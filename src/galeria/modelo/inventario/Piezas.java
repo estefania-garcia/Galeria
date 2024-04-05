@@ -1,6 +1,6 @@
 package galeria.modelo.inventario;
 
-import galeria.modelo.compras.OfertaOpcion;
+import galeria.modelo.compras.GaleriaOferta;
 
 public abstract class Piezas {
 	
@@ -9,18 +9,18 @@ public abstract class Piezas {
 	private String lugar;
 	private String autores;
 	private Deposito deposito;
-	private OfertaOpcion ofertaOpcion;
+	private GaleriaOferta galeriaOferta;
 	private String propietario;
 	private String estado;
 	
-	public Piezas(String titulo, String año, String autores, String lugar, Deposito deposito, OfertaOpcion ofertaOpcion, String propietario) {
+	public Piezas(String titulo, String año, String autores, String lugar, Deposito deposito, GaleriaOferta galeriaOferta, String propietario) {
 		
 		this.titulo = titulo;
 		this.año = año;
 		this.lugar = lugar;
 		this.autores = autores;
 		this.deposito = deposito;
-		this.ofertaOpcion = ofertaOpcion;
+		this.galeriaOferta = galeriaOferta;
 		this.propietario = propietario;
 	}
 	
@@ -34,9 +34,6 @@ public abstract class Piezas {
 		return propietario;
 	}
 	
-	public OfertaOpcion getOfertaOpcion() {
-		return ofertaOpcion;	
-	}
 	
 	public Deposito getDeposito() {
 		return deposito;
@@ -58,5 +55,9 @@ public abstract class Piezas {
 		
 		this.estado = estados;
 		return estado;
+	}
+
+	public GaleriaOferta getGaleriaOferta() {
+		return galeriaOferta;
 	}
 }

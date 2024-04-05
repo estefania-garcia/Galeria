@@ -8,7 +8,7 @@ public class Oferta {
 	private Piezas pieza;
 	private Usuarios comprador;
 	private int monto;
-	private Inversores comprador_monto;
+	private Comprador comprador_monto;
 	
 	public Oferta(Piezas pieza, Usuarios comprador, int monto) {
 		

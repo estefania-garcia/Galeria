@@ -1,6 +1,6 @@
 package galeria.modelo.inventario;
 
-import galeria.modelo.compras.OfertaOpcion;
+import galeria.modelo.compras.GaleriaOferta;
 
 public class ArteTridimensional extends Piezas{
 
@@ -14,8 +14,8 @@ public class ArteTridimensional extends Piezas{
 	private String material;
 	private String tecnica;
 	
-	public ArteTridimensional(String titulo, Deposito deposito, OfertaOpcion ofertaOpcion, String propietario, String año, String lugar, String autores, double alto, String tecnica, double ancho, double profundidad, double peso, boolean electricidad, String material) {
-		super(titulo, año, lugar, autores, deposito, ofertaOpcion, propietario);
+	public ArteTridimensional(String titulo, Deposito deposito, GaleriaOferta galeriaOferta, String propietario, String año, String lugar, String autores, double alto, String tecnica, double ancho, double profundidad, double peso, boolean electricidad, String material) {
+		super(titulo, año, lugar, autores, deposito, galeriaOferta, propietario);
 		this.ancho = ancho;
 		this.alto = alto;
 		this.material = material;

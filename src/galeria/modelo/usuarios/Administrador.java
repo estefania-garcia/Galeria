@@ -13,19 +13,17 @@ public class Administrador{
 	
 	private String usuario;
 	private String contrasena;
-	private String rol;
 	private String nombre;
-	private Inversores comprador;
+	private Comprador comprador;
 	
 	private List<Usuarios> nuevosUsuarios = new ArrayList<Usuarios>();
 	private List<Usuarios> usuariosConfirmados = new ArrayList<Usuarios>();
 	private List<Oferta> piezasConOferta = new LinkedList<Oferta>();
 	
-	public Administrador(String usuario, String contrasena, String rol, String nombre) {
+	public Administrador(String usuario, String contrasena, String nombre) {
 		
 		this.usuario = usuario;
 		this.contrasena = contrasena;
-		this.rol = rol;
 		this.nombre = nombre;
 	}
 	
@@ -39,10 +37,6 @@ public class Administrador{
 	
 	public String getContrasena() {
 		return contrasena;
-	}
-	
-	public String getRol() {
-		return rol;
 	}
 	
 	public String getNombre() {

@@ -1,6 +1,6 @@
 package galeria.modelo.inventario;
 
-import galeria.modelo.compras.OfertaOpcion;
+import galeria.modelo.compras.GaleriaOferta;
 
 public class ArteVisual extends Piezas{
 	
@@ -12,8 +12,8 @@ public class ArteVisual extends Piezas{
 	private String material;
 	private String tecnica;
 	
-	public ArteVisual(String titulo, Deposito deposito, OfertaOpcion ofertaOpcion, String propietario, String año, String lugar, String autores, double ancho, double largo, String tipoArte, String material, String tecnica) {
-		super(titulo, año, lugar, autores, deposito, ofertaOpcion, propietario);
+	public ArteVisual(String titulo, Deposito deposito, GaleriaOferta galeriaOferta, String propietario, String año, String lugar, String autores, double ancho, double largo, String tipoArte, String material, String tecnica) {
+		super(titulo, año, lugar, autores, deposito, galeriaOferta, propietario);
 		this.ancho = ancho;
 		this.largo = largo;
 		this.material = material;

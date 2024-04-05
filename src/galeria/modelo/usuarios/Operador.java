@@ -22,7 +22,7 @@ public class Operador extends Usuarios{
 	}
 	
 	public List<Oferta> agregarOfertas(Oferta ofertas){
-		if(ofertas.getMonto() >= ofertas.getPiezas().getOfertaOpcion().getMontoMinimo()) {
+		if(ofertas.getMonto() >= ofertas.getPiezas().getGaleriaOferta().getMontoMinimo()) {
 			ordenSuabasta.add(ofertas);
 		}
 		/*Ordenar la lista segun el monto de la oferta*/

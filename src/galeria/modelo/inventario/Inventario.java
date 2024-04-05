@@ -15,8 +15,6 @@ public class Inventario {
 	private List<Piezas> piezasSubasta;
 	private List<Piezas> piezasVenta;
 	
-	
-	
 	public Inventario() {
 		
 		piezasTotales = new LinkedList<Piezas>();

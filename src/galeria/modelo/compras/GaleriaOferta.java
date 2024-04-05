@@ -1,22 +1,22 @@
 package galeria.modelo.compras;
 
-public class OfertaOpcion {
+public class GaleriaOferta {
 	
 	private int montoCliente;
 	private int montoMinimo;
 	
-	public OfertaOpcion(int monto, int montoMinimo) {
+	public GaleriaOferta(int monto, int montoMinimo) {
 		
 		this.montoCliente = monto;
 		this.montoMinimo = montoMinimo;
 	}
 	
-	public OfertaOpcion(int monto) {
+	public GaleriaOferta(int monto) {
 		
 		this.montoCliente = monto;
 	}
 	
-	public OfertaOpcion() {}
+	public GaleriaOferta() {}
 	
 	public int getMontoCliente() {
 		return montoCliente;

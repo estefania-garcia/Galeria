@@ -1,6 +1,6 @@
 package galeria.modelo.inventario;
 
-import galeria.modelo.compras.OfertaOpcion;
+import galeria.modelo.compras.GaleriaOferta;
 
 public class ArteDigital extends Piezas{
 
@@ -11,8 +11,8 @@ public class ArteDigital extends Piezas{
 	private boolean audio;
 	private boolean imagen;
 	
-	public ArteDigital(String titulo, String año, Deposito deposito, OfertaOpcion ofertaOpcion, String propietario, String lugar, String autores, double ancho, double largo, boolean audio, boolean imagen) {
-		super(titulo, año, lugar, autores, deposito, ofertaOpcion, propietario);
+	public ArteDigital(String titulo, String año, Deposito deposito, GaleriaOferta galeriaOferta, String propietario, String lugar, String autores, double ancho, double largo, boolean audio, boolean imagen) {
+		super(titulo, año, lugar, autores, deposito, galeriaOferta, propietario);
 		this.ancho = ancho;
 		this.largo = largo;
 		this.audio = audio;
