@@ -8,12 +8,12 @@ import galeria.modelo.compras.*;
 public class Operador extends Usuarios{
 
 	public static final String OPERADOR = "Operador";
-	private List<Oferta> ordenSuabasta;
+	private List<Ofertas> ordenSuabasta;
 	
 	public Operador(String usuario, String contrasena, String rol, String nombre) {
 		
 		super(usuario, contrasena, rol, nombre);
-		ordenSuabasta = new LinkedList<Oferta>();
+		ordenSuabasta = new LinkedList<Ofertas>();
 	}
 	
 	@Override
@@ -21,7 +21,7 @@ public class Operador extends Usuarios{
 		return OPERADOR;
 	}
 	
-	public List<Oferta> agregarOfertas(Oferta ofertas){
+	public List<Ofertas> agregarOfertas(Ofertas ofertas){
 		if(ofertas.getMonto() >= ofertas.getPiezas().getGaleriaOferta().getMontoMinimo()) {
 			ordenSuabasta.add(ofertas);
 		}
@@ -29,9 +29,9 @@ public class Operador extends Usuarios{
 		return ordenSuabasta;
 	}
 	
-	public Oferta obtenerMayorOferta() {
+	public Ofertas obtenerMayorOferta() {
 		
-		Oferta mayor = ordenSuabasta.get(0);
+		Ofertas mayor = ordenSuabasta.get(0);
 		return mayor;
 	}
 }

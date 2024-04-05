@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import galeria.modelo.compras.Oferta;
+import galeria.modelo.compras.Ofertas;
 
 public class Administrador{
 	
@@ -18,7 +18,7 @@ public class Administrador{
 	
 	private List<Usuarios> nuevosUsuarios = new ArrayList<Usuarios>();
 	private List<Usuarios> usuariosConfirmados = new ArrayList<Usuarios>();
-	private List<Oferta> piezasConOferta = new LinkedList<Oferta>();
+	private List<Ofertas> piezasConOferta = new LinkedList<Ofertas>();
 	
 	public Administrador(String usuario, String contrasena, String nombre) {
 		
@@ -60,7 +60,7 @@ public class Administrador{
 		return usuariosConfirmados;
 	}
 	
-	public List<Oferta> agregarOferta(Oferta ofertas){
+	public List<Ofertas> agregarOferta(Ofertas ofertas){
 		
 		piezasConOferta.add(ofertas);
 		return piezasConOferta;

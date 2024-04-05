@@ -1,16 +1,17 @@
 package galeria.modelo.compras;
 
 import galeria.modelo.inventario.Piezas;
-import galeria.modelo.usuarios.*;
+import galeria.modelo.usuarios.Comprador;
+import galeria.modelo.usuarios.Usuarios;
 
-public class Oferta {
-
+public abstract class Ofertas {
+	
 	private Piezas pieza;
 	private Usuarios comprador;
 	private int monto;
 	private Comprador comprador_monto;
 	
-	public Oferta(Piezas pieza, Usuarios comprador, int monto) {
+	public Ofertas(Piezas pieza, Usuarios comprador, int monto) {
 		
 		this.pieza = pieza;
 		this.comprador = comprador;
@@ -27,6 +28,8 @@ public class Oferta {
 	 public int getMonto() {
 		 return monto;
 	 }
+	 
+	 public abstract boolean validarPrecio();
 	 
 	 public boolean verificarMonto() {
 		 
