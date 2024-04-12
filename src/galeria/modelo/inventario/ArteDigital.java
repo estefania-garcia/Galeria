@@ -1,5 +1,6 @@
 package galeria.modelo.inventario;
 
+//HOLAAAAAAAAAAA
 import galeria.modelo.compras.GaleriaOferta;
 
 public class ArteDigital extends Piezas{
