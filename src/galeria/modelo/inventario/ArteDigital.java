@@ -1,42 +1,61 @@
 package galeria.modelo.inventario;
 
 import galeria.modelo.compras.GaleriaOferta;
+import galeria.modelo.usuarios.Usuarios;
 
+/**
+ * Esta clase es una subclase de Piezas que representa obras como música o presentaciones
+ * */
 public class ArteDigital extends Piezas{
 
+	/**
+	 * Constante que representa el tipo de Pieza
+	 * */
 	private static final String ARTEDIGITAL = "Arte Digital";
 	
-	private double ancho;
-	private double largo;
-	private boolean audio;
-	private boolean imagen;
+	/**
+	 * Atributo que relacion el tipo de archivo de la pieza. Es decir, si el mp4, mp3, entre otros
+	 * */
+	private String tipoArchivo;
 	
-	public ArteDigital(String titulo, String año, Deposito deposito, GaleriaOferta galeriaOferta, String propietario, String lugar, String autores, double ancho, double largo, boolean audio, boolean imagen) {
-		super(titulo, año, lugar, autores, deposito, galeriaOferta, propietario);
-		this.ancho = ancho;
-		this.largo = largo;
-		this.audio = audio;
-		this.imagen = imagen;
+	/**
+	 * Atributo que relacion el tipo de arte de la pieza
+	 * */
+	private String tipoArte;
+	
+	/**
+	 * El constructor junta los atributos del constructor de la super clase y añade sus propieos atributos
+	 * @param tipoArchivo
+	 * @param tipoArte
+	 * */
+	public ArteDigital(String titulo, String año, boolean deposito, GaleriaOferta galeriaOferta, Usuarios propietario, String autores, String tipoArte, String tipoArchivo) {
+		super(titulo, año, autores, deposito, galeriaOferta, propietario);
+		this.tipoArchivo = tipoArchivo;
+		this.tipoArte = tipoArte;
 	}
 	
+	/**
+	 * Método que indica el tipo de pieza
+	 * @return ARTEVISUAL
+	 * */
 	@Override
 	public String getTipo() {
 		return ARTEDIGITAL;
 	}
 	
-	public double getAncho() {
-		return ancho;
+	/**
+	 * Método getter que indica el tipo de arte de la pieza
+	 * @return tipoArte
+	 * */
+	public String getTipoArte() {
+		return tipoArte;
 	}
 	
-	public double getLargo() {
-		return largo;
-	}
-	
-	public boolean getImagen() {
-		return imagen;
-	}
-	
-	public boolean getAudio() {
-		return audio;
+	/**
+	 * Método getter que indica el tipo de archivo de la pieza
+	 * @return tipoArchivo
+	 * */
+	public String getTipoArchivo() {
+		return tipoArchivo;
 	}
 }

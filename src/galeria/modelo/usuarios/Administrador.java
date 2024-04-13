@@ -6,63 +6,18 @@ import java.util.List;
 
 import galeria.modelo.compras.Ofertas;
 
-public class Administrador{
+public class Administrador extends Usuarios{
 	
 	/*CONSIDERAR LA ELIMINACIÓN DE ESTE ATRIBUTO PUES YA NO HACE PARTE DE LA CLASE ABSTRACTA*/
 	private static final String ADMINISTRADOR = "Administrador";
 	
-	private String usuario;
-	private String contrasena;
-	private String nombre;
-	private Comprador comprador;
-	
-	private List<Usuarios> nuevosUsuarios = new ArrayList<Usuarios>();
-	private List<Usuarios> usuariosConfirmados = new ArrayList<Usuarios>();
-	private List<Ofertas> piezasConOferta = new LinkedList<Ofertas>();
-	
-	public Administrador(String usuario, String contrasena, String nombre) {
+	public Administrador(String usuario, String contrasena, String rol, String nombre) {
 		
-		this.usuario = usuario;
-		this.contrasena = contrasena;
-		this.nombre = nombre;
+		super(usuario, contrasena, rol, nombre);
 	}
 	
+	@Override
 	public String getTipoUsuario() {
 		return ADMINISTRADOR;
-	}
-	
-	public String getUsuario() {
-		return usuario;
-	}
-	
-	public String getContrasena() {
-		return contrasena;
-	}
-	
-	public String getNombre() {
-		return nombre;
-	}
-	
-	public List<Usuarios> nuevosUsuarios(Usuarios usuarios){
-		
-		nuevosUsuarios.add(usuarios);
-		return nuevosUsuarios;
-	}
-	
-	public List<Usuarios> listaUsuarios(Usuarios usuarios, int posUsuario, int monto) {
-		
-		Usuarios usuario = nuevosUsuarios.get(posUsuario);
-		if(usuario.getRol().equals("Inversor")) {
-			comprador.asignarValorMaximo(monto);
-		}
-		usuariosConfirmados.add(usuario);
-		nuevosUsuarios.remove(posUsuario);
-		return usuariosConfirmados;
-	}
-	
-	public List<Ofertas> agregarOferta(Ofertas ofertas){
-		
-		piezasConOferta.add(ofertas);
-		return piezasConOferta;
 	}
 }
