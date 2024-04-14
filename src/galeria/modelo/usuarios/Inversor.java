@@ -5,19 +5,19 @@ import java.util.List;
 
 import galeria.modelo.inventario.Piezas;
 
-public class Propietario extends Usuarios{
-
-	public static final String PROPIETARIO = "Propietario";
+public class Inversor extends Usuarios{
+	
+	public static final String INVERSOR = "Inversor";
 	private List<Piezas> pizasPropias;
 	
-	public Propietario(String usuario, String contrasena, String rol, String nombre) {
+	public Inversor(String usuario, String contrasena, String rol, String nombre) {
 		super(usuario, contrasena, rol, nombre);
 		pizasPropias = new LinkedList<Piezas>();
 	}
 	
 	@Override
 	public String getTipoUsuario() {
-		return PROPIETARIO;
+		return INVERSOR;
 	}
 	
 	public List<Piezas> getPiezas(){

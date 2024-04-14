@@ -14,12 +14,17 @@ public abstract class Piezas {
 	private String titulo;
 	
 	/**
+	 * Atributo que relacion el lugar de creación de la pieza
+	 * */
+	private String lugar_creacion;
+	
+	/**
 	 * Atributo que relacion el año de creación de la pieza
 	 * */
 	private String año;
 	
 	/**
-	 * Atributo que relacion el lugar de creación de la pieza
+	 * Atributo que relacion el lugar en el que se encuentra la pieza dentro de la galería
 	 * */
 	private String lugar;
 	
@@ -67,7 +72,7 @@ public abstract class Piezas {
 	 * @param galeriaOferta
 	 * @param propietario
 	 * */
-	public Piezas(String titulo, String año, String autores, boolean deposito, GaleriaOferta galeriaOferta, Usuarios propietario) {
+	public Piezas(String titulo, String lugar_creacion, String año, String autores, boolean deposito, GaleriaOferta galeriaOferta, Usuarios propietario) {
 		
 		this.titulo = titulo;
 		this.año = año;
@@ -75,6 +80,7 @@ public abstract class Piezas {
 		this.deposito = deposito;
 		this.galeriaOferta = galeriaOferta;
 		this.propietario = propietario;
+		this.lugar_creacion = lugar_creacion;
 	}
 	
 	/**
@@ -88,6 +94,14 @@ public abstract class Piezas {
 	 * */
 	public String getAutores() {
 		return autores;	
+	}
+	
+	/**
+	 * Método getter que indica el lugar de creacion
+	 * @return autores
+	 * */
+	public String getLugarCreacion() {
+		return lugar_creacion;	
 	}
 	
 	/**

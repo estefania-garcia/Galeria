@@ -58,8 +58,8 @@ public class ArteTridimensional extends Piezas{
 	 * @param electricidad
 	 * @param tecnica
 	 * */
-	public ArteTridimensional(String titulo, boolean deposito, GaleriaOferta galeriaOferta, Usuarios propietario, String año, String autores, double alto, String tecnica, double ancho, double profundidad, double peso, boolean electricidad, String material) {
-		super(titulo, año, autores, deposito, galeriaOferta, propietario);
+	public ArteTridimensional(String titulo, String lugar_creacion, boolean deposito, GaleriaOferta galeriaOferta, Usuarios propietario, String año, String autores, double alto, String tecnica, double ancho, double profundidad, double peso, boolean electricidad, String material) {
+		super(titulo, lugar_creacion, año, autores, deposito, galeriaOferta, propietario);
 		this.ancho = ancho;
 		this.alto = alto;
 		this.material = material;
