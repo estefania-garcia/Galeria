@@ -10,14 +10,39 @@ import galeria.modelo.compras.*;
 import galeria.modelo.controlador.Galeria;
 import galeria.modelo.inventario.Piezas;
 
+/**
+ * Esta clase es una subclase de Usuarios que representa al Operador de la Galeria
+ * */
 public class Operador extends Usuarios{
 
+	/**
+	 * Atributo que representa el tipo de usuario de la clase
+	 * */
 	public static final String OPERADOR = "Operador";
+	/**
+	 * Lista de las ofertas de la subasta que se van registrando en el mapa
+	 * */
 	private List<Ofertas> listaOfertas;
+	/**
+	 * Mapa que registra las ofertas de la subasta segun la pieza, donde las llaves son la pieza y el valor es la lista de las ofertas asociadas a esta.
+	 * */
 	private Map<Piezas, List<Ofertas>> mapaSubastas = new HashMap<>();
+	/**
+	 * Atributo que nos da acceso a la clase OfertaSubasta
+	 * */
 	private OfertaSubasta oferta_subastas;
+	/**
+	 * Atributo que nos da acceso a la clase Galeria
+	 * */
 	private Galeria galeria;
 	
+	/**
+	 * Constructor que inicializa los atributos de la clase
+	 * @param usuario
+	 * @param contraseña
+	 * @param rol
+	 * @param nombre
+	 * */
 	public Operador(String usuario, String contrasena, String rol, String nombre) {
 		
 		super(usuario, contrasena, rol, nombre);
@@ -25,17 +50,28 @@ public class Operador extends Usuarios{
 		mapaSubastas = new HashMap<>();
 	}
 	
+	/**
+	 * Método getter que indica el tipo de Usuario
+	 * @return OPERADOR
+	 * */
 	@Override
 	public String getTipoUsuario() {
 		return OPERADOR;
 	}
-	
+	/**
+	 * Método que agrega piezas que van a estar disponibles en la subasta
+	 * @param piezas
+	 * */
 	public void agregarPiezasSubasta(Piezas piezas) {
 		if(mapaSubastas.get(piezas) == null) {
 			mapaSubastas.put(piezas, listaOfertas);
 		}
 	}
 	
+	/**
+	 * Método que agrega ofertas a las piezas que están disponibles para la subasta
+	 * @param ofertas
+	 * */
 	public void agregarOfertas(Ofertas ofertas){
 		Iterator<Map.Entry<Piezas, List<Ofertas>>> iterador = mapaSubastas.entrySet().iterator();
     	while(iterador.hasNext()) {
@@ -51,7 +87,11 @@ public class Operador extends Usuarios{
     		}
     	}
 	}
-	//Retorna la Oferta mas grand, de una lista de ofertas que entra por parametro
+	
+	/**
+	 * Método que verifica cual fue la oferta mayor de una pieza en subasta y se la pasa a Galeria.
+	 * @param ofertas
+	 * */
 	public void obtenerMayorOferta(Piezas pieza) {
 		List<Ofertas> lista = mapaSubastas.get(pieza);
 		Ofertas oferta_final = lista.get(lista.size()-1);
