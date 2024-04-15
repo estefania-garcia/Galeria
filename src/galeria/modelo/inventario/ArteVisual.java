@@ -47,8 +47,8 @@ public class ArteVisual extends Piezas{
 	 * @param tecnica
 	 * @param tipoArte
 	 * */
-	public ArteVisual(String titulo, String lugar_creacion, boolean deposito, GaleriaOferta galeriaOferta, Usuarios propietario, String año, String autores, double ancho, double largo, String tipoArte, String material, String tecnica) {
-		super(titulo, lugar_creacion, año, autores, deposito, galeriaOferta, propietario);
+	public ArteVisual(String titulo, String proposito, String lugar_creacion, boolean deposito, GaleriaOferta galeriaOferta, Usuarios propietario, String año, String autores, double ancho, double largo, String tipoArte, String material, String tecnica) {
+		super(titulo, proposito, lugar_creacion, año, autores, deposito, galeriaOferta, propietario);
 		this.ancho = ancho;
 		this.largo = largo;
 		this.material = material;

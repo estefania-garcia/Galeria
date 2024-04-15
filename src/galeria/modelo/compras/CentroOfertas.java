@@ -84,7 +84,9 @@ public class CentroOfertas {
 		Iterator<Ofertas> iterador = ofertasSubasta.iterator();
     	while(iterador.hasNext()) {
     		Ofertas oferta = iterador.next();
-    		operador.agregarOfertas(oferta);
+    		if(oferta.validarPrecio() == true && oferta.verificarMonto() == true) {
+    			operador.agregarOfertas(oferta);
+    		}
     	}
 	}
 	

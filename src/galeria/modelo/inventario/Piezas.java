@@ -64,6 +64,11 @@ public abstract class Piezas {
 	private boolean creacion;
 	
 	/**
+	 * Atributo que indica el proposito de la pieza, si es para vender, exhibir o subastar
+	 * */
+	private String proposito;
+	
+	/**
 	 * Constructor que inicializa los atributos de la clase
 	 * @param titulo
 	 * @param año
@@ -71,8 +76,9 @@ public abstract class Piezas {
 	 * @param deposito
 	 * @param galeriaOferta
 	 * @param propietario
+	 * @param proposito
 	 * */
-	public Piezas(String titulo, String lugar_creacion, String año, String autores, boolean deposito, GaleriaOferta galeriaOferta, Usuarios propietario) {
+	public Piezas(String titulo, String proposito, String lugar_creacion, String año, String autores, boolean deposito, GaleriaOferta galeriaOferta, Usuarios propietario) {
 		
 		this.titulo = titulo;
 		this.año = año;
@@ -81,6 +87,7 @@ public abstract class Piezas {
 		this.galeriaOferta = galeriaOferta;
 		this.propietario = propietario;
 		this.lugar_creacion = lugar_creacion;
+		this.proposito = proposito;
 	}
 	
 	/**
@@ -94,6 +101,14 @@ public abstract class Piezas {
 	 * */
 	public String getAutores() {
 		return autores;	
+	}
+	
+	/**
+	 * Método getter que indica el proposito
+	 * @return autores
+	 * */
+	public String getProposito() {
+		return proposito;	
 	}
 	
 	/**

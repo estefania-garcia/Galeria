@@ -56,15 +56,15 @@ public class Inversor extends Usuarios{
 	
 	public ArteDigital CrearPiezaDigital(String titulo, int monto, int montoMinimo, String proposito, String lugar_creacion, String año, boolean deposito, Usuarios propietario, String autores, String tipoArte, String tipoArchivo) {
 		GaleriaOferta oferta = crearOfertaGaleria(monto, montoMinimo, proposito);
-		return new ArteDigital(titulo, lugar_creacion, año, deposito, oferta, this, autores, tipoArte, tipoArchivo);
+		return new ArteDigital(titulo, proposito, lugar_creacion, año, deposito, oferta, this, autores, tipoArte, tipoArchivo);
 	}
 	
 	public ArteTridimensional CrearPiezaTridimensional(String titulo,  int monto, int montoMinimo, String proposito, String lugar_creacion, String año, boolean deposito, Usuarios propietario, String autores,double alto, String tecnica, double ancho, double profundidad, double peso, boolean electricidad, String material) {
 		GaleriaOferta oferta = crearOfertaGaleria(monto, montoMinimo, proposito);
-		return new ArteTridimensional(titulo, lugar_creacion, deposito, oferta, this, año, autores, alto, tecnica, ancho, profundidad, peso, electricidad, material);
+		return new ArteTridimensional(titulo, proposito, lugar_creacion, deposito, oferta, this, año, autores, alto, tecnica, ancho, profundidad, peso, electricidad, material);
 	}
 	public ArteDigital CrearPiezaPintura(String titulo,  int monto, int montoMinimo, String proposito, String lugar_creacion, String año, boolean deposito, Usuarios propietario, String autores, double ancho, double largo , String material, String tecnica, String tipoArte, String tipoArchivo ) {
 		GaleriaOferta oferta = crearOfertaGaleria(monto, montoMinimo, proposito);
-		return new ArteDigital(titulo, lugar_creacion, año, deposito, oferta, this, autores, tipoArte, tipoArchivo);
+		return new ArteDigital(titulo, proposito, lugar_creacion, año, deposito, oferta, this, autores, tipoArte, tipoArchivo);
 	}
 }
