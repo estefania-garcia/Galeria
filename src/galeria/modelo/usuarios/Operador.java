@@ -1,5 +1,3 @@
-package galeria.modelo.usuarios;
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -25,10 +23,9 @@ public class Operador extends Usuarios{
 		if(ofertas.getMonto() >= ofertas.getPiezas().getGaleriaOferta().getMontoMinimo()) {
 			ordenSuabasta.add(ofertas);
 		}
-		/*Ordenar la lista segun el monto de la oferta*/
 		return ordenSuabasta;
 	}
-	
+	//Retorna la Oferta mas grand, de una lista de ofertas que entra por parametro
 	public Ofertas obtenerMayorOferta() {
 		
 		Ofertas mayor = ordenSuabasta.get(0);
