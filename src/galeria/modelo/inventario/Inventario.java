@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import galeria.modelo.usuarios.Operador;
-import uniandes.dpoo.aerolinea.modelo.Vuelo;
 
 /**
  * Esta clase almacena todas las piezas de la galería y las distribuye en diferentes listas para un manejo más ordenado
@@ -277,7 +276,7 @@ public class Inventario {
 		Iterator<Piezas> iterador = piezasSubasta.iterator();
     	while(iterador.hasNext()) {
     		Piezas pieza = iterador.next();
-    		operador.agregarPiezas(pieza);
+    		operador.agregarPiezasSubasta(pieza);
     	}
 	}
 }

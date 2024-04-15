@@ -1,7 +1,7 @@
 package galeria.modelo.compras;
 
 import galeria.modelo.inventario.Piezas;
-import galeria.modelo.usuarios.Comprador;
+import galeria.modelo.usuarios.Inversor;
 import galeria.modelo.usuarios.Usuarios;
 
 /**
@@ -85,7 +85,7 @@ public abstract class Ofertas {
 	 * */
 	public boolean verificarMonto() {
 		 
-		 if(comprador_monto.getTopeMonto() < monto) {
+		 if(comprador_monto.getMontoMaximo() < monto) {
 			 return false;
 		 }else {
 			 return true;

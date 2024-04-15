@@ -1,3 +1,5 @@
+package galeria.modelo.usuarios;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,8 +18,12 @@ public class Inversor extends Usuarios{
 		super(usuario, contrasena, rol, nombre);
 		pizasPropias = new LinkedList<Piezas>();
 	}
-	public void setMontoMaximo(double montoMaximo) {
+	public void modificarMontoMaximo(double montoMaximo) {
         this.montoMaximo = montoMaximo;
+	}
+	
+	public double getMontoMaximo() {
+		return montoMaximo;
 	}
 	
 	@Override
@@ -36,12 +42,16 @@ public class Inversor extends Usuarios{
 	public GaleriaOferta crearOfertaGaleria(int monto, int montoMinimo, String proposito) {
 		
 		if(proposito.equals("Subasta")) {
-			return new GaleriaOferta(monto, montoMinimo);
+			GaleriaOferta oferta = new GaleriaOferta(monto, montoMinimo);
+			return oferta;
 		}else if(proposito.equals("Vender")) {
-			return new GaleriaOferta(monto);
+			GaleriaOferta oferta = new GaleriaOferta(monto);
+			return oferta;
 		}else if(proposito.equals("Exhibir")) {
-			return new GaleriaOferta();
+			GaleriaOferta oferta = new GaleriaOferta();
+			return oferta;
 		}
+		return null;
 	}
 	
 	public ArteDigital CrearPiezaDigital(String titulo, int monto, int montoMinimo, String proposito, String lugar_creacion, String año, boolean deposito, Usuarios propietario, String autores, String tipoArte, String tipoArchivo) {
@@ -57,8 +67,4 @@ public class Inversor extends Usuarios{
 		GaleriaOferta oferta = crearOfertaGaleria(monto, montoMinimo, proposito);
 		return new ArteDigital(titulo, lugar_creacion, año, deposito, oferta, this, autores, tipoArte, tipoArchivo);
 	}
-	
-	public void modificarMontoMaximo(double nuevoMonto) {
-       
-    }
 }

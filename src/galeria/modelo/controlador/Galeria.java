@@ -27,6 +27,12 @@ public class Galeria {
 	 * Atributo que nos da acceso a la clase Inventario
 	 * */
 	private Inventario inventario;
+	
+	/**
+	 * Atributo que nos da acceso a la clase Inversor
+	 * */
+	private Inversor inversor_p;
+	
 	/**
 	 * Mapa que guarda todos los usuarios registrados, donde la llave es el tipo de usuario y el valor son los usuarios con ese rol.
 	 * */
@@ -148,7 +154,7 @@ public class Galeria {
 				Usuarios inversor = iterator.next();
 				if (inversor.getUsuario().equals(login))
 				{
-					inversor.ModificarMontoMaximo(montoMax);
+					inversor_p.modificarMontoMaximo(montoMax);
 				}
 			}
 		}
@@ -178,7 +184,7 @@ public class Galeria {
 				Usuarios inversor = iterator.next();
 				if (inversor.getUsuario().equals(login))
 				{
-					inversor.ModificarMontoMaximo(monto);
+					inversor_p.modificarMontoMaximo(monto);
 				}
 			}
 		}
