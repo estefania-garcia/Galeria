@@ -1,6 +1,6 @@
 package galeria.modelo.inventario;
 
-//HOLAAAAAAAAAAA
+
 import galeria.modelo.compras.GaleriaOferta;
 import galeria.modelo.usuarios.Usuarios;
 
