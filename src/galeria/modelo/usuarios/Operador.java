@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import galeria.modelo.compras.*;
+import galeria.modelo.controlador.Galeria;
 import galeria.modelo.inventario.Piezas;
 
 public class Operador extends Usuarios{
@@ -15,6 +16,7 @@ public class Operador extends Usuarios{
 	private List<Ofertas> listaOfertas;
 	private Map<Piezas, List<Ofertas>> mapaSubastas = new HashMap<>();
 	private OfertaSubasta oferta_subastas;
+	private Galeria galeria;
 	
 	public Operador(String usuario, String contrasena, String rol, String nombre) {
 		
@@ -50,12 +52,11 @@ public class Operador extends Usuarios{
     	}
 	}
 	//Retorna la Oferta mas grand, de una lista de ofertas que entra por parametro
-	public Ofertas obtenerMayorOferta(Piezas pieza) {
+	public void obtenerMayorOferta(Piezas pieza) {
 		List<Ofertas> lista = mapaSubastas.get(pieza);
 		Ofertas oferta_final = lista.get(lista.size()-1);
 		if(oferta_subastas.venderPieza() == true) {
-			return oferta_final;
+			galeria.validarOfertaFinal(oferta_final);
 		}
-		return null;
 	}
 }

@@ -34,6 +34,11 @@ public class Galeria {
 	private Inversor inversor_p;
 	
 	/**
+	 * Atributo que nos da acceso a la clase Cajero
+	 * */
+	private Cajero cajero_p;
+	
+	/**
 	 * Mapa que guarda todos los usuarios registrados, donde la llave es el tipo de usuario y el valor son los usuarios con ese rol.
 	 * */
 	private Map<String, List<Usuarios>> usuariosRegistrados;
@@ -275,8 +280,7 @@ public class Galeria {
 	 * */
 	public void validarOfertaFinal (Ofertas oferta)
 	{
-		//metersela a algo en cajero
-		//meter la pieza en propiedad del inversor
+		cajero_p.agregarOfertas(oferta);
 	}
 	
 	/**
