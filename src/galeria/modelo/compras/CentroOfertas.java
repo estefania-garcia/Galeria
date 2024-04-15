@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import galeria.modelo.inventario.Inventario;
+import galeria.modelo.inventario.Piezas;
 import galeria.modelo.usuarios.Operador;
 
 /**
@@ -18,6 +20,11 @@ public class CentroOfertas {
 	 * Atributo que nos da acceso a la clase operador
 	 * */
 	private Operador operador;
+	
+	/**
+	 * Atributo que nos da acceso a la clase inventario
+	 * */
+	private Inventario inventario;
 	
 	/**
 	 * Lista que recibe objetos de tipo Ofertas y que guarda todas las ofertas de tipo subasta
@@ -46,6 +53,9 @@ public class CentroOfertas {
 		if(oferta.tipoOferta().equals("Oferta Subasta")){
 			ofertasSubasta.add(oferta);
 		}else if(oferta.getPiezas().getEstado() != "Bloqueada"){
+			Piezas pieza = oferta.getPiezas();
+			inventario.modificarEstado("Bloqueada", pieza);
+			inventario.añadirPiezasBloqueadas(pieza);
 			ofertasVenta.add(oferta);
 		}
 	}

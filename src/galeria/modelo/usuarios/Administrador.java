@@ -1,10 +1,5 @@
 package galeria.modelo.usuarios;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-
-import galeria.modelo.compras.Ofertas;
 
 public class Administrador extends Usuarios{
 	
