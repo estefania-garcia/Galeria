@@ -1,7 +1,6 @@
 package galeria.modelo.controlador;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Iterator;
@@ -10,10 +9,11 @@ import java.util.LinkedList;
 import galeria.modelo.compras.Ofertas;
 import galeria.modelo.inventario.Inventario;
 import galeria.modelo.inventario.Piezas;
-import galeria.modelo.usuarios.Administrador;
-import galeria.modelo.usuarios.Cajero;
-import galeria.modelo.usuarios.Inversor;
-import galeria.modelo.usuarios.Operador;
+import galeria.modelo.persistencia.CentralPersistencia;
+import galeria.modelo.persistencia.PersistenciaUsuariosJson;
+import galeria.modelo.usuarios.HistorialInversor;
+import galeria.modelo.usuarios.ProcesoCompra;
+import galeria.modelo.usuarios.RegistroInicio;
 import galeria.modelo.usuarios.Usuarios;
 
 /**
@@ -31,12 +31,14 @@ public class Galeria {
 	/**
 	 * Atributo que nos da acceso a la clase Inversor
 	 * */
-	private Inversor inversor_p;
+	private HistorialInversor inversor_p;
 	
 	/**
 	 * Atributo que nos da acceso a la clase Cajero
 	 * */
-	private Cajero cajero_p;
+	private ProcesoCompra cajero_p;
+	
+	private RegistroInicio registro;
 	
 	/**
 	 * Mapa que guarda todos los usuarios registrados, donde la llave es el tipo de usuario y el valor son los usuarios con ese rol.
@@ -46,7 +48,7 @@ public class Galeria {
 	/**
 	 * Lista que guarda los inversores con solicitud de aumento de monto.
 	 * */
-	private List<Inversor> inversoresEnSolicitud; 
+	private List<Usuarios> inversoresEnSolicitud; 
 	
 	/**
 	 * Lista que guarda todas las piezas que deben ser aprobadas.
@@ -56,99 +58,59 @@ public class Galeria {
 	/**
 	 * Constructor que inicializa la lista de usuarios registrados
 	 * */
-	public Galeria ()
-	{
-		Map<String, List<Usuarios>> usuariosRegistrados = new HashMap<String, List<Usuarios>>();
-		List<Piezas> piezasEnSolicitud = new LinkedList<Piezas>();
-		List<Inversor> inversoresEnSolicitud = new LinkedList<Inversor>();
-		Inventario inventario = new Inventario ();
-	}
-	
-	/**
-	 * Método para registrar un usuario, dependiendo del rol
-	 * @param usuario
-	 * @param contraseña
-	 * @param rol
-	 * @param nombre
-	 * */
-	public void registrarUsuario(String usuario, String contrasena, String rol, String nombre){
+	public Galeria(){
 		
-		Usuarios nuevoUsuario = null;
-        if ("Administrador".equalsIgnoreCase(rol))
-        {
-            nuevoUsuario = new Administrador(usuario, contrasena, rol, nombre);
-        } 
-        else if ("Inversor".equalsIgnoreCase(rol)) 
-        {
-            nuevoUsuario = new Inversor(usuario, contrasena, rol, nombre);
-        } 
-        else if ("Cajero".equalsIgnoreCase(rol)) 
-        {
-            nuevoUsuario = new Cajero(usuario, contrasena, rol, nombre);
-        } 
-        else if ("Operador".equalsIgnoreCase(rol)) 
-        {
-            nuevoUsuario = new Operador(usuario, contrasena, rol, nombre);
-        } 
-
-     // Verificar si ya existe una lista para este rol en el mapa
-     	if (usuariosRegistrados.containsKey(rol)) 
-     	{
-     		// Si la lista ya existe, obtenerla del mapa y agregar el nuevo usuario
-     		List<Usuarios> usuariosConRol = usuariosRegistrados.get(rol);
-     		usuariosConRol.add(nuevoUsuario);
-     		usuariosRegistrados.put(rol, usuariosConRol);
-     	} 
-     	else 
-     	{
-     		// Si la lista no existe, crear una nueva lista y agregar el nuevo usuario
-     		List<Usuarios> nuevaListaUsuarios = new ArrayList<>();
-     		nuevaListaUsuarios.add(nuevoUsuario);
-     		usuariosRegistrados.put(rol, nuevaListaUsuarios);
-   		}
-	}
-	/**
-	 * Método getter de la lista de inversores
-	 * @return inversores
-	 * */
-	public List<Usuarios> getInversores()
-	{
-		return usuariosRegistrados.get("Inversor");
+		List<Piezas> piezasEnSolicitud = new LinkedList<Piezas>();
+		List<Usuarios> inversoresEnSolicitud = new LinkedList<Usuarios>();
+		Inventario inventario = new Inventario ();
+		this.registro = new RegistroInicio();
 	}
 	
-	/**
-	 * Método getter del Administrador de la galería
-	 * @return inversores
-	 * */
-	public Usuarios getAdministrador()
-	{
-		return usuariosRegistrados.get("Administrador").get(0);
+	//METODO PARA APROBAR NEUVOS USUARIOS
+	public void verficarNuevosUsuarios(int posicion, boolean aprobacion) {
+		
+		Usuarios usuario = registro.getSolicitud().get(posicion);
+		if(aprobacion == true) {
+			registro.agregarNuevosAprobados(usuario);
+		}else {
+			registro.rechazarSoliciutd(usuario);
+		}
 	}
 	
-	/**
-	 * Método getter del Operador de la galería
-	 * @return inversores
-	 * */
-	public Usuarios getOperador()
-	{
-		return usuariosRegistrados.get("Operador").get(0);
+	public RegistroInicio getRegistro() {
+		
+		return registro;
 	}
 	
-	/**
-	 * Método getter del Cajero de la galería
-	 * @return inversores
-	 * */
-	public Usuarios getCajero()
-	{
-		return usuariosRegistrados.get("Cajero").get(0);
+	public List<Usuarios> getUsuarios(){
+		
+		return registro.getAprobados();
 	}
+	
+	public List<Usuarios> getRegistrosUsuarios(){
+		
+		return registro.getSolicitud();
+	}
+	
+	public void cargarUsuarios() throws IOException {
+		
+		PersistenciaUsuariosJson cargador = CentralPersistencia.getPersistenciaUsuarios();
+		cargador.cargarTodosUsuarios(this);
+	}
+	
+	public void salvarUsuarios() throws IOException {
+		
+		PersistenciaUsuariosJson cargador = CentralPersistencia.getPersistenciaUsuarios();
+		cargador.salvarTdosoUsuarios(this);
+	}
+	
 	
 	/**
 	 * Método para asignarle el monto máximo de compra a un inversor. Se busca su login en los usuarios registrados y le asigna monto
 	 * @param login
 	 * @param contraseña
 	 * */
-	public void asignarMonto (String login, double montoMax)
+	public void asignarMonto(String login, double montoMax)
 	{
 		List<Usuarios> inversores = usuariosRegistrados.get("Inversor");
 		if (inversores != null)
@@ -169,7 +131,7 @@ public class Galeria {
 	 * Agregar inversor son solicitud de aumento de Monto a la lista de solicitudes.
 	 * @param Inversor
 	 * */
-	public void agregarSolicitudMonto (Inversor inversor)
+	public void agregarSolicitudMonto (Usuarios inversor)
 	{
 		inversoresEnSolicitud.add(inversor);
 	}
@@ -183,7 +145,7 @@ public class Galeria {
 	{
 		if (inversoresEnSolicitud != null)
 		{
-			Iterator<Inversor> iterator = inversoresEnSolicitud.iterator();
+			Iterator<Usuarios> iterator = inversoresEnSolicitud.iterator();
 			while (iterator.hasNext()) 
 			{
 				Usuarios inversor = iterator.next();
@@ -230,7 +192,7 @@ public class Galeria {
 				inventario.añadirPiezas(pieza);
 				if (pieza.getDeposito()== true)
 				{
-					inventario.añadirPiezasDeposito(pieza);
+					//inventario.añadirPiezasDeposito(pieza);
 					inventario.añadirPiezasVigente(pieza);
 				}
 				if (pieza.getLugar()=="Exhibición")
@@ -269,7 +231,7 @@ public class Galeria {
 		{
 			if (pieza.getDiasPrestamo()==0)
 			{
-				inventario.añadirPiezasDevueltas(pieza);
+				//inventario.añadirPiezasDevueltas(pieza);
 			}
 		}
 	}

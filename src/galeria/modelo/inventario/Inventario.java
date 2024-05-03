@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import galeria.modelo.usuarios.Operador;
+import galeria.modelo.usuarios.OperacionSubasta;
 
 /**
  * Esta clase almacena todas las piezas de la galería y las distribuye en diferentes listas para un manejo más ordenado
@@ -20,12 +20,12 @@ public class Inventario {
 	/**
 	 * Listas de las piezas dadas en deposito
 	 * */
-	private List<Piezas> piezasDeposito;
+	private List<ConsignacionPieza> piezasDeposito;
 	
 	/**
 	 * Listas de las piezas devueltas
 	 * */
-	private List<Piezas> piezasDevueltas;
+	private List<ConsignacionPieza> piezasDevueltas;
 	
 	/**
 	 * Listas de las piezas vigentes
@@ -60,7 +60,7 @@ public class Inventario {
 	/**
 	 * Atributo que nos da acceso a los métodos de operador
 	 * */
-	private Operador operador;
+	private OperacionSubasta operador;
 	
 	/**
 	 * Constructor que inicializa las listas con las piezas
@@ -68,8 +68,8 @@ public class Inventario {
 	public Inventario() {
 		
 		piezasTotales = new LinkedList<Piezas>();
-		piezasDeposito = new LinkedList<Piezas>();
-		piezasDevueltas = new LinkedList<Piezas>();
+		piezasDeposito = new LinkedList<ConsignacionPieza>();
+		piezasDevueltas = new LinkedList<ConsignacionPieza>();
 		piezasVigentes = new LinkedList<Piezas>();
 		piezasExhibir = new LinkedList<Piezas>();
 		piezasSubasta = new LinkedList<Piezas>();
@@ -100,7 +100,7 @@ public class Inventario {
 	 * Método que agrega una pieza a las piezas en deposito
 	 * @param piezas
 	 * */
-	public void añadirPiezasDeposito(Piezas piezas){
+	public void añadirPiezasDeposito(ConsignacionPieza piezas){
 		
 		piezasDeposito.add(piezas);
 	}
@@ -145,7 +145,7 @@ public class Inventario {
 	 * Método que agrega una pieza a las piezas devueltas y las elimina de las piezas en deposito
 	 * @param piezas
 	 * */
-	public void añadirPiezasDevueltas(Piezas piezas){
+	public void añadirPiezasDevueltas(ConsignacionPieza piezas){
 		
 		piezasDevueltas.add(piezas);
 		piezasDeposito.remove(piezas);
@@ -167,13 +167,9 @@ public class Inventario {
 	 * @param indicador
 	 * @param consignación
 	 * */
-	public void eliminarPiezas(Piezas piezas, String indicador, boolean consignacion) {
+	public void eliminarPiezas(Piezas piezas, String indicador) {
 		
 		piezasVigentes.remove(piezas);
-		
-		if(consignacion == true) {
-			piezasDeposito.remove(piezas);
-		}
 		
 		if (indicador.equals("Venta")) {
 			piezasVenta.remove(piezas);
@@ -184,6 +180,11 @@ public class Inventario {
 		}else if(indicador.equals("Bloqueada")) {
 			piezasBloqueadas.remove(piezas);
 		}
+	}
+	
+	public void eliminarConsignacion(ConsignacionPieza pieza) {
+		
+		this.piezasDeposito.remove(pieza);
 	}
 	
 	/**
@@ -208,7 +209,7 @@ public class Inventario {
 	 * Método getter de la lista de piezas en deposito
 	 * @return piezasDeposito
 	 * */
-	public List<Piezas> getDeposito(){
+	public List<ConsignacionPieza> getDeposito(){
 		return piezasDeposito;
 	}
 	
@@ -216,7 +217,7 @@ public class Inventario {
 	 * Método getter de la lista de piezas devueltas
 	 * @return piezasDevueltas
 	 * */
-	public List<Piezas> getDevueltas(){
+	public List<ConsignacionPieza> getDevueltas(){
 		return piezasDevueltas;
 	}
 	

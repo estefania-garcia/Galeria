@@ -1,0 +1,9 @@
+{
+  "Usuarios": [],
+  "Registros": [{
+    "usuario": "la",
+    "nombre": "Laura",
+    "rol": "Operador",
+    "contraseña": "lala"
+  }]
+}

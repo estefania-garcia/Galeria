@@ -6,19 +6,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import galeria.modelo.compras.*;
+import galeria.modelo.compras.OfertaSubasta;
+import galeria.modelo.compras.Ofertas;
 import galeria.modelo.controlador.Galeria;
 import galeria.modelo.inventario.Piezas;
 
-/**
- * Esta clase es una subclase de Usuarios que representa al Operador de la Galeria
- * */
-public class Operador extends Usuarios{
-
-	/**
-	 * Atributo que representa el tipo de usuario de la clase
-	 * */
-	public static final String OPERADOR = "Operador";
+public class OperacionSubasta {
+	
 	/**
 	 * Lista de las ofertas de la subasta que se van registrando en el mapa
 	 * */
@@ -43,21 +37,12 @@ public class Operador extends Usuarios{
 	 * @param rol
 	 * @param nombre
 	 * */
-	public Operador(String usuario, String contrasena, String rol, String nombre) {
+	public OperacionSubasta() {
 		
-		super(usuario, contrasena, rol, nombre);
 		listaOfertas = new LinkedList<>();
 		mapaSubastas = new HashMap<>();
 	}
 	
-	/**
-	 * Método getter que indica el tipo de Usuario
-	 * @return OPERADOR
-	 * */
-	@Override
-	public String getTipoUsuario() {
-		return OPERADOR;
-	}
 	/**
 	 * Método que agrega piezas que van a estar disponibles en la subasta
 	 * @param piezas

@@ -6,8 +6,7 @@ import java.util.List;
 
 import galeria.modelo.inventario.Inventario;
 import galeria.modelo.inventario.Piezas;
-import galeria.modelo.usuarios.Operador;
-
+import galeria.modelo.usuarios.OperacionSubasta;
 /**
  * Esta clase recolecta todas las ofertas hechas por los usuarios y las organiza según su tipo
  * Sirve como base para que las otras partes del sistema puedan tener un acceso ordenado a estas ofertas
@@ -18,7 +17,7 @@ public class CentroOfertas {
 	/**
 	 * Atributo que nos da acceso a la clase operador
 	 * */
-	private Operador operador;
+	private OperacionSubasta operador;
 	
 	/**
 	 * Atributo que nos da acceso a la clase inventario

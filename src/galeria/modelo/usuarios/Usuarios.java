@@ -1,9 +1,11 @@
 package galeria.modelo.usuarios;
 
+import org.json.JSONObject;
+
 /**
  * Esta clase modela los usuarios que van a ser parte de la galería y tiene 4 subclases, para cada tipo de usuario.
  * */
-public abstract class Usuarios {
+public class Usuarios {
 	
 	/**
 	 * Atributo que relaciona el login del usuario
@@ -21,10 +23,6 @@ public abstract class Usuarios {
 	 * Atributo que relaciona el nombre del usuario
 	 * */
 	private String nombre;
-	/**
-	 * Atributo que indica si el usuario fue aprobado o no
-	 * */
-	private boolean aprobacion;
 	
 	/**
 	 * Constructor que inicializa los atributos de la clase
@@ -40,14 +38,16 @@ public abstract class Usuarios {
 		this.contrasena = contrasena;
 		this.rol = rol;
 		this.nombre = nombre;
-		this.aprobacion = false;
 	}
 
 	/**
 	 * Método getter que indica el tipo de Usuario
 	 * @return tipo de usuario
 	 * */
-	public abstract String getTipoUsuario();
+	public String getTipoUsuario() {
+		
+		return rol;
+	}
 	
 	/**
 	 * Método getter que indica el login del Usuario
@@ -81,15 +81,22 @@ public abstract class Usuarios {
 		return nombre;
 	}
 	
-	/**
-	 * Método que aprueba el Usuario para que pueda estar activo en la galeria
-	 * @return nombre
-	 * */
-	public boolean darAprobacion(boolean approved) {
-	    if (usuario != null && nombre != null && contrasena != null && rol != null) {
-	        this.aprobacion = true;
-	    }
-	    return aprobacion;
+	public static Usuarios cargarDesdeJSON(JSONObject usuario) {
+		
+		String rol = usuario.getString("rol");
+		String usuario1 = usuario.getString("usuario");
+		String nombre = usuario.getString("nombre");
+		String contraseña = usuario.getString("contraseña");
+		return new Usuarios(usuario1, contraseña, rol, nombre);
 	}
-
+	
+	public JSONObject salvarEnJson() {
+		
+		JSONObject jobject = new JSONObject();
+		jobject.put("rol", this.rol);
+		jobject.put("nombre", this.nombre);
+		jobject.put("usuario", this.usuario);
+		jobject.put("contraseña", this.contrasena);
+		return jobject;
+	}
 }

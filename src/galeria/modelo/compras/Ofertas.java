@@ -1,7 +1,7 @@
 package galeria.modelo.compras;
 
 import galeria.modelo.inventario.Piezas;
-import galeria.modelo.usuarios.Inversor;
+import galeria.modelo.usuarios.HistorialInversor;
 import galeria.modelo.usuarios.Usuarios;
 
 /**
@@ -28,7 +28,7 @@ public abstract class Ofertas {
 	/**
 	 * Atributo que nos da acceso al monto maximo asignado al comprador
 	 * */
-	private Inversor comprador_monto;
+	private HistorialInversor comprador_monto;
 	
 	/**
 	 * Inicializa los atributos según los parámetros
