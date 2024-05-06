@@ -1,5 +1,6 @@
 package galeria.modelo.usuarios;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -39,7 +40,7 @@ public class OperacionSubasta {
 	 * */
 	public OperacionSubasta() {
 		
-		listaOfertas = new LinkedList<>();
+		listaOfertas = new ArrayList<Ofertas>();
 		mapaSubastas = new HashMap<>();
 	}
 	
@@ -48,6 +49,7 @@ public class OperacionSubasta {
 	 * @param piezas
 	 * */
 	public void agregarPiezasSubasta(Piezas piezas) {
+		
 		if(mapaSubastas.get(piezas) == null) {
 			mapaSubastas.put(piezas, listaOfertas);
 		}
@@ -58,6 +60,7 @@ public class OperacionSubasta {
 	 * @param ofertas
 	 * */
 	public void agregarOfertas(Ofertas ofertas){
+		
 		Iterator<Map.Entry<Piezas, List<Ofertas>>> iterador = mapaSubastas.entrySet().iterator();
     	while(iterador.hasNext()) {
     		Map.Entry<Piezas, List<Ofertas>> mapa = iterador.next();
@@ -77,11 +80,12 @@ public class OperacionSubasta {
 	 * Método que verifica cual fue la oferta mayor de una pieza en subasta y se la pasa a Galeria.
 	 * @param ofertas
 	 * */
-	public void obtenerMayorOferta(Piezas pieza) {
+	public void finalizarSubasta(Piezas pieza) {
 		List<Ofertas> lista = mapaSubastas.get(pieza);
 		Ofertas oferta_final = lista.get(lista.size()-1);
+		mapaSubastas.remove(pieza);
 		if(oferta_subastas.venderPieza() == true) {
-			galeria.validarOfertaFinal(oferta_final);
+			galeria.ofertasFinalesSubastas(oferta_final);
 		}
 	}
 }

@@ -1,5 +1,6 @@
 package galeria.modelo.usuarios;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -35,9 +36,12 @@ public class ProcesoCompra {
 	 * @param ofertas
 	 * */
 	public void agregarOfertas(Ofertas ofertas) {
+		
 		lista_ofertas.add(ofertas);
 		inventario.modificarEstado("Vendida", ofertas.getPiezas());
-		inventario.añadirPiezasVendidas(ofertas.getPiezas());
-		//inventario.eliminarPiezas(ofertas.getPiezas(), ofertas.getPiezas().getProposito(), ofertas.getPiezas().getDeposito());
+		ofertas.getPiezas().asignarVenta(true);
+		ofertas.getPiezas().modificarPropietario(ofertas.getComprador());
+		Date fechaVenta = new Date();
+		ofertas.getPiezas().asignarFechaVendida(fechaVenta);
 	}
 }

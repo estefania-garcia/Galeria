@@ -3,13 +3,17 @@ package galeria.modelo.controlador;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import galeria.modelo.compras.CentroOfertas;
 import galeria.modelo.compras.Ofertas;
+import galeria.modelo.inventario.ConsignacionPieza;
 import galeria.modelo.inventario.Inventario;
 import galeria.modelo.inventario.Piezas;
 import galeria.modelo.persistencia.CentralPersistencia;
+import galeria.modelo.persistencia.PersistenciaInventario;
 import galeria.modelo.persistencia.PersistenciaUsuariosJson;
 import galeria.modelo.usuarios.HistorialInversor;
 import galeria.modelo.usuarios.ProcesoCompra;
@@ -28,15 +32,12 @@ public class Galeria {
 	 * */
 	private Inventario inventario;
 	
+	private CentroOfertas centroOfertas;
+	
 	/**
 	 * Atributo que nos da acceso a la clase Inversor
 	 * */
 	private HistorialInversor inversor_p;
-	
-	/**
-	 * Atributo que nos da acceso a la clase Cajero
-	 * */
-	private ProcesoCompra cajero_p;
 	
 	private RegistroInicio registro;
 	
@@ -55,31 +56,30 @@ public class Galeria {
 	 * */
 	private List<Piezas> piezasEnSolicitud;
 	
+	private List<Ofertas> listaOfertasFinalesSubastas;
+	
+	private ProcesoCompra cajero;
+	
 	/**
 	 * Constructor que inicializa la lista de usuarios registrados
 	 * */
 	public Galeria(){
 		
-		List<Piezas> piezasEnSolicitud = new LinkedList<Piezas>();
-		List<Usuarios> inversoresEnSolicitud = new LinkedList<Usuarios>();
-		Inventario inventario = new Inventario ();
+		this.listaOfertasFinalesSubastas = new ArrayList<>();
+		this.inventario = new Inventario ();
 		this.registro = new RegistroInicio();
-	}
-	
-	//METODO PARA APROBAR NEUVOS USUARIOS
-	public void verficarNuevosUsuarios(int posicion, boolean aprobacion) {
-		
-		Usuarios usuario = registro.getSolicitud().get(posicion);
-		if(aprobacion == true) {
-			registro.agregarNuevosAprobados(usuario);
-		}else {
-			registro.rechazarSoliciutd(usuario);
-		}
+		this.cajero = new ProcesoCompra();
+		this.centroOfertas = new CentroOfertas();
 	}
 	
 	public RegistroInicio getRegistro() {
 		
 		return registro;
+	}
+	
+	public Inventario getInventario() {
+		
+		return inventario;
 	}
 	
 	public List<Usuarios> getUsuarios(){
@@ -104,153 +104,56 @@ public class Galeria {
 		cargador.salvarTdosoUsuarios(this);
 	}
 	
-	
-	/**
-	 * Método para asignarle el monto máximo de compra a un inversor. Se busca su login en los usuarios registrados y le asigna monto
-	 * @param login
-	 * @param contraseña
-	 * */
-	public void asignarMonto(String login, double montoMax)
-	{
-		List<Usuarios> inversores = usuariosRegistrados.get("Inversor");
-		if (inversores != null)
-		{
-			Iterator<Usuarios> iterator = inversores.iterator();
-			while (iterator.hasNext()) 
-			{
-				Usuarios inversor = iterator.next();
-				if (inversor.getUsuario().equals(login))
-				{
-					inversor_p.modificarMontoMaximo(montoMax);
-				}
-			}
-		}
+	public List<HistorialInversor> getListaHistorial(){
+		
+		return registro.getListaHistorial();
 	}
 	
-	/**
-	 * Agregar inversor son solicitud de aumento de Monto a la lista de solicitudes.
-	 * @param Inversor
-	 * */
-	public void agregarSolicitudMonto (Usuarios inversor)
-	{
-		inversoresEnSolicitud.add(inversor);
+	public List<ConsignacionPieza> getPiezasTotales(){
+		
+		return inventario.getTotales();
 	}
 	
-	/**
-	 * Método para aumentarle el monto máximo de compra a un inversor. Se busca su login en los inversores con solicitud y le asigna monto
-	 * @param monto
-	 * @param login
-	 * */
-	public void verificarAumentoMonto (double monto, String login)
-	{
-		if (inversoresEnSolicitud != null)
-		{
-			Iterator<Usuarios> iterator = inversoresEnSolicitud.iterator();
-			while (iterator.hasNext()) 
-			{
-				Usuarios inversor = iterator.next();
-				if (inversor.getUsuario().equals(login))
-				{
-					inversor_p.modificarMontoMaximo(monto);
-				}
-			}
-		}
-	}
-	/**
-	 * Agrega una pieza creada por un Inversor a la lista en solicitud para ser aprobada.
-	 * @param pieza
-	 * */
-	public void agregarPiezaSolicitud (Piezas pieza)
-	{
-		piezasEnSolicitud.add(pieza);
+	public void cargarInventario() throws IOException {
+		
+		PersistenciaInventario cargador = CentralPersistencia.getPersistenciaInventario();
+		cargador.cargarTodasPiezas(this);
 	}
 	
-	/**
-	 * Verifica que las piezas en solicitud no se encuentren actualmente en inventario, y se agregan a las listas correspondientes de inventario.
-	 * Se aprueba el atributo de creación de las piezas.
-	 * @param n.a.
-	 * */
-	public void verificarPieza ()
-	{
-		Iterator<Piezas> iterator = piezasEnSolicitud.iterator();
-		while (iterator.hasNext()) 
-		{
-			Piezas pieza = iterator.next();
-			boolean encontrada = false;
-			Iterator<Piezas> inventarioTotal = inventario.getTotale().iterator();
-			while (inventarioTotal.hasNext()) 
-			{
-				Piezas piezaInventario = iterator.next();
-				if (pieza.equals(piezaInventario))
-				{
-					encontrada = true;
-					break;
-				}	
-			}	
-			if (encontrada == false)
-			{
-				inventario.añadirPiezas(pieza);
-				if (pieza.getDeposito()== true)
-				{
-					//inventario.añadirPiezasDeposito(pieza);
-					inventario.añadirPiezasVigente(pieza);
-				}
-				if (pieza.getLugar()=="Exhibición")
-				{
-					inventario.añadirPiezasExhibir(pieza);
-				}
-				else if (pieza.getLugar()=="Subasta")
-				{
-					inventario.añadirPiezasSubasta(pieza);
-				}
-				else if (pieza.getLugar()=="Venta")
-				{
-					inventario.añadirPiezasVenta(pieza);
-				}
-				pieza.actualizarVerficacionPieza(true);
-				
-			}
-		}	
-	}
-	/**
-	 * Cambiar el lugar de la pieza, esta puede estar en la bodega o exhibida
-	 * @param ubicacion
-	 * @param pieza
-	 * */
-	public void cambiarUbicacionPieza (Piezas pieza, String ubicacion)
-	{
-		pieza.asignarLugar(ubicacion);
-	}
-	/**
-	 * Hacer la devolución de una pieza que haya sido por "consignación" y sus días ya sean 0.
-	 * @param pieza
-	 * */
-	public void devolverPieza (Piezas pieza)
-	{
-		if (pieza.getDeposito()==true)
-		{
-			if (pieza.getDiasPrestamo()==0)
-			{
-				//inventario.añadirPiezasDevueltas(pieza);
-			}
-		}
+	public void salvarInventario() throws IOException {
+		
+		PersistenciaInventario cargador = CentralPersistencia.getPersistenciaInventario();
+		cargador.salvarTodasPiezas(this);
 	}
 	
-	/**
-	 * Pasa la oferta final a cajero para hacer efectiva la venta.
-	 * @param oferta
-	 * */
-	public void validarOfertaFinal (Ofertas oferta)
-	{
-		cajero_p.agregarOfertas(oferta);
+	public List<Ofertas> ofertasFinalesSubastas(Ofertas oferta){
+		
+		listaOfertasFinalesSubastas.add(oferta);
+		return listaOfertasFinalesSubastas;
 	}
 	
-	/**
-	 * Asignar el número de días que la pieza fue dada en prestamo. Si es propiedad de la galería, su valor será siempre 0
-	 * @param dias
-	 * */
-	public void actualizarDias (Piezas pieza, int dias)
-	{
-		pieza.actualizarDiasPrestamos(dias);
+	public List<Ofertas> getOfertasFinalesSubasta(){
+		
+		return listaOfertasFinalesSubastas;
+	}
+	
+	public void rechazarOfertasFinalesSubasta(Ofertas oferta) {
+		
+		listaOfertasFinalesSubastas.remove(oferta);
+	}
+	
+	public ProcesoCompra getCajero() {
+		
+		return cajero;
+	}
+	
+	public List<Ofertas> getOfertasSubasta(){
+		
+		return centroOfertas.getOfertasSubasta();
+	}
+	
+	public List<Ofertas> getOfertasVentas(){
+		
+		return centroOfertas.getOfertaVenta();
 	}
 }

@@ -13,15 +13,13 @@ public class ConsolaInversor {
 
         while (!salir) {
             System.out.println("Bienvenido al menú del operador de la galeria:");
-            System.out.println("1. ");
-            System.out.println("2. ");
-            System.out.println("3. ");
-            System.out.println("4. ");
-            System.out.println("5. ");
-            System.out.println("6. ");
-            System.out.println("7. ");
-            System.out.println("8. ");
-            System.out.println("9. ");
+            System.out.println("1. Crear una nueva pieza");
+            System.out.println("2. Ofertar por pieza en subasta");
+            System.out.println("3. Ofertar por pieza en venta");
+            System.out.println("4. Consultar el historial de una pieza");
+            System.out.println("5. Consultar historial de un autor");
+            System.out.println("6. Consultar traza de cuenta");
+            System.out.println("7. Solicitar ampliar monto maximo de compras");
             System.out.println("10. Volver al inicio");
             System.out.println("0. Salir");
             System.out.print("Elije una opción: ");

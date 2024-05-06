@@ -1,5 +1,7 @@
 package galeria.modelo.inventario;
 
+import java.util.Date;
+
 import galeria.modelo.compras.GaleriaOferta;
 import galeria.modelo.usuarios.Usuarios;
 
@@ -13,15 +15,17 @@ public abstract class Piezas {
 	 * */
 	private String titulo;
 	
+	private boolean vigencia = false;
+	
+	private boolean aprobacion = false;
+	
+	private boolean vendida = false;
+	
+	private Date fecha_vendida;
 	/**
 	 * Atributo que relacion el lugar de creación de la pieza
 	 * */
-	private String lugar_creacion;
-	
-	/**
-	 * Atributo que relacion el año de creación de la pieza
-	 * */
-	private String año;
+	private String año_lugar_creacion;
 	
 	/**
 	 * Atributo que relacion el lugar en el que se encuentra la pieza dentro de la galería
@@ -54,16 +58,6 @@ public abstract class Piezas {
 	private String estado;
 	
 	/**
-	 * Atributo que relacion el número de días que fue dado en consignación de la pieza. Si esta es propiedad de la galería, este atributo será 0
-	 * */
-	private int dias;
-	
-	/**
-	 * Atributo que indica si la pieza fue admitida o no
-	 * */
-	private boolean creacion;
-	
-	/**
 	 * Atributo que indica el proposito de la pieza, si es para vender, exhibir o subastar
 	 * */
 	private String proposito;
@@ -78,16 +72,50 @@ public abstract class Piezas {
 	 * @param propietario
 	 * @param proposito
 	 * */
-	public Piezas(String titulo, String proposito, String lugar_creacion, String año, String autores, boolean deposito, GaleriaOferta galeriaOferta, Usuarios propietario) {
+	public Piezas(String titulo, String proposito, String año_lugar_creacion, String autores, boolean deposito, GaleriaOferta galeriaOferta, Usuarios propietario) {
 		
 		this.titulo = titulo;
-		this.año = año;
 		this.autores = autores;
 		this.deposito = deposito;
 		this.galeriaOferta = galeriaOferta;
 		this.propietario = propietario;
-		this.lugar_creacion = lugar_creacion;
+		this.año_lugar_creacion = año_lugar_creacion;
 		this.proposito = proposito;
+	}
+	
+	public void asignarVigenica(boolean vigente) {
+		
+		this.vigencia = vigente;
+	}
+	
+	public boolean getVigencia() {
+		
+		return vigencia;
+	}
+	
+	public void asignarVenta(boolean venta) {
+		
+		this.vendida = venta;
+	}
+	
+	public boolean getVenta() {
+		
+		return vendida;
+	}
+	
+	public void asignarAprobada(boolean aprobacion) {
+		
+		this.aprobacion = aprobacion;
+	}
+	
+	public boolean getAprobada() {
+		
+		return aprobacion;
+	}
+	
+	public void modificarPropietario(Usuarios nuevo) {
+		
+		this.propietario = nuevo;
 	}
 	
 	/**
@@ -116,7 +144,7 @@ public abstract class Piezas {
 	 * @return autores
 	 * */
 	public String getLugarCreacion() {
-		return lugar_creacion;	
+		return año_lugar_creacion;	
 	}
 	
 	/**
@@ -144,19 +172,21 @@ public abstract class Piezas {
 	}
 	
 	/**
-	 * Método getter que indica el año de creación
-	 * @return año
-	 * */
-	public String getAño() {
-		return año;
-	}
-	
-	/**
 	 * Método getter que indica el tipo de oferta según su proposito
 	 * @return galeriaOferta
 	 * */
 	public GaleriaOferta getGaleriaOferta() {
 		return galeriaOferta;
+	}
+	
+	public Date getFechaVendida() {
+		
+		return fecha_vendida;
+	}
+	
+	public void asignarFechaVendida(Date fecha) {
+		
+		this.fecha_vendida = fecha;
 	}
 	
 	/**
@@ -193,41 +223,5 @@ public abstract class Piezas {
 	 * */
 	public String getEstado() {
 		return estado;
-	}
-	
-	/**
-	 * Método asigna el número de días que la pieza fue dada en prestamo. Si es propiedad de la galería, su valor será siempre 0
-	 * @param dias
-	 * @return dias
-	 * */
-	public int actualizarDiasPrestamos(int dias) {
-		this.dias = dias;
-		return this.dias;
-	}
-	
-	/**
-	 * Método getter que indica los dias de prestamo
-	 * @return dias
-	 * */
-	public int getDiasPrestamo() {
-		return dias;
-	}
-	
-	/**
-	 * Método que indica si la pieza fue aprobada por el administrador
-	 * @param crear
-	 * @return creacion
-	 * */
-	public boolean actualizarVerficacionPieza(boolean crear) {
-		this.creacion = crear;
-		return this.creacion;
-	}
-	
-	/**
-	 * Método getter que indica la aprobación de la pieza
-	 * @return creacion
-	 * */
-	public boolean getCreacion() {
-		return creacion;
 	}
 }

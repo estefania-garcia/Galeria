@@ -3,6 +3,8 @@ package galeria.modelo.usuarios;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.json.JSONObject;
+
 import galeria.modelo.compras.GaleriaOferta;
 import galeria.modelo.controlador.Galeria;
 import galeria.modelo.inventario.ArteDigital;
@@ -78,6 +80,9 @@ public class HistorialInversor implements CrearPiezas{
 		pizasPropias.add(piezas);
 	}
 	
+	/**
+	 * Método getter del usuario dueño
+	 * */
 	public Usuarios getInversor() {
 		
 		return inversor;
@@ -91,18 +96,9 @@ public class HistorialInversor implements CrearPiezas{
 	 * @return GaleriOferta
 	 * */
 	public GaleriaOferta crearOfertaGaleria(int monto, int montoMinimo, String proposito) {
-		
-		if(proposito.equals("Subasta")) {
-			GaleriaOferta oferta = new GaleriaOferta(monto, montoMinimo);
-			return oferta;
-		}else if(proposito.equals("Vender")) {
-			GaleriaOferta oferta = new GaleriaOferta(monto);
-			return oferta;
-		}else if(proposito.equals("Exhibir")) {
-			GaleriaOferta oferta = new GaleriaOferta();
-			return oferta;
-		}
-		return null;
+
+		GaleriaOferta oferta = new GaleriaOferta(monto, montoMinimo);
+		return oferta;
 	}
 	
 	/**

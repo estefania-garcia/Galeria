@@ -48,12 +48,13 @@ public class CentroOfertas {
 	 * @return
 	 * */
 	public void agregarOfertas(Ofertas oferta) {
+		
 		if(oferta.tipoOferta().equals("Oferta Subasta")){
 			ofertasSubasta.add(oferta);
-		}else if(oferta.getPiezas().getEstado() != "Bloqueada"){
+		}
+		else if(oferta.tipoOferta().equals("Oferta Venta") && oferta.getPiezas().getEstado() != "Bloqueada"){
 			Piezas pieza = oferta.getPiezas();
 			inventario.modificarEstado("Bloqueada", pieza);
-			inventario.añadirPiezasBloqueadas(pieza);
 			ofertasVenta.add(oferta);
 		}
 	}

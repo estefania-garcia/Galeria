@@ -1,9 +1,21 @@
 {
-  "Usuarios": [],
-  "Registros": [{
-    "usuario": "la",
-    "nombre": "Laura",
-    "rol": "Operador",
-    "contraseña": "lala"
-  }]
+  "Usuarios": [
+    {
+      "usuario": "Stefania",
+      "nombre": "Estefania",
+      "rol": "Administrador",
+      "contraseña": "BTfr1997!"
+    },
+    {
+      "usuario": "Isabel",
+      "nombre": "Laura",
+      "rol": "Inversor",
+      "contraseña": "20005!"
+    }
+  ],
+  "HistorialesInversor": [{
+    "inversor": "Isabel",
+    "monto": 5000000
+  }],
+  "Registros": []
 }

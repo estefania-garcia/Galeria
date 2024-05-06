@@ -30,17 +30,36 @@ public class ConsolaInicio {
 		}
 	}
 	
+	public void persistenciaCargarInventario() {
+		
+        try {
+			galeria.cargarInventario();;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void persistenciaSalvarInventario() {
+		
+        try {
+			galeria.salvarInventario();;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public static void main(String[] args) {
 		
 		ConsolaInicio consola = new ConsolaInicio();
+		RegistroInicio sesion = galeria.getRegistro();
 		consola.persistenciaCargar();
 		
         Scanner scanner = new Scanner(System.in);
         Scanner scanner2 = new Scanner(System.in);
         boolean salir = false;
         int opcion;
-        
-        RegistroInicio sesion = galeria.getRegistro();
 
         while (!salir) {
         	System.out.print("\n");
@@ -68,10 +87,11 @@ public class ConsolaInicio {
                     
                     boolean comprobacion = sesion.inicioSesion(rol, usuario, contraseña); 
                     if(comprobacion == true) {
+                    	consola.persistenciaSalvar();
                     	if(rol.equals("Administrador")) {
                     		
                     		System.out.print("\n");
-                    		ConsolaAdministrador.principal(galeria);
+                    		ConsolaAdministrador.principal(galeria, consola);
                     	}
                     	else if(rol.equals("Cajero")) {
                     		
@@ -112,10 +132,12 @@ public class ConsolaInicio {
                     
                     boolean comprobar = sesion.crearNuevoUsuario(rolR, nombre, contraseñaR, usuarioR);
                     if(comprobar == true && !rolR.equals("Administrador")) {
+                    	consola.persistenciaSalvar();
                     	System.out.print("\n");
                     	System.out.println("Registro exitoso. Debe esperar la aprobación del administrador.");
                     }
                     else if(comprobar == true && rolR.equals("Administrador")) {
+                    	consola.persistenciaSalvar();
                     	System.out.print("\n");
                     	System.out.println("Registro exitoso. Bienvenido administrador de este chuzo.");
                     }

@@ -7,25 +7,100 @@ import java.util.List;
 
 public class RegistroInicio {
 	
-	//Lista de los usuarios que aun esperan aprobacion
+	/**
+	 * Lista que guarda los nuevos usuarios, es decir, aquellos que se han registrado pero no han sido aprobados
+	 * */
 	private List<Usuarios> listaNuevosUsuarios;
 	
-	//Lista de los usuarios que ya fueron aprobados
+	/**
+	 * Lista que guarda los usuarios aprobados por el administrador
+	 * */
 	private List<Usuarios> listaUsuariosRegistrados;
 	
+	/**
+	 * Lista que guarda todos los historiales de todos los usuarios de tipo "Inversor"
+	 * */
+	private List<HistorialInversor> listaHistorialesInversores;
+	
+	/**
+	 * Atributo que contiene la única instancia de la clase encargada de llevar el trazo de las subastas. Manejado por el "Operador"
+	 * */
+	private OperacionSubasta subasta;
+	
+	/**
+	 * Atributo que contiene la única instancia de la clase encargada de llevar el trazo de las ofertas finales. Manejado por el "Cajero"
+	 * */
+	private ProcesoCompra caja;
+	
+	/**
+	 * Método contructor. Inicializa las dos listas de los usuarios y la lista de los historiales de los inversores
+	 * */
 	public RegistroInicio() {
 		
 		this.listaNuevosUsuarios = new ArrayList<Usuarios>();
-		this.listaUsuariosRegistrados = new LinkedList<Usuarios>();
+		this.listaUsuariosRegistrados = new ArrayList<Usuarios>();
+		this.listaHistorialesInversores = new ArrayList<HistorialInversor>();
 	}
 	
-	//FUNCIONA
+	/**
+	 * Método getter de la lista de los usuarios sin aprobación pero registrados
+	 * */
 	public List<Usuarios> getSolicitud(){
 		
 		return listaNuevosUsuarios;
 	}
 	
-	//FUNCIONA (Crea nuevos usarios y los manda a solicitud)
+	/**
+	 * Método getter de la lista de los usuarios aprobados
+	 * */
+	public List<Usuarios> getAprobados(){
+		
+		return listaUsuariosRegistrados;
+	}
+	
+	/**
+	 * Método que agrega a la lista de usuarios aprobados el usuario entrado por parametro
+	 * */
+	public void agregarNuevosAprobados(Usuarios usuario) {
+		
+		boolean aprobar = true;
+		int contador = 0;
+		for(Usuarios usu : listaUsuariosRegistrados) {
+			if(usu.getRol().equals(usuario.getRol()) && !usuario.getRol().equals("Inversor")) {
+				contador++;
+			}
+			if(usu.getRol().equals(usuario.getRol()) && usu.getUsuario().equals(usuario.getUsuario()) && usu.getContrasena().equals(usuario.getContrasena()) && usu.getNombre().equals(usuario.getNombre())) {
+				aprobar = false;
+			}
+		}
+		if(aprobar == true) {
+			if(contador == 0 && !usuario.getRol().equals("Inversor")) {
+				listaUsuariosRegistrados.add(usuario);
+			}
+			else if(usuario.getRol().equals("Inversor")) {
+				listaUsuariosRegistrados.add(usuario);
+			}
+		}
+	}
+	
+	/**
+	 * Método que elimina de la lista de usuarios registrados el usuario entrado por parametro
+	 * */		
+	public void rechazarSolicitud() {
+			
+		Iterator<Usuarios> iterador = listaUsuariosRegistrados.iterator();
+	    while(iterador.hasNext()) {
+	   		Usuarios ingreso = iterador.next();
+	   		if(listaNuevosUsuarios.contains(ingreso)) {
+	   			listaNuevosUsuarios.remove(ingreso);
+	   		}
+	    }
+	}
+	
+	/**
+	 * Este método verifica que el nuevo usuario registrado sea válido y no este repetido 
+	 * Este método registra al primer administrador que entra como usuario aprobado directamente
+	 * */
 	public boolean crearNuevoUsuario(String rol, String nombre, String contraseña, String usuario) {
 		
 		Usuarios nuevo = new Usuarios(usuario, contraseña, rol, nombre);
@@ -73,10 +148,22 @@ public class RegistroInicio {
 		}else {
 			listaNuevosUsuarios.add(nuevo);
 		}
+		if(aprobado == false) {
+			listaNuevosUsuarios.remove(nuevo);
+		}
+		Iterator<Usuarios> iterador = listaUsuariosRegistrados.iterator();
+	    while(iterador.hasNext()) {
+	   		Usuarios ingreso = iterador.next();
+	   		if(listaNuevosUsuarios.contains(ingreso)) {
+	   			listaNuevosUsuarios.remove(ingreso);
+	   		}
+	    }
 		return aprobado;
 	}
 	
-	//FUNCIONA (Verifica el inicio de sesion)
+	/**
+	 * Este método verifica que el usuario que intenta iniciar sesión sea válido, es decir, que se encuentre en la lista de los usuarios aprobados
+	 * */
 	public boolean inicioSesion(String rol, String usuario, String contraseña) {
 			
 		Iterator<Usuarios> iterador = listaUsuariosRegistrados.iterator();
@@ -84,62 +171,19 @@ public class RegistroInicio {
 	   		Usuarios ingreso = iterador.next();
 	   		if(ingreso.getRol().equals(rol) && ingreso.getUsuario().equals(usuario) && ingreso.getContrasena().equals(contraseña) ) {
 	   			return true;
-	   		}else {
-    			return false;
-	    	}
+	   		}
 	    }
 		return false;
 	}
 	
-	//A ESPERA DE APROBACION COMPLETA
-	public boolean agregarNuevosAprobados(Usuarios usuario) {
-		
-		Iterator<Usuarios> iterador = listaUsuariosRegistrados.iterator();
-    	while(iterador.hasNext()) {
-    		Usuarios ingreso = iterador.next();
-    		if(ingreso.getRol().equals(usuario.getRol()) && ingreso.getUsuario().equals(usuario.getUsuario()) && ingreso.getContrasena().equals(usuario.getContrasena()) ) {
-    			return false;
-    		}
-    		else if(ingreso.getUsuario().equals(usuario.getUsuario())) {
-    			return false;
-    		}
-    		else if(ingreso.getRol().equals("Administrador") && usuario.getRol().equals("Administrador")) {
-    			return false;
-    		}
-    		else if(ingreso.getRol().equals("Cajero") && usuario.getRol().equals("Cajero")) {
-    			return false;
-    		}
-    		else if(ingreso.getRol().equals("Operador") && usuario.getRol().equals("Operador")) {
-    			return false;
-    		}
-    		else {
-    			listaUsuariosRegistrados.add(usuario);
-    			listaNuevosUsuarios.remove(usuario);
-    			return true;
-    		}
-    	}
-    	if(listaUsuariosRegistrados.size() == 0) {
-    		
-    		listaUsuariosRegistrados.add(usuario);
-    		listaNuevosUsuarios.remove(usuario);
-			return true;
-    	}
-		return true;
-	}
-	
-	public void rechazarSoliciutd(Usuarios usuario) {
-		
-		listaNuevosUsuarios.remove(usuario);
-	}
+	public void crearHistoriales(Usuarios usuario, double monto) {
 
-	public void agregarRegistrados(Usuarios usuario) {
-		
-		listaUsuariosRegistrados.add(usuario);
-		listaNuevosUsuarios.remove(usuario);
+		HistorialInversor nombre = new HistorialInversor(monto, usuario);
+		listaHistorialesInversores.add(nombre) ;
 	}
 	
-	public List<Usuarios> getAprobados(){
+	public List<HistorialInversor> getListaHistorial(){
 		
-		return listaUsuariosRegistrados;
+		return listaHistorialesInversores;
 	}
 }

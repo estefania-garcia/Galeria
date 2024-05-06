@@ -1,5 +1,7 @@
 package galeria.modelo.inventario;
 
+import org.json.JSONObject;
+
 import galeria.modelo.compras.GaleriaOferta;
 import galeria.modelo.usuarios.Usuarios;
 
@@ -17,23 +19,8 @@ public class ArteVisual extends Piezas{
 	/**
 	 * Atributo que relacion el ancho de la pieza
 	 * */
-	private double ancho;
-	
-	/**
-	 * Atributo que relacion el largo de la pieza
-	 * */
-	private double largo;
-	
-	/**
-	 * Atributo que relacion el tipo de arte de la pieza
-	 * */
-	private String tipoArte;
-	
-	/**
-	 * Atributo que relacion el material de la pieza
-	 * */
-	private String material;
-	
+	private String anchoxlargo;
+
 	/**
 	 * Atributo que relacion la técnica de la pieza
 	 * */
@@ -47,13 +34,10 @@ public class ArteVisual extends Piezas{
 	 * @param tecnica
 	 * @param tipoArte
 	 * */
-	public ArteVisual(String titulo, String proposito, String lugar_creacion, boolean deposito, GaleriaOferta galeriaOferta, Usuarios propietario, String año, String autores, double ancho, double largo, String tipoArte, String material, String tecnica) {
-		super(titulo, proposito, lugar_creacion, año, autores, deposito, galeriaOferta, propietario);
-		this.ancho = ancho;
-		this.largo = largo;
-		this.material = material;
+	public ArteVisual(String titulo, String proposito, String lugar_creacion, boolean deposito, GaleriaOferta galeriaOferta, Usuarios propietario, String autores, String anchoxlargo, String tecnica) {
+		super(titulo, proposito, lugar_creacion, autores, deposito, galeriaOferta, propietario);
+		this.anchoxlargo = anchoxlargo;
 		this.tecnica = tecnica;
-		this.tipoArte = tipoArte;
 	}
 	
 	/**
@@ -69,32 +53,8 @@ public class ArteVisual extends Piezas{
 	 * Método getter que indica el ancho de la pieza
 	 * @return ancho
 	 * */
-	public double getAncho() {
-		return ancho;
-	}
-	
-	/**
-	 * Método getter que indica el largo de la pieza
-	 * @return largo
-	 * */
-	public double getLargo() {
-		return largo;
-	}
-	
-	/**
-	 * Método getter que indica el tipo de arte de la pieza
-	 * @return tipoArte
-	 * */
-	public String getTipoArte() {
-		return tipoArte;
-	}
-	
-	/**
-	 * Método getter que indica el material de la pieza
-	 * @return material
-	 * */
-	public String getMaterial() {
-		return material;
+	public String getAncho() {
+		return anchoxlargo;
 	}
 	
 	/**

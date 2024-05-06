@@ -29,8 +29,8 @@ public class ArteDigital extends Piezas{
 	 * @param tipoArchivo
 	 * @param tipoArte
 	 * */
-	public ArteDigital(String titulo, String proposito, String lugar_creacion, String año, boolean deposito, GaleriaOferta galeriaOferta, Usuarios propietario, String autores, String tipoArte, String tipoArchivo) {
-		super(titulo, proposito, lugar_creacion, año, autores, deposito, galeriaOferta, propietario);
+	public ArteDigital(String titulo, String proposito, String lugar_creacion, boolean deposito, GaleriaOferta galeriaOferta, Usuarios propietario, String autores, String tipoArte, String tipoArchivo) {
+		super(titulo, proposito, lugar_creacion, autores, deposito, galeriaOferta, propietario);
 		this.tipoArchivo = tipoArchivo;
 		this.tipoArte = tipoArte;
 	}

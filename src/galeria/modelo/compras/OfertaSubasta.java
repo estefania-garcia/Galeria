@@ -41,15 +41,6 @@ public class OfertaSubasta extends Ofertas{
 	}
 	
 	/**
-	 * Indica el tipo de oferta que representa la clase
-	 * @return OFERTAVENTA 
-	 * */
-	@Override
-	public String tipoOferta() {
-		return OFERTASUBASTA;
-	}
-	
-	/**
 	 * Verifica que el monto que el comprador pretende pagar por la pieza sea mayor o igual al precio minimo asignado a la pieza para poder ser vendida
 	 * @return retorna un booleano que nos indica si esta condición se cumple o no
 	 * */
@@ -59,5 +50,14 @@ public class OfertaSubasta extends Ofertas{
 		}else {
 			return false;
 		}
+	}
+
+	/**
+	 * Indica el tipo de oferta que representa la clase
+	 * @return OFERTAVENTA 
+	 * */
+	@Override
+	public String tipoOferta() {
+		return OFERTASUBASTA;
 	}
 }

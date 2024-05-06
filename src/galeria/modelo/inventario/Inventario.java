@@ -1,5 +1,6 @@
 package galeria.modelo.inventario;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -12,10 +13,12 @@ import galeria.modelo.usuarios.OperacionSubasta;
 
 public class Inventario {
 	
+	private List<ConsignacionPieza> piezasSolicitud;
+	
 	/**
 	 * Listas de las piezas totales
 	 * */
-	private List<Piezas> piezasTotales;
+	private List<ConsignacionPieza> piezasTotales;
 	
 	/**
 	 * Listas de las piezas dadas en deposito
@@ -67,33 +70,78 @@ public class Inventario {
 	 * */
 	public Inventario() {
 		
-		piezasTotales = new LinkedList<Piezas>();
+		this.operador = new OperacionSubasta();
+		piezasTotales = new LinkedList<ConsignacionPieza>();
 		piezasDeposito = new LinkedList<ConsignacionPieza>();
-		piezasDevueltas = new LinkedList<ConsignacionPieza>();
 		piezasVigentes = new LinkedList<Piezas>();
+		piezasDevueltas = new LinkedList<ConsignacionPieza>();
 		piezasExhibir = new LinkedList<Piezas>();
 		piezasSubasta = new LinkedList<Piezas>();
 		piezasVenta = new LinkedList<Piezas>();
 		piezasVendidas = new LinkedList<Piezas>();
+		piezasSolicitud = new ArrayList<ConsignacionPieza>();
 		piezasBloqueadas = new LinkedList<Piezas>();
 	}
 	
-	/**
-	 * Método que agrega una pieza a las piezas totales
-	 * @param piezas
-	 * */
-	public void añadirPiezas(Piezas piezas){
-		
-		piezasTotales.add(piezas);
+	public void añadirPiezasTodas(Piezas pieza) {
+
+		if(pieza.getVigencia() == true) {
+			piezasVigentes.add(pieza);
+			if(pieza.getProposito().equals("Exhibir")) {
+				piezasExhibir.add(pieza);
+			}
+			else if(pieza.getProposito().equals("Subastar")) {
+				if(pieza.getVenta() == true) {
+					piezasVendidas.add(pieza);
+					piezasSubasta.remove(pieza);
+				}else {
+					piezasSubasta.add(pieza);
+				}
+			}
+			else if(pieza.getProposito().equals("Vender")) {
+				if(pieza.getEstado().equals("Bloqueada")) {
+					piezasBloqueadas.add(pieza);
+					piezasVenta.remove(pieza);
+				}
+				else if(pieza.getVenta() == true) {
+					piezasVendidas.add(pieza);
+					piezasBloqueadas.remove(pieza);
+					piezasVenta.remove(pieza);
+				}else {
+					piezasBloqueadas.remove(pieza);
+					piezasVenta.add(pieza);
+				}
+			}
+		}else {
+			piezasVigentes.remove(pieza);
+			if(pieza.getProposito().equals("Exhibir")) {
+				piezasExhibir.remove(pieza);
+			}
+			else if(pieza.getProposito().equals("Subastar")) {
+				piezasSubasta.remove(pieza);
+			}
+			else if(pieza.getProposito().equals("Vender")) {
+				if(pieza.getEstado().equals("Bloqueada")) {
+					piezasBloqueadas.remove(pieza);
+					piezasVenta.remove(pieza);
+				}else {
+					piezasVenta.remove(pieza);
+				}
+			}
+		}
 	}
 	
-	/**
-	 * Método que agrega una pieza a las piezas vigentes
-	 * @param piezas
-	 * */
-	public void añadirPiezasVigente(Piezas piezas){
+	public void añadirPiezasSolicitud(ConsignacionPieza piezas){
 		
-		piezasVigentes.add(piezas);
+		if(!piezasTotales.contains(piezas)) {
+			piezasTotales.add(piezas);
+			if(piezas.getPieza().getAprobada() == true) {
+				piezasSolicitud.remove(piezas);
+				añadirPiezasDeposito(piezas);
+			}else {
+				piezasSolicitud.add(piezas);
+			}
+		}
 	}
 	
 	/**
@@ -101,90 +149,20 @@ public class Inventario {
 	 * @param piezas
 	 * */
 	public void añadirPiezasDeposito(ConsignacionPieza piezas){
-		
-		piezasDeposito.add(piezas);
-	}
-	
-	/**
-	 * Método que agrega una pieza a las piezas para exhibición
-	 * @param piezas
-	 * */
-	public void añadirPiezasExhibir(Piezas piezas){
-		
-		piezasExhibir.add(piezas);
-	}
-	
-	/**
-	 * Método que agrega una pieza a las piezas para subasta
-	 * @param piezas
-	 * */
-	public void añadirPiezasSubasta(Piezas piezas){
-		
-		piezasSubasta.add(piezas);
-	}
-	
-	/**
-	 * Método que agrega una pieza a las piezas para venta
-	 * @param piezas
-	 * */
-	public void añadirPiezasVenta(Piezas piezas){
-		
-		piezasVenta.add(piezas);
-	}
-	
-	/**
-	 * Método que agrega una pieza a las piezas vendidas
-	 * @param piezas
-	 * */
-	public void añadirPiezasVendidas(Piezas piezas){
-		
-		piezasVendidas.add(piezas);
-	}
-	
-	/**
-	 * Método que agrega una pieza a las piezas devueltas y las elimina de las piezas en deposito
-	 * @param piezas
-	 * */
-	public void añadirPiezasDevueltas(ConsignacionPieza piezas){
-		
-		piezasDevueltas.add(piezas);
-		piezasDeposito.remove(piezas);
-	}
-	
-	/**
-	 * Método que agrega una pieza a las piezas bloqueadas y las remueve de las piezas en venta
-	 * @param piezas
-	 * */
-	public void añadirPiezasBloqueadas(Piezas piezas){
-		
-		piezasBloqueadas.add(piezas);
-		piezasVenta.remove(piezas);
-	}
-	
-	/**
-	 * Método que permite eliminar las piezas que ya no hace parte del catalogo según el indicador que nos lleva a las lista donde estaba guardada y consignación que indica si esta tambien estaba en la lista deposito
-	 * @param piezas
-	 * @param indicador
-	 * @param consignación
-	 * */
-	public void eliminarPiezas(Piezas piezas, String indicador) {
-		
-		piezasVigentes.remove(piezas);
-		
-		if (indicador.equals("Venta")) {
-			piezasVenta.remove(piezas);
-		}else if(indicador.equals("Subasta")) {
-			piezasSubasta.remove(piezas);
-		}else if(indicador.equals("Exhibir")) {
-			piezasExhibir.remove(piezas);
-		}else if(indicador.equals("Bloqueada")) {
-			piezasBloqueadas.remove(piezas);
+
+		if(piezas.getPieza().getVigencia() == true) {
+			piezasDeposito.add(piezas);
+			añadirPiezasTodas(piezas.getPieza());
+		}else {
+			piezasDeposito.remove(piezas);
+			piezasDevueltas.add(piezas);
+			añadirPiezasTodas(piezas.getPieza());
 		}
 	}
 	
-	public void eliminarConsignacion(ConsignacionPieza pieza) {
+	public List<ConsignacionPieza> getPiezasSolicitud(){
 		
-		this.piezasDeposito.remove(pieza);
+		return piezasSolicitud;
 	}
 	
 	/**
@@ -201,7 +179,7 @@ public class Inventario {
 	 * Método getter de la lista de piezas totales
 	 * @return piezasTotale
 	 * */
-	public List<Piezas> getTotale(){
+	public List<ConsignacionPieza> getTotales(){
 		return piezasTotales;
 	}
 	
@@ -279,5 +257,10 @@ public class Inventario {
     		Piezas pieza = iterador.next();
     		operador.agregarPiezasSubasta(pieza);
     	}
+	}
+	
+	public OperacionSubasta getClaseSubasta() {
+		
+		return operador;
 	}
 }
