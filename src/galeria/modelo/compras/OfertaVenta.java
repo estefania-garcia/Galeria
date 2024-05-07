@@ -1,6 +1,7 @@
 package galeria.modelo.compras;
 
 import galeria.modelo.inventario.Piezas;
+import galeria.modelo.usuarios.HistorialInversor;
 import galeria.modelo.usuarios.Usuarios;
 
 /**
@@ -21,7 +22,7 @@ public class OfertaVenta extends Ofertas{
 	 * @param comprador
 	 * @param monto
 	 * */
-	public OfertaVenta(Piezas pieza, Usuarios comprador, double monto) {
+	public OfertaVenta(Piezas pieza, HistorialInversor comprador, double monto) {
 		super(pieza, comprador, monto);
 	}
 	

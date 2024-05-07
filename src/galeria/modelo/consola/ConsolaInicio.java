@@ -96,12 +96,12 @@ public class ConsolaInicio {
                     	else if(rol.equals("Cajero")) {
                     		
                     		System.out.print("\n");
-                    		ConsolaCajero.main(null);
+                    		ConsolaCajero.principal(galeria, consola);
                     	}
                     	else if(rol.equals("Operador")) {
                     		
                     		System.out.print("\n");
-                    		ConsolaOperador.main(null);
+                    		ConsolaOperador.principal(galeria, consola);
                     	}
                     	else if(rol.equals("Inversor")) {
                     		

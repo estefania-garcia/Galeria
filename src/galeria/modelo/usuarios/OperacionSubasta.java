@@ -83,6 +83,7 @@ public class OperacionSubasta {
 	 * @param ofertas
 	 * */
 	public void finalizarSubasta(Piezas pieza) {
+		
 		List<Ofertas> lista = mapaSubastas.get(pieza);
 		Ofertas oferta_final = lista.get(lista.size()-1);
 		mapaSubastas.remove(pieza);

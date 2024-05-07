@@ -7,6 +7,8 @@ import java.util.List;
 import org.json.JSONObject;
 
 import galeria.modelo.compras.GaleriaOferta;
+import galeria.modelo.compras.OfertaSubasta;
+import galeria.modelo.compras.OfertaVenta;
 import galeria.modelo.controlador.Galeria;
 import galeria.modelo.inventario.ArteDigital;
 import galeria.modelo.inventario.ArteTridimensional;
@@ -100,6 +102,18 @@ public class HistorialInversor{
 	public Usuarios getInversor() {
 		
 		return inversor;
+	}
+	
+	public OfertaSubasta crearOfertaSubasta(Piezas pieza, HistorialInversor comprador, double monto) {
+		
+		OfertaSubasta ofertaNueva = new OfertaSubasta(pieza, comprador, monto);
+        return ofertaNueva;
+	}
+	
+	public OfertaVenta crearOfertaVenta(Piezas pieza, HistorialInversor comprador, double monto) {
+		
+		OfertaVenta ofertaNueva = new OfertaVenta(pieza, comprador, monto);
+        return ofertaNueva;
 	}
 	
 	/**

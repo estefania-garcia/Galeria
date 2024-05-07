@@ -180,7 +180,7 @@ public class ConsolaAdministrador {
                         	
                         		for(Ofertas oferta: ofertasFinalesSubasta) {
                         		contador++;
-                        		System.out.printf("%-10d %-10s %-10d %-10s%n", contador, oferta.getComprador().getUsuario(), oferta.getPiezas().getTitulo(), oferta.getMonto());
+                        		System.out.printf("%-10d %-10s %-10d %-10s%n", contador, oferta.getComprador().getInversor().getUsuario(), oferta.getPiezas().getTitulo(), oferta.getMonto());
                         		}
                         		System.out.println("\n");
                         		
@@ -215,7 +215,7 @@ public class ConsolaAdministrador {
                 	
                 		for(Ofertas oferta: ofertasVenta) {
                 		contador++;
-                		System.out.printf("%-10d %-10s %-10d %-10s%n", contador, oferta.getComprador().getUsuario(), oferta.getPiezas().getTitulo(), oferta.getMonto());
+                		System.out.printf("%-10d %-10s %-10d %-10s%n", contador, oferta.getComprador().getInversor().getUsuario(), oferta.getPiezas().getTitulo(), oferta.getMonto());
                 		}
                 		System.out.println("\n");
                 		

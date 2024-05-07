@@ -17,10 +17,7 @@ public abstract class Ofertas {
 	 * Atributo que relaciona una pieza con la oferta
 	 * */
 	private Piezas pieza;
-	/**
-	 * Atributo que relaciona un comprador con la oferta
-	 * */
-	private Usuarios comprador;
+	
 	/**
 	 * Atributo que relaciona un monto con la oferta
 	 * */
@@ -28,7 +25,7 @@ public abstract class Ofertas {
 	/**
 	 * Atributo que nos da acceso al monto maximo asignado al comprador
 	 * */
-	private HistorialInversor comprador_monto;
+	private HistorialInversor comprador;
 	
 	/**
 	 * Inicializa los atributos según los parámetros
@@ -36,7 +33,7 @@ public abstract class Ofertas {
 	 * @param comprador
 	 * @param monto
 	 * */
-	public Ofertas(Piezas pieza, Usuarios comprador, double monto) {
+	public Ofertas(Piezas pieza, HistorialInversor comprador, double monto) {
 		
 		this.pieza = pieza;
 		this.comprador = comprador;
@@ -55,7 +52,7 @@ public abstract class Ofertas {
 	 * Método getter del atributo comprador
 	 * @return comprador
 	 * */
-	public Usuarios getComprador() {
+	public HistorialInversor getComprador() {
 		 return comprador;
 	}
 	
@@ -85,7 +82,7 @@ public abstract class Ofertas {
 	 * */
 	public boolean verificarMonto() {
 		 
-		 if(comprador_monto.getMontoMaximo() < monto) {
+		 if(comprador.getMontoMaximo() < monto) {
 			 return false;
 		 }else {
 			 return true;
