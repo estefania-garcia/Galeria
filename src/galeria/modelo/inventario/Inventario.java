@@ -131,16 +131,11 @@ public class Inventario {
 		}
 	}
 	
-	public void añadirPiezasSolicitud(ConsignacionPieza piezas){
+	public void añadirPiezasSolicitud(ConsignacionPieza pieza) {
 		
-		if(!piezasTotales.contains(piezas)) {
-			piezasTotales.add(piezas);
-			if(piezas.getPieza().getAprobada() == true) {
-				piezasSolicitud.remove(piezas);
-				añadirPiezasDeposito(piezas);
-			}else {
-				piezasSolicitud.add(piezas);
-			}
+		if(!piezasSolicitud.contains(pieza)) {
+			piezasSolicitud.add(pieza);
+			añadirPiezasDeposito(pieza);
 		}
 	}
 	
@@ -150,12 +145,10 @@ public class Inventario {
 	 * */
 	public void añadirPiezasDeposito(ConsignacionPieza piezas){
 
-		if(piezas.getPieza().getVigencia() == true) {
-			piezasDeposito.add(piezas);
-			añadirPiezasTodas(piezas.getPieza());
-		}else {
-			piezasDeposito.remove(piezas);
-			piezasDevueltas.add(piezas);
+		if(piezas.getPieza().getVigencia() == true && !piezasSolicitud.contains(piezas)) {
+			if(piezas.getPieza().getDeposito() == true) {
+				piezasDeposito.add(piezas);
+			}
 			añadirPiezasTodas(piezas.getPieza());
 		}
 	}
@@ -180,6 +173,7 @@ public class Inventario {
 	 * @return piezasTotale
 	 * */
 	public List<ConsignacionPieza> getTotales(){
+		
 		return piezasTotales;
 	}
 	

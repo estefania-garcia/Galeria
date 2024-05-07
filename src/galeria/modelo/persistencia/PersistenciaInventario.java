@@ -16,7 +16,6 @@ import galeria.modelo.inventario.ArteDigital;
 import galeria.modelo.inventario.ArteTridimensional;
 import galeria.modelo.inventario.ArteVisual;
 import galeria.modelo.inventario.ConsignacionPieza;
-import galeria.modelo.inventario.Piezas;
 import galeria.modelo.usuarios.Usuarios;
 
 public class PersistenciaInventario {
@@ -27,7 +26,7 @@ public class PersistenciaInventario {
 		String jsonCompleto = new String(Files.readAllBytes(new File(rutaArchivo).toPath()));
 		JSONObject raiz = new JSONObject(jsonCompleto);
 		
-		cargarPiezas(galeria, raiz.getJSONArray("Piezas"));
+		cargarPiezasAprobadas(galeria, raiz.getJSONArray("Piezas"));
 	}
 	
 	public void salvarTodasPiezas(Galeria galeria) throws FileNotFoundException {
@@ -35,28 +34,31 @@ public class PersistenciaInventario {
 		String rutaArchivo = "./Datos/Inventario.json";
 		JSONObject jobject = new JSONObject();
 		
-		salvarPiezas(galeria, jobject);
+		salvarPiezasAprobadas(galeria, jobject);
 		
 		PrintWriter pw = new PrintWriter( rutaArchivo );
         jobject.write( pw, 2, 0 );
         pw.close( );
 	}
 	
-	public void cargarPiezas(Galeria galeria, JSONArray jPiezas) {
+	public void cargarPiezasAprobadas(Galeria galeria, JSONArray jPiezas) {
 		
 		int numPiezas = jPiezas.length();
 		for(int i = 0; i < numPiezas; i++) {
 			JSONObject pieza = jPiezas.getJSONObject(i);
+			
 			String tipo = pieza.getString("tipo");
 			String titulo = pieza.getString("titulo");
 			String proposito = pieza.getString("proposito");
 			String creacion = pieza.getString("creacion");
 			boolean deposito = pieza.getBoolean("deposito");
+			boolean vigencia = pieza.getBoolean("vigencia");
 			double monto = pieza.getDouble("monto");
 			double montoMin = pieza.getDouble("montoMin");
 			int tiempo = pieza.getInt("tiempo");
 			String propietario = pieza.getString("propietario");
 			String autores = pieza.getString("autores");
+			
 			Usuarios inver = null;
 			List<Usuarios> lista = galeria.getUsuarios();
 			for(Usuarios usu : lista) {
@@ -64,13 +66,14 @@ public class PersistenciaInventario {
 					inver = usu;
 				}
 			}
+			
 			if(tipo.equals("Arte Visual")) {
 				String anchoXlargo = pieza.getString("anchoXlargo");
 				String tecnica = pieza.getString("tecnica");
 				GaleriaOferta ofert = new GaleriaOferta(monto, montoMin);
 				ArteVisual arte = new ArteVisual(titulo, proposito, creacion, deposito, ofert, inver, autores, anchoXlargo, tecnica);
-				Piezas art = (Piezas) arte;
-				ConsignacionPieza consignacion = new ConsignacionPieza(tiempo, art, inver);
+				arte.asignarVigenica(vigencia);
+				ConsignacionPieza consignacion = new ConsignacionPieza(tiempo, arte, inver);
 				galeria.getInventario().añadirPiezasSolicitud(consignacion);
 			}
 			else if(tipo.equals("Arte Tridimensional")){
@@ -80,8 +83,8 @@ public class PersistenciaInventario {
 				boolean electricidad = pieza.getBoolean("electricidad");
 				GaleriaOferta ofert = new GaleriaOferta(monto, montoMin);
 				ArteTridimensional arte = new ArteTridimensional(titulo, proposito, creacion, deposito, ofert, inver, autores, dimensiones, tecnica, peso, electricidad);
-				Piezas art = (Piezas) arte;
-				ConsignacionPieza consignacion = new ConsignacionPieza(tiempo, art, inver);
+				arte.asignarVigenica(vigencia);
+				ConsignacionPieza consignacion = new ConsignacionPieza(tiempo, arte, inver);
 				galeria.getInventario().añadirPiezasSolicitud(consignacion);
 			}
 			else if(tipo.equals("Arte Digital")) {
@@ -89,17 +92,17 @@ public class PersistenciaInventario {
 				String tipoArchivo = pieza.getString("tipoArchivo");
 				GaleriaOferta ofert = new GaleriaOferta(monto, montoMin);
 				ArteDigital arte = new ArteDigital(titulo, proposito, creacion, deposito, ofert, inver, autores, tipoArte, tipoArchivo);
-				Piezas art = (Piezas) arte;
-				ConsignacionPieza consignacion = new ConsignacionPieza(tiempo, art, inver);
+				arte.asignarVigenica(vigencia);
+				ConsignacionPieza consignacion = new ConsignacionPieza(tiempo, arte, inver);
 				galeria.getInventario().añadirPiezasSolicitud(consignacion);
 			}
 		}
 	}
 	
-	public void salvarPiezas(Galeria galeria, JSONObject jobject) {
+	public void salvarPiezasAprobadas(Galeria galeria, JSONObject jobject) {
 		
 		JSONArray jInventario = new JSONArray();
-		for(ConsignacionPieza piezas : galeria.getPiezasTotales()) {
+		for(ConsignacionPieza piezas : galeria.getPiezasSolicitud()) {
 			
 			JSONObject jPiezas = new JSONObject();
 			
@@ -113,6 +116,7 @@ public class PersistenciaInventario {
 			jPiezas.put("tiempo", piezas.getTiempo());
 			jPiezas.put("propietario", piezas.getPropietario().getUsuario());
 			jPiezas.put("autores", piezas.getPieza().getAutores());
+			jPiezas.put("vigencia", piezas.getPieza().getVigencia());
 			if(piezas.getPieza().getTipo().equals("Arte Visual")) {
 				ArteVisual piz = (ArteVisual) piezas.getPieza();
 				jPiezas.put("anchoXlargo", piz.getAncho());

@@ -17,5 +17,10 @@
     "inversor": "Isabel",
     "monto": 5000000
   }],
-  "Registros": []
+  "Registros": [{
+    "usuario": "MelissaA",
+    "nombre": "Melissa",
+    "rol": "Operador",
+    "contraseña": "TUta1n4!"
+  }]
 }

@@ -88,4 +88,9 @@ public class OperacionSubasta {
 			galeria.ofertasFinalesSubastas(oferta_final);
 		}
 	}
+	
+	public Map<Piezas, List<Ofertas>> getMapa(){
+		
+		return mapaSubastas;
+	}
 }

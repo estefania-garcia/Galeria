@@ -16,6 +16,7 @@ import galeria.modelo.persistencia.CentralPersistencia;
 import galeria.modelo.persistencia.PersistenciaInventario;
 import galeria.modelo.persistencia.PersistenciaUsuariosJson;
 import galeria.modelo.usuarios.HistorialInversor;
+import galeria.modelo.usuarios.OperacionSubasta;
 import galeria.modelo.usuarios.ProcesoCompra;
 import galeria.modelo.usuarios.RegistroInicio;
 import galeria.modelo.usuarios.Usuarios;
@@ -60,6 +61,8 @@ public class Galeria {
 	
 	private ProcesoCompra cajero;
 	
+	private OperacionSubasta operador;
+	
 	/**
 	 * Constructor que inicializa la lista de usuarios registrados
 	 * */
@@ -70,6 +73,7 @@ public class Galeria {
 		this.registro = new RegistroInicio();
 		this.cajero = new ProcesoCompra();
 		this.centroOfertas = new CentroOfertas();
+		this.operador = new OperacionSubasta();
 	}
 	
 	public RegistroInicio getRegistro() {
@@ -107,11 +111,6 @@ public class Galeria {
 	public List<HistorialInversor> getListaHistorial(){
 		
 		return registro.getListaHistorial();
-	}
-	
-	public List<ConsignacionPieza> getPiezasTotales(){
-		
-		return inventario.getTotales();
 	}
 	
 	public void cargarInventario() throws IOException {
@@ -155,5 +154,20 @@ public class Galeria {
 	public List<Ofertas> getOfertasVentas(){
 		
 		return centroOfertas.getOfertaVenta();
+	}
+	
+	public CentroOfertas getCentroOfertas() {
+		
+		return centroOfertas;
+	}
+	
+	public Map<Piezas, List<Ofertas>> getMapaSubastas(){
+		
+		return operador.getMapa();
+	}
+	
+	public List<ConsignacionPieza> getPiezasSolicitud(){
+		
+		return inventario.getPiezasSolicitud();
 	}
 }

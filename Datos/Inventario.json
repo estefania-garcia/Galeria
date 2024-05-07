@@ -1,3 +1,49 @@
-{
-	"Piezas":[]
-}
+{"Piezas": [
+  {
+    "vigencia": true,
+    "tipo": "Arte Digital",
+    "proposito": "Exhibir",
+    "propietario": "Isabel",
+    "tipoArte": "Musica",
+    "titulo": "Roto",
+    "creacion": "2020-London",
+    "deposito": false,
+    "autores": "Anonimo",
+    "tipoArchivo": "mp3",
+    "monto": 0,
+    "montoMin": 0,
+    "tiempo": 0
+  },
+  {
+    "vigencia": true,
+    "tipo": "Arte Digital",
+    "proposito": "Exhibir",
+    "propietario": "Isabel",
+    "tipoArte": "Musica",
+    "titulo": "Roto",
+    "creacion": "2020-London",
+    "deposito": false,
+    "autores": "Anonimo",
+    "tipoArchivo": "mp3",
+    "monto": 0,
+    "montoMin": 0,
+    "tiempo": 0
+  },
+  {
+    "vigencia": true,
+    "dimensiones": "23x25x24",
+    "tipo": "Arte Tridimensional",
+    "peso": 25,
+    "proposito": "Subastar",
+    "propietario": "Isabel",
+    "titulo": "Toro",
+    "creacion": "2020-London",
+    "deposito": true,
+    "autores": "Ruben, Martha",
+    "monto": 2000,
+    "montoMin": 2000000,
+    "tiempo": 30,
+    "tecnica": "Madera",
+    "electricidad": true
+  }
+]}

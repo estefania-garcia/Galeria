@@ -55,7 +55,7 @@ public abstract class Piezas {
 	/**
 	 * Atributo que relacion el estado de la pieza (bloqueda, vendida o devuleta)
 	 * */
-	private String estado;
+	private String estado = "Nueva";
 	
 	/**
 	 * Atributo que indica el proposito de la pieza, si es para vender, exhibir o subastar

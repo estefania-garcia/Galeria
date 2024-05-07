@@ -9,6 +9,7 @@ import galeria.modelo.controlador.Galeria;
 import galeria.modelo.inventario.ConsignacionPieza;
 import galeria.modelo.inventario.Inventario;
 import galeria.modelo.inventario.Piezas;
+import galeria.modelo.usuarios.HistorialInversor;
 import galeria.modelo.usuarios.OperacionSubasta;
 import galeria.modelo.usuarios.ProcesoCompra;
 import galeria.modelo.usuarios.RegistroInicio;
@@ -36,7 +37,7 @@ public class ConsolaAdministrador {
             System.out.println("Bienvenido al menú del administrador de la galeria:");
             System.out.println("1. Aprobar nuevos usuarios");
             System.out.println("2. Aprobar nuevas piezas");
-            System.out.println("3. Consultar procesor subastas");
+            System.out.println("3. Consultar proceso subastas");
             System.out.println("4. Aprobar ofertas venta");
             System.out.println("5. Consultar historial de comprador");
             System.out.println("6. Verificar solicitudes inversores");
@@ -98,32 +99,36 @@ public class ConsolaAdministrador {
                 	boolean bucle = true;
                 	while(bucle) {
                 		
-                		List<ConsignacionPieza> listaSolicitudPiezas = inventario.getTotales();
-                		System.out.printf("%-10s %-10s %-10s %-10s %-10s%n", "Número", "Titulo", "Dueño", "Proposito", "Consignación");
-                		int contar = 0;
-                	
+                		List<ConsignacionPieza> listaSolicitudPiezas = inventario.getPiezasSolicitud();
+ 
+                		System.out.printf("%-10s %-10s %-10s %-10s %-10s %-10s%n", "Número", "Titulo", "Dueño", "Proposito", "Consignación", "Vigencia");
+                    	int contar = 0;
                 		for(ConsignacionPieza pieza: listaSolicitudPiezas) {
-                		contar++;
-                		System.out.printf("%-10d %-10s %-10s %-10s %-10s%n", contar, pieza.getPieza().getTitulo(), pieza.getPieza().getPropietario().getUsuario(), pieza.getPieza().getProposito(), pieza.getPieza().getDeposito());
-                		}
+                       		contar++;
+                        	System.out.printf("%-10d %-10s %-10s %-10s %-10s %-10s%n", contar, pieza.getPieza().getTitulo(), pieza.getPieza().getPropietario().getUsuario(), pieza.getPieza().getProposito(), pieza.getPieza().getDeposito(), pieza.getPieza().getVigencia());
+                        }
                 		System.out.println("\n");
-                		
+                		System.out.print("El número de piezas es: ");
+                		System.out.print(listaSolicitudPiezas.size());
+                		System.out.println("\n");
+                   		
                 		System.out.print("Ingresa la posicion de la pieza: ");
-                    	int pos = scanner2.nextInt();
-                    	
-                    	System.out.print("¿Desea aprobar la solicitud? (true/false): ");
-                    	boolean aprobar = scanner2.nextBoolean();
-                    	
-                    	Piezas arte = listaSolicitudPiezas.get(pos-1).getPieza();
-                    	arte.asignarVigenica(true);
-                    	arte.asignarAprobada(aprobar);
-                    	inventario.añadirPiezasSolicitud(listaSolicitudPiezas.get(pos-1));
-                    	consola.persistenciaSalvarInventario();
-                    	System.out.print("¿Deseas seguir verificando? (true/false): ");
-                    	ciclo = scanner2.nextBoolean();
-                    	System.out.println("\n");
+                       	int pos = scanner2.nextInt();
+                       	
+                      	System.out.print("¿Desea aprobar la solicitud? (true/false): ");
+                       	boolean aprobar = scanner2.nextBoolean();
+                      	
+                       	if(aprobar == true) {
+                       		Piezas arte = listaSolicitudPiezas.get(pos-1).getPieza();
+                       		arte.asignarVigenica(true);
+                           	arte.asignarAprobada(aprobar);
+                           	consola.persistenciaSalvarInventario();
+                       	}
+                       	
+                       	System.out.print("¿Deseas seguir verificando? (true/false): ");
+                       	bucle = scanner2.nextBoolean();
+                       	System.out.println("\n");
                 	}
-                	
                     break;
                 case 3:
                 	System.out.println("1. Inicializar subastas");

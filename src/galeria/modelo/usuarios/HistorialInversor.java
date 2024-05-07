@@ -14,7 +14,7 @@ import galeria.modelo.inventario.ConsignacionPieza;
 import galeria.modelo.inventario.CrearPiezas;
 import galeria.modelo.inventario.Piezas;
 
-public class HistorialInversor implements CrearPiezas{
+public class HistorialInversor{
 	
 	/**
 	 * Lista de las piezas que son propiedad del usuario
@@ -47,6 +47,11 @@ public class HistorialInversor implements CrearPiezas{
 		this.inversor = inversor;
 		pizasPropias = new LinkedList<Piezas>();
 		solicitudPiezas = new LinkedList<Piezas>();
+	}
+	
+	public void asignarGaleria(Galeria galeria) {
+		
+		this.galeria = galeria;
 	}
 	
 	/**
@@ -95,7 +100,7 @@ public class HistorialInversor implements CrearPiezas{
 	 * @param monto
 	 * @return GaleriOferta
 	 * */
-	public GaleriaOferta crearOfertaGaleria(int monto, int montoMinimo, String proposito) {
+	public GaleriaOferta crearOfertaGaleria(double monto, double montoMinimo, String proposito) {
 
 		GaleriaOferta oferta = new GaleriaOferta(monto, montoMinimo);
 		return oferta;
@@ -106,12 +111,13 @@ public class HistorialInversor implements CrearPiezas{
 	 * @param sus parametros son todos los requeridos para la creacion de la pieza
 	 * @return ArteDigital
 	 * */
-	public ArteDigital CrearPiezaDigital(String titulo, int monto, int montoMinimo, String proposito, String lugar_creacion, String año, boolean deposito, Usuarios propietario, String autores, String tipoArte, String tipoArchivo) {
+	public ConsignacionPieza CrearPiezaDigital(int dias, String titulo, double monto, double montoMinimo, String proposito, String lugar_creacion, boolean deposito, Usuarios propietario, String autores, String tipoArte, String tipoArchivo) {
 		GaleriaOferta oferta = crearOfertaGaleria(monto, montoMinimo, proposito);
-		Piezas pieza = new ArteDigital(titulo, proposito, lugar_creacion, año, deposito, oferta, inversor, autores, tipoArte, tipoArchivo);
-		galeria.agregarPiezaSolicitud(pieza);
+		Piezas pieza = new ArteDigital(titulo, proposito, lugar_creacion, deposito, oferta, inversor, autores, tipoArte, tipoArchivo);
+		ConsignacionPieza consignacion = new ConsignacionPieza(dias, pieza, inversor);
+		galeria.getInventario().añadirPiezasSolicitud(consignacion);
 		solicitudPiezas.add(pieza);
-		return (ArteDigital) pieza;
+		return consignacion;
 	}
 	
 	/**
@@ -119,12 +125,13 @@ public class HistorialInversor implements CrearPiezas{
 	 * @param sus parametros son todos los requeridos para la creacion de la pieza
 	 * @return ArteTridimensional
 	 * */
-	public ArteTridimensional CrearPiezaTridimensional(String titulo,  int monto, int montoMinimo, String proposito, String lugar_creacion, String año, boolean deposito, Usuarios propietario, String autores,double alto, String tecnica, double ancho, double profundidad, double peso, boolean electricidad, String material) {
+	public ConsignacionPieza CrearPiezaTridimensional(int dias, String titulo,  double monto, double montoMinimo, String proposito, String lugar_creacion, boolean deposito, Usuarios propietario, String autores, String dimensiones, String tecnica, double peso, boolean electricidad) {
 		GaleriaOferta oferta = crearOfertaGaleria(monto, montoMinimo, proposito);
-		Piezas pieza = new ArteTridimensional(titulo, proposito, lugar_creacion, deposito, oferta, inversor, año, autores, alto, tecnica, ancho, profundidad, peso, electricidad, material);
-		galeria.agregarPiezaSolicitud(pieza);
+		Piezas pieza = new ArteTridimensional(titulo, proposito, lugar_creacion, deposito, oferta, inversor, autores, dimensiones, tecnica, peso, electricidad);
+		ConsignacionPieza consignacion = new ConsignacionPieza(dias, pieza, inversor);
+		galeria.getInventario().añadirPiezasSolicitud(consignacion);
 		solicitudPiezas.add(pieza);
-		return (ArteTridimensional) pieza;
+		return consignacion;
 	}
 	
 	/**
@@ -132,17 +139,12 @@ public class HistorialInversor implements CrearPiezas{
 	 * @param sus parametros son todos los requeridos para la creacion de la pieza
 	 * @return ArteVisual
 	 * */
-	public ArteVisual CrearPiezaPintura(String titulo,  int monto, int montoMinimo, String proposito, String lugar_creacion, String año, boolean deposito, Usuarios propietario, String autores, double ancho, double largo , String material, String tecnica, String tipoArte, String tipoArchivo ) {
+	public ConsignacionPieza CrearPiezaPintura(int dias, String titulo, double monto, double montoMinimo, String proposito, String lugar_creacion, boolean deposito, Usuarios propietario, String autores, String anchoxlargo,String tecnica) {
 		GaleriaOferta oferta = crearOfertaGaleria(monto, montoMinimo, proposito);
-		Piezas pieza = new ArteDigital(titulo, proposito, lugar_creacion, año, deposito, oferta, inversor, autores, tipoArte, tipoArchivo);
-		galeria.agregarPiezaSolicitud(pieza);
+		Piezas pieza = new ArteVisual(titulo, proposito, lugar_creacion, deposito, oferta, inversor, autores, anchoxlargo, tecnica);
+		ConsignacionPieza consignacion = new ConsignacionPieza(dias, pieza, inversor);
+		galeria.getInventario().añadirPiezasSolicitud(consignacion);
 		solicitudPiezas.add(pieza);
-		return (ArteVisual) pieza;
-	}
-	
-	public ConsignacionPieza CrearPiezaEnConsignacion(int tiempo, Piezas pieza) {
-		
-		ConsignacionPieza consignacion = new ConsignacionPieza(tiempo, pieza, this.inversor);
 		return consignacion;
 	}
 	
@@ -150,6 +152,6 @@ public class HistorialInversor implements CrearPiezas{
 	 * Manda una solicitud de cambio monto
 	 * */
 	public void crearSolicitudMonto() {
-		galeria.agregarSolicitudMonto(inversor);
+		//galeria.agregarSolicitudMonto(inversor);
 	}
 }

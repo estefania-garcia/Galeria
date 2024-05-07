@@ -106,7 +106,7 @@ public class ConsolaInicio {
                     	else if(rol.equals("Inversor")) {
                     		
                     		System.out.print("\n");
-                    		ConsolaInversor.main(null);
+                    		ConsolaInversor.principal(galeria, consola, usuario);
                     	}
                     }else {
                     	System.out.print("\n");
