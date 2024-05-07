@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 
 import galeria.modelo.compras.CentroOfertas;
 import galeria.modelo.compras.Ofertas;
+import galeria.modelo.inventario.CentroAutores;
 import galeria.modelo.inventario.ConsignacionPieza;
 import galeria.modelo.inventario.Inventario;
 import galeria.modelo.inventario.Piezas;
@@ -42,43 +42,41 @@ public class Galeria {
 	
 	private RegistroInicio registro;
 	
-	/**
-	 * Mapa que guarda todos los usuarios registrados, donde la llave es el tipo de usuario y el valor son los usuarios con ese rol.
-	 * */
-	private Map<String, List<Usuarios>> usuariosRegistrados;
-	
-	/**
-	 * Lista que guarda los inversores con solicitud de aumento de monto.
-	 * */
-	private List<Usuarios> inversoresEnSolicitud; 
-	
-	/**
-	 * Lista que guarda todas las piezas que deben ser aprobadas.
-	 * */
-	private List<Piezas> piezasEnSolicitud;
-	
-	private List<Ofertas> listaOfertasFinalesSubastas;
-	
 	private ProcesoCompra cajero;
 	
 	private OperacionSubasta operador;
+	
+	private CentroAutores autores;
+	
+	private List<HistorialInversor> listaSolicitudMonto;
 	
 	/**
 	 * Constructor que inicializa la lista de usuarios registrados
 	 * */
 	public Galeria(){
 		
-		this.listaOfertasFinalesSubastas = new ArrayList<>();
-		this.inventario = new Inventario ();
+		this.operador = new OperacionSubasta();
+		this.inventario = new Inventario (operador);
 		this.registro = new RegistroInicio();
 		this.cajero = new ProcesoCompra();
 		this.centroOfertas = new CentroOfertas();
-		this.operador = new OperacionSubasta();
+		this.listaSolicitudMonto = new ArrayList<>();
+		this.autores = new CentroAutores();
 	}
 	
 	public RegistroInicio getRegistro() {
 		
 		return registro;
+	}
+	
+	public CentroAutores getCentroAutores() {
+		
+		return autores;
+	}
+
+	public OperacionSubasta getClaseSubasta() {
+		
+		return operador;
 	}
 	
 	public Inventario getInventario() {
@@ -125,22 +123,6 @@ public class Galeria {
 		cargador.salvarTodasPiezas(this);
 	}
 	
-	public List<Ofertas> ofertasFinalesSubastas(Ofertas oferta){
-		
-		listaOfertasFinalesSubastas.add(oferta);
-		return listaOfertasFinalesSubastas;
-	}
-	
-	public List<Ofertas> getOfertasFinalesSubasta(){
-		
-		return listaOfertasFinalesSubastas;
-	}
-	
-	public void rechazarOfertasFinalesSubasta(Ofertas oferta) {
-		
-		listaOfertasFinalesSubastas.remove(oferta);
-	}
-	
 	public ProcesoCompra getCajero() {
 		
 		return cajero;
@@ -148,12 +130,17 @@ public class Galeria {
 	
 	public List<Ofertas> getOfertasSubasta(){
 		
-		return centroOfertas.getOfertasSubasta();
+		return operador.getofertaFinalesSubasta();
 	}
 	
 	public List<Ofertas> getOfertasVentas(){
 		
 		return centroOfertas.getOfertaVenta();
+	}
+	
+	public void recharOfertasSubasta(Ofertas oferta) {
+		
+		operador.recharOfertaFinal(oferta);
 	}
 	
 	public CentroOfertas getCentroOfertas() {
@@ -169,5 +156,20 @@ public class Galeria {
 	public List<ConsignacionPieza> getPiezasSolicitud(){
 		
 		return inventario.getPiezasSolicitud();
+	}
+	
+	public void agregarSolicitudMonto(HistorialInversor solicitud) {
+		
+		listaSolicitudMonto.add(solicitud);
+	}
+	
+	public List<HistorialInversor> getSolicitudMonto() {
+		
+		return listaSolicitudMonto;
+	}
+	
+	public List<ConsignacionPieza> getDeposito(){
+		
+		return inventario.getDeposito();
 	}
 }

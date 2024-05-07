@@ -2,7 +2,6 @@ package galeria.modelo.inventario;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 import galeria.modelo.usuarios.OperacionSubasta;
@@ -68,19 +67,19 @@ public class Inventario {
 	/**
 	 * Constructor que inicializa las listas con las piezas
 	 * */
-	public Inventario() {
+	public Inventario(OperacionSubasta operador) {
 		
-		this.operador = new OperacionSubasta();
-		piezasTotales = new LinkedList<ConsignacionPieza>();
-		piezasDeposito = new LinkedList<ConsignacionPieza>();
-		piezasVigentes = new LinkedList<Piezas>();
-		piezasDevueltas = new LinkedList<ConsignacionPieza>();
-		piezasExhibir = new LinkedList<Piezas>();
-		piezasSubasta = new LinkedList<Piezas>();
-		piezasVenta = new LinkedList<Piezas>();
-		piezasVendidas = new LinkedList<Piezas>();
+		this.operador = operador;
+		piezasTotales = new ArrayList<ConsignacionPieza>();
+		piezasDeposito = new ArrayList<ConsignacionPieza>();
+		piezasVigentes = new ArrayList<Piezas>();
+		piezasDevueltas = new ArrayList<ConsignacionPieza>();
+		piezasExhibir = new ArrayList<Piezas>();
+		piezasSubasta = new ArrayList<Piezas>();
+		piezasVenta = new ArrayList<Piezas>();
+		piezasVendidas = new ArrayList<Piezas>();
 		piezasSolicitud = new ArrayList<ConsignacionPieza>();
-		piezasBloqueadas = new LinkedList<Piezas>();
+		piezasBloqueadas = new ArrayList<Piezas>();
 	}
 	
 	public void añadirPiezasTodas(Piezas pieza) {
@@ -182,7 +181,16 @@ public class Inventario {
 	 * @return piezasDeposito
 	 * */
 	public List<ConsignacionPieza> getDeposito(){
+		
 		return piezasDeposito;
+	}
+	
+	public void devolverPieza(ConsignacionPieza pieza) {
+		
+		piezasDevueltas.add(pieza);
+		piezasDevueltas.remove(pieza);
+		pieza.getPieza().asignarVigenica(false);
+		añadirPiezasTodas(pieza.getPieza());
 	}
 	
 	/**
@@ -190,6 +198,7 @@ public class Inventario {
 	 * @return piezasDevueltas
 	 * */
 	public List<ConsignacionPieza> getDevueltas(){
+		
 		return piezasDevueltas;
 	}
 	
@@ -251,10 +260,5 @@ public class Inventario {
     		Piezas pieza = iterador.next();
     		operador.agregarPiezasSubasta(pieza);
     	}
-	}
-	
-	public OperacionSubasta getClaseSubasta() {
-		
-		return operador;
 	}
 }

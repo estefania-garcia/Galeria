@@ -20,6 +20,7 @@ public abstract class Piezas {
 	private boolean aprobacion = false;
 	
 	private boolean vendida = false;
+
 	
 	private Date fecha_vendida;
 	/**

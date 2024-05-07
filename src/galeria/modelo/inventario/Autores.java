@@ -1,6 +1,6 @@
 package galeria.modelo.inventario;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Autores {
@@ -11,7 +11,7 @@ public class Autores {
 	public Autores(String nombre) {
 		
 		this.nombre = nombre;
-		listaPiezas = new LinkedList<Piezas>();
+		listaPiezas = new ArrayList<Piezas>();
 	}
 	
 	public void agregarPiezas(Piezas pieza) {

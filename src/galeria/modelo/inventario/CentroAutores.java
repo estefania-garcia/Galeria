@@ -1,7 +1,7 @@
 package galeria.modelo.inventario;
 
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 public class CentroAutores {
@@ -10,7 +10,7 @@ public class CentroAutores {
 	
 	public CentroAutores() {
 		
-		listaAutores = new LinkedList<Autores>();
+		listaAutores = new ArrayList<Autores>();
 	}
 	
 	public void guardarNuevoAutor(Autores autor) {
@@ -35,5 +35,22 @@ public class CentroAutores {
 			}
 		}
 		return null;
+	}
+	
+	public void crearAutor(String nombre) {
+		
+		Autores autor = new Autores(nombre);
+		guardarNuevoAutor(autor);
+	}
+	
+	public void añadirPiezas(String nombre, Piezas pieza) {
+		
+		Autores autor = null;
+		for(Autores autores : listaAutores) {
+			if(autores.getNombre().equals(nombre)) {
+				autor = autores;
+			}
+		}
+		autor.agregarPiezas(pieza);
 	}
 }

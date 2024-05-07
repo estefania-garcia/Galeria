@@ -1,6 +1,7 @@
 package galeria.modelo.usuarios;
 
-import java.util.LinkedList;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -21,15 +22,14 @@ public class HistorialInversor{
 	 * */
 	private List<Piezas> pizasPropias;
 	
-	/**
-	 * Lista de las piezas que instancia el usuario para ser aprobadas
-	 * */
-	private List<Piezas> solicitudPiezas;
+	private List<Piezas> piezasCompradas;
 	
 	/**
 	 * Atributo que indica el monto maximo a gastar
 	 * */
 	private double montoMaximo;
+	
+	private double valorColeccion;
 	
 	/**
 	 * Atributo que nos da acceso a galeria
@@ -45,13 +45,18 @@ public class HistorialInversor{
 		
 		this.montoMaximo = monto;
 		this.inversor = inversor;
-		pizasPropias = new LinkedList<Piezas>();
-		solicitudPiezas = new LinkedList<Piezas>();
+		pizasPropias = new ArrayList<Piezas>();
+		piezasCompradas = new ArrayList<Piezas>();
 	}
 	
 	public void asignarGaleria(Galeria galeria) {
 		
 		this.galeria = galeria;
+	}
+	
+	public double getValorColeccion() {
+		
+		return valorColeccion;
 	}
 	
 	/**
@@ -76,6 +81,10 @@ public class HistorialInversor{
 	 * */
 	public List<Piezas> getPiezas(){
 		return pizasPropias;
+	}
+	
+	public List<Piezas> getPiezasCompradas(){
+		return piezasCompradas;
 	}
 	
 	/**
@@ -116,7 +125,7 @@ public class HistorialInversor{
 		Piezas pieza = new ArteDigital(titulo, proposito, lugar_creacion, deposito, oferta, inversor, autores, tipoArte, tipoArchivo);
 		ConsignacionPieza consignacion = new ConsignacionPieza(dias, pieza, inversor);
 		galeria.getInventario().añadirPiezasSolicitud(consignacion);
-		solicitudPiezas.add(pieza);
+		//solicitudPiezas.add(pieza);
 		return consignacion;
 	}
 	
@@ -130,7 +139,7 @@ public class HistorialInversor{
 		Piezas pieza = new ArteTridimensional(titulo, proposito, lugar_creacion, deposito, oferta, inversor, autores, dimensiones, tecnica, peso, electricidad);
 		ConsignacionPieza consignacion = new ConsignacionPieza(dias, pieza, inversor);
 		galeria.getInventario().añadirPiezasSolicitud(consignacion);
-		solicitudPiezas.add(pieza);
+		//solicitudPiezas.add(pieza);
 		return consignacion;
 	}
 	
@@ -144,7 +153,7 @@ public class HistorialInversor{
 		Piezas pieza = new ArteVisual(titulo, proposito, lugar_creacion, deposito, oferta, inversor, autores, anchoxlargo, tecnica);
 		ConsignacionPieza consignacion = new ConsignacionPieza(dias, pieza, inversor);
 		galeria.getInventario().añadirPiezasSolicitud(consignacion);
-		solicitudPiezas.add(pieza);
+		//solicitudPiezas.add(pieza);
 		return consignacion;
 	}
 	
@@ -152,6 +161,7 @@ public class HistorialInversor{
 	 * Manda una solicitud de cambio monto
 	 * */
 	public void crearSolicitudMonto() {
-		//galeria.agregarSolicitudMonto(inversor);
+		
+		galeria.agregarSolicitudMonto(this);
 	}
 }

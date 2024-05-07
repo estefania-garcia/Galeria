@@ -1,7 +1,7 @@
 package galeria.modelo.compras;
 
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 import galeria.modelo.inventario.Inventario;
@@ -38,8 +38,9 @@ public class CentroOfertas {
 	 * Inicializa la lista de ofertas subastas
 	 * */
 	public CentroOfertas() {
-		ofertasSubasta = new LinkedList<Ofertas>();
-		ofertasVenta = new LinkedList<Ofertas>();
+		
+		ofertasSubasta = new ArrayList<Ofertas>();
+		ofertasVenta = new ArrayList<Ofertas>();
 	}
 	
 	/**
@@ -57,6 +58,12 @@ public class CentroOfertas {
 			inventario.modificarEstado("Bloqueada", pieza);
 			ofertasVenta.add(oferta);
 		}
+	}
+	
+	public void recharOfertaVenta(Ofertas oferta) {
+		
+		inventario.modificarEstado("Disponible", oferta.getPiezas());
+		ofertasVenta.remove(oferta);
 	}
 	
 	/**

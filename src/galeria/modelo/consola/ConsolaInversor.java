@@ -1,13 +1,15 @@
 package galeria.modelo.consola;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import galeria.modelo.controlador.Galeria;
 import galeria.modelo.inventario.ArteVisual;
+import galeria.modelo.inventario.Autores;
 import galeria.modelo.inventario.ConsignacionPieza;
 import galeria.modelo.inventario.Inventario;
+import galeria.modelo.inventario.Piezas;
 import galeria.modelo.usuarios.HistorialInversor;
 import galeria.modelo.usuarios.OperacionSubasta;
 import galeria.modelo.usuarios.ProcesoCompra;
@@ -23,8 +25,8 @@ public class ConsolaInversor {
         Scanner scanner3 = new Scanner(System.in);
         
         RegistroInicio sesion = galeria.getRegistro();
+		OperacionSubasta subasta = galeria.getClaseSubasta();
 		Inventario inventario = galeria.getInventario();
-		OperacionSubasta subasta = galeria.getInventario().getClaseSubasta();
 		ProcesoCompra cajero = galeria.getCajero();
 		
 		consola.persistenciaCargarInventario();
@@ -48,14 +50,12 @@ public class ConsolaInversor {
             System.out.println("3. Ofertar por pieza en venta");
             System.out.println("4. Consultar el historial de una pieza");
             System.out.println("5. Consultar historial de un autor");
-            System.out.println("6. Consultar traza de cuenta");
-            System.out.println("7. Solicitar ampliar monto maximo de compras");
-            System.out.println("10. Volver al inicio");
+            System.out.println("6. Solicitar ampliar monto maximo de compras");
             System.out.println("0. Salir");
             System.out.print("Elije una opción: ");
             opcion = scanner.nextInt();
             
-            List<String> posiblesPropositos = new LinkedList<>();
+            List<String> posiblesPropositos = new ArrayList<>();
             posiblesPropositos.add("Exhibir");
             posiblesPropositos.add("Subastar");
             posiblesPropositos.add("Vender");
@@ -248,23 +248,66 @@ public class ConsolaInversor {
                 	consola.persistenciaSalvarInventario();
                     break;
                 case 2:
+                	System.out.println();
                     break;
                 case 3:
                     break;
                 case 4:
+                	System.out.print("Ingrese el titulo de la pieza que tuiere consultar: ");
+                	String titulo = scanner2.next();
+                	
+                	System.out.print("Ingrese el autor de la pieza que tuiere consultar: ");
+                	String autor = scanner2.next();
+                	
+                	List<ConsignacionPieza> piezas = galeria.getPiezasSolicitud();
+                	ConsignacionPieza pieza = null;
+                	for(ConsignacionPieza arte : piezas) {
+                		if(arte.getPieza().getTitulo().equals(titulo) && arte.getPieza().getAutores().equals(autor)) {
+                			pieza = arte;
+                		}
+                	}
+                	
+                	System.out.printf("%-10s %-10s %-10s %-10s %-10d%n", "Titulo", "Tipo", "Dueño", "Fecha Venta", "Precio Venta");
+                	if(pieza.getPieza().getProposito().equals("Vender")) {
+                		System.out.printf("%-10s %-10s %-10s %-10s %-10d%n", pieza.getPieza().getTitulo(), pieza.getPieza().getTipo(), pieza.getPropietario().getUsuario(), pieza.getPieza().getFechaVendida(), pieza.getPieza().getGaleriaOferta().getMontoCliente());
+                	}
+                	else if(pieza.getPieza().getProposito().equals("Subastar")) {
+                		System.out.printf("%-10s %-10s %-10s %-10s %-10d%n", pieza.getPieza().getTitulo(), pieza.getPieza().getTipo(), pieza.getPropietario().getUsuario(), pieza.getPieza().getFechaVendida(), pieza.getPieza().getGaleriaOferta().getMontoMinimo());
+                	}
+                	else if(pieza.getPieza().getProposito().equals("Exhibir")) {
+                		System.out.print("Esta pieza no se vende");
+                		System.out.printf("%-10s %-10s %-10s %-10s %-10d%n", pieza.getPieza().getTitulo(), pieza.getPieza().getTipo(), pieza.getPropietario().getUsuario(), pieza.getPieza().getFechaVendida(), 0);
+                	}
+                	
+                	//PONER PERSISTENCIA DE PIEZA QUE LE PERTENECEN
                     break;
                 case 5:
+                	System.out.print("Ingresa el nombre del autor que desea consultar: ");
+                	String nombre = scanner2.next();
+                	
+                	List<Autores> autoresDisponibles = galeria.getCentroAutores().getListaAutores();
+                	Autores autorEncontrado = null;
+                	for(Autores autor1 : autoresDisponibles) {
+                		if(autor1.getNombre().equals(nombre)) {
+                			autorEncontrado = autor1;
+                		}
+                	}
+                	
+                	System.out.printf("%-10s %-10s %-10s %-10s%n", "Pieza", "Fecha", "Fecha Vendida", "Monto");
+                	for(Piezas piezas1 : autorEncontrado.getListaPiezas()) {
+                		if(piezas1.getProposito().equals("Subastar")) {
+                			System.out.printf("%-10s %-10s %-10s %-10d%n", piezas1.getTitulo(), piezas1.getLugarCreacion(), piezas1.getFechaVendida(), piezas1.getGaleriaOferta().getMontoMinimo());
+                		}
+                		else if(piezas1.getProposito().equals("Vender")) {
+                			System.out.printf("%-10s %-10s %-10s %-10d%n", piezas1.getTitulo(), piezas1.getLugarCreacion(), piezas1.getFechaVendida(), piezas1.getGaleriaOferta().getMontoCliente());
+                		}
+                		else if(piezas1.getProposito().equals("Exhibir")) {
+                			System.out.printf("%-10s %-10s %-10s %-10d%n", piezas1.getTitulo(), piezas1.getLugarCreacion(), piezas1.getFechaVendida(), 0);
+                		}
+                	}
+                	//PONER PERSISTENCIA DE PIEZA QUE LE PERTENECEN
                     break;
                 case 6:
-                    break;
-                case 7:
-                    break;
-                case 8:
-                    break;
-                case 9:
-                    break;
-                case 10:
-                	ConsolaInicio.main(null);
                     break;
                 case 0:
                 	salir = true;

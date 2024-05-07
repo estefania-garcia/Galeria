@@ -3,7 +3,6 @@ package galeria.modelo.usuarios;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +17,8 @@ public class OperacionSubasta {
 	 * Lista de las ofertas de la subasta que se van registrando en el mapa
 	 * */
 	private List<Ofertas> listaOfertas;
+	
+	private List<Ofertas> listaOfertasFinales;
 	/**
 	 * Mapa que registra las ofertas de la subasta segun la pieza, donde las llaves son la pieza y el valor es la lista de las ofertas asociadas a esta.
 	 * */
@@ -41,6 +42,7 @@ public class OperacionSubasta {
 	public OperacionSubasta() {
 		
 		listaOfertas = new ArrayList<Ofertas>();
+		listaOfertasFinales = new ArrayList<Ofertas>();
 		mapaSubastas = new HashMap<>();
 	}
 	
@@ -85,12 +87,22 @@ public class OperacionSubasta {
 		Ofertas oferta_final = lista.get(lista.size()-1);
 		mapaSubastas.remove(pieza);
 		if(oferta_subastas.venderPieza() == true) {
-			galeria.ofertasFinalesSubastas(oferta_final);
+			listaOfertasFinales.add(oferta_final);
 		}
+	}
+	
+	public void recharOfertaFinal(Ofertas oferta) {
+		
+		listaOfertasFinales.remove(oferta);
 	}
 	
 	public Map<Piezas, List<Ofertas>> getMapa(){
 		
 		return mapaSubastas;
+	}
+	
+	public List<Ofertas> getofertaFinalesSubasta(){
+		
+		return listaOfertasFinales;
 	}
 }
