@@ -13,6 +13,7 @@ import galeria.modelo.compras.Ofertas;
 import galeria.modelo.controlador.Galeria;
 import galeria.modelo.inventario.ArteVisual;
 import galeria.modelo.inventario.Autores;
+import galeria.modelo.inventario.CentroAutores;
 import galeria.modelo.inventario.ConsignacionPieza;
 import galeria.modelo.inventario.Inventario;
 import galeria.modelo.inventario.Piezas;
@@ -38,8 +39,10 @@ public class ConsolaInversor {
 		Inventario inventario = galeria.getInventario();
 		ProcesoCompra cajero = galeria.getCajero();
 		CentroOfertas centroOferta = galeria.getCentroOfertas();
+		CentroAutores cenAutores = galeria.getCentroAutores();
 		
 		consola.persistenciaCargarInventario();
+		consola.persistenciaCargarAutores();
         
         HistorialInversor inversor = null;
         for(HistorialInversor usu : galeria.getListaHistorial()) {
@@ -83,8 +86,8 @@ public class ConsolaInversor {
 
                     System.out.print("Ingrese el propósito (Exhibir, Subastar, Vender): ");
                     String proposito = scanner2.next();
-                    double monto = 0;
-                    double montoMin = 0;
+                    int monto = 0;
+                    int montoMin = 0;
                     
                     if(!posiblesPropositos.contains(proposito)) {
                     	System.out.print("Ingrese un valor válido");
@@ -96,14 +99,14 @@ public class ConsolaInversor {
                     }
                     else if(proposito.equals("Subastar")) {
                     	System.out.print("Ingrese el monto inicial: ");
-                        monto = scanner2.nextDouble();
+                        monto = scanner2.nextInt();
                         
                         System.out.print("Ingrese el monto minimo de venta: ");
-                        montoMin = scanner2.nextDouble();
+                        montoMin = scanner2.nextInt();
                     }
                     else if(proposito.equals("Vender")) {
                     	System.out.print("Ingrese el precio fijo de venta: ");
-                        monto = scanner2.nextDouble();
+                        monto = scanner2.nextInt();
                         montoMin = 0;
                     }
 
@@ -119,6 +122,7 @@ public class ConsolaInversor {
                     }else {
                     	tiempo = 0;
                     }
+                    
                 	if(tipo.equals("Arte Cuadros")) {
                         
                         System.out.print("Ingrese el ancho y largo: ");
@@ -131,12 +135,19 @@ public class ConsolaInversor {
                         inventario.añadirPiezasSolicitud(pieza);
                         
                     	System.out.println("Registro existoso. A espera de aprobación.");
-                    	//scanner2.close();
+                    	
+                    	String[] nombresCompletos = autores.split(",");
+                    	for (String nombreCompleto : nombresCompletos) {
+                    		String nombreC = nombreCompleto.replaceAll("(?<=.)([A-Z])", " $1");
+                    		Autores auto = cenAutores.crearAutor(nombreC);
+                    		auto.agregarPiezas(pieza.getPieza());
+                    		consola.persistenciaSalvarAutores();
+                        }
                 	}
                 	else if(tipo.equals("Arte Tridimensional")) {
 
                 		System.out.print("Ingresa el peso: ");
-                        double peso = scanner3.nextDouble();
+                        int peso = scanner3.nextInt();
                         
                         System.out.print("¿La obra necesita electricidad?: ");
                         boolean electricidad = scanner3.nextBoolean();
@@ -151,13 +162,16 @@ public class ConsolaInversor {
                         inventario.añadirPiezasSolicitud(pieza);
                     	
                     	System.out.println("Registro existoso. A espera de aprobación.");
-                    	//scanner2.close();
-                    	//scanner3.close();
+                    	String[] nombresCompletos = autores.split(",");
+                    	for (String nombreCompleto : nombresCompletos) {
+                    		String nombreC = nombreCompleto.replaceAll("(?<=.)([A-Z])", " $1");
+                    		Autores auto = cenAutores.crearAutor(nombreC);
+                    		auto.agregarPiezas(pieza.getPieza());
+                    		consola.persistenciaSalvarAutores();
+                        }
                 	}
                 	else if(tipo.equals("Arte Digital")) {
                 		
-                		
-                        
                         System.out.print("Ingrese el tipo de arte: ");
                         String tipoArte = scanner2.next();
                         
@@ -168,24 +182,38 @@ public class ConsolaInversor {
                         inventario.añadirPiezasSolicitud(pieza);
                     	
                     	System.out.println("Registro existoso. A espera de aprobación.");
-                    	//scanner2.close();
-                    	//scanner3.close();
+                    	String[] nombresCompletos = autores.split(",");
+                    	for (String nombreCompleto : nombresCompletos) {
+                    		String nombreC = nombreCompleto.replaceAll("(?<=.)([A-Z])", " $1");
+                    		Autores auto = cenAutores.crearAutor(nombreC);
+                    		auto.agregarPiezas(pieza.getPieza());
+                    		consola.persistenciaSalvarAutores();
+                        }
                 	}
                 	else {
                 		System.out.println("Ingrese un valor válido");
                 	}
+                	
                 	consola.persistenciaSalvarInventario();
                     break;
                 case 2:
+                	inventario.agregarPiezaSubasta();
                 	System.out.println("Estas son las piezas disponibles: ");
                 	Set<Piezas> piezasSubasta = galeria.getMapaSubastas().keySet();
                 	System.out.printf("%-10s %-10s %-10s %-10s", "Número", "Pieza", "Autor/es", "Puja Actual");
+                	System.out.print("\n");
                 	int contador = 0;
                 	for(Piezas pieza : piezasSubasta) {
                 		contador++;
-                		List<Ofertas> oferta = galeria.getMapaSubastas().get(pieza); 
-                		System.out.printf("%-10d %-10s %-10s %-10d%n", contador, pieza.getTitulo(), pieza.getAutores(), oferta.get(oferta.size()-1).getMonto());
+                		List<Ofertas> oferta = galeria.getMapaSubastas().get(pieza);
+                		if(oferta.size() > 0) {
+                			System.out.printf("%-10d %-10s %-10s %-10f%n", contador, pieza.getTitulo(), pieza.getAutores(), oferta.get(oferta.size()-1).getMonto());
+                		}
+                		else {
+                			System.out.printf("%-10d %-10s %-10s %-10f%n", contador, pieza.getTitulo(), pieza.getAutores(), pieza.getGaleriaOferta().getMontoCliente());
+                		}
                 	}
+                	System.out.print("\n");
                 	System.out.print("Ingrese el titulo de la pieza: ");
                 	String titulo1 = scanner2.next();
                 	
@@ -199,7 +227,7 @@ public class ConsolaInversor {
                 		}
                 	}
                 	System.out.println("Ingrese el monto: ");
-                	double montoParticipa = scanner2.nextDouble();
+                	int montoParticipa = scanner2.nextInt();
                 	System.out.println("Si ingresa un valor menor su oferta no será tomada en cuenta");
                 	OfertaSubasta ofertaNuevas = inversor.crearOfertaSubasta(seleccionada, inversor, montoParticipa);
                     centroOferta.agregarOfertas(ofertaNuevas);
@@ -287,6 +315,7 @@ public class ConsolaInversor {
                 case 6:
                 	inversor.crearSolicitudMonto();
                 	System.out.println("Su solicitud ha sido registrada con exito.");
+                	consola.persistenciaSalvar();
                     break;
                 case 0:
                 	salir = true;

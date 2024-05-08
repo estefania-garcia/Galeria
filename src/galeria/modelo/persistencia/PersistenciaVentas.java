@@ -53,7 +53,7 @@ public class PersistenciaVentas {
 			String ofertador = oferta.getString("ofertador");
 			String titulo = oferta.getString("titulo");
 			String autores = oferta.getString("autores");
-			double monto = oferta.getDouble("monto");
+			int monto = oferta.getInt("monto");
 			String tipo = oferta.getString("tipo");
 			
 			HistorialInversor inver = null;
@@ -107,7 +107,7 @@ public class PersistenciaVentas {
 			String ofertador = oferta.getString("ofertador");
 			String titulo = oferta.getString("titulo");
 			String autores = oferta.getString("autores");
-			double monto = oferta.getDouble("monto");
+			int monto = oferta.getInt("monto");
 			String tipo = oferta.getString("tipo");
 			
 			HistorialInversor inver = null;

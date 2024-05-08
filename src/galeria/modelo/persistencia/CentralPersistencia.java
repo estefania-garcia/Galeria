@@ -16,4 +16,9 @@ public class CentralPersistencia {
 		
 		return new PersistenciaVentas();
 	}
+	
+	public static PersistenciaAutores getPersistenciaAutores() {
+		
+		return new PersistenciaAutores();
+	}
 }

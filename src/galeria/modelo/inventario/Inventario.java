@@ -153,8 +153,12 @@ public class Inventario {
 
 		if(piezas.getPieza().getAprobada() == true) {
 			añadirPiezasTodas(piezas.getPieza());
-			if(piezas.getPieza().getDeposito() == true) {
+			if(piezas.getPieza().getDeposito() == true && piezas.getPieza().getVigencia() == true) {
 				piezasDeposito.add(piezas);
+			}
+			else if(piezas.getPieza().getDeposito() == true && piezas.getPieza().getVigencia() == false) {
+				piezasDevueltas.add(piezas);
+				piezasDeposito.remove(piezas);
 			}
 		}
 	}
@@ -191,14 +195,6 @@ public class Inventario {
 		
 		return piezasDeposito;
 	}
-	/**
-	public void devolverPieza(ConsignacionPieza pieza) {
-		
-		piezasDevueltas.add(pieza);
-		piezasDevueltas.remove(pieza);
-		pieza.getPieza().asignarVigenica(false);
-		añadirPiezasTodas(pieza.getPieza());
-	}*/
 	
 	/**
 	 * Método getter de la lista de piezas devueltas

@@ -22,7 +22,7 @@ public class OfertaVenta extends Ofertas{
 	 * @param comprador
 	 * @param monto
 	 * */
-	public OfertaVenta(Piezas pieza, HistorialInversor comprador, double monto) {
+	public OfertaVenta(Piezas pieza, HistorialInversor comprador, int monto) {
 		super(pieza, comprador, monto);
 	}
 	

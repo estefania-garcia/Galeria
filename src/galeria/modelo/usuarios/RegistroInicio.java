@@ -175,7 +175,7 @@ public class RegistroInicio {
 		return false;
 	}
 	
-	public HistorialInversor crearHistoriales(Usuarios usuario, double monto) {
+	public HistorialInversor crearHistoriales(Usuarios usuario, int monto) {
 
 		HistorialInversor nombre = new HistorialInversor(monto, usuario);
 		listaHistorialesInversores.add(nombre) ;

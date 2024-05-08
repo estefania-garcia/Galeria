@@ -9,19 +9,19 @@ public class GaleriaOferta {
 	/**
 	 * Método getter del atributo monto cliente. Para las subasta representa el monto inicial y para las ventas representa el monto fijo
 	 * */
-	private double montoCliente;
+	private int montoCliente;
 	
 	/**
 	 * Método getter del atributo monto minimo. Aplica para las ofertas de tipo subasta
 	 * */
-	private double montoMinimo;
+	private int montoMinimo;
 	
 	/**
 	 * Constructor para las ofertas de tipo subasta. Relaciona el monto inicial y el monto minimo
 	 * @param monto
 	 * @param montoMinimo
 	 * */
-	public GaleriaOferta(double monto, double montoMinimo) {
+	public GaleriaOferta(int monto, int montoMinimo) {
 		
 		this.montoCliente = monto;
 		this.montoMinimo = montoMinimo;
@@ -30,14 +30,14 @@ public class GaleriaOferta {
 	/**
 	 * Método getter del atributo montoCliente
 	 * */
-	public double getMontoCliente() {
+	public int getMontoCliente() {
 		return montoCliente;
 	}
 	
 	/**
 	 * Método getter del atributo montoMinimo
 	 * */
-	public double getMontoMinimo() {
+	public int getMontoMinimo() {
 		return montoMinimo;
 	}
 }

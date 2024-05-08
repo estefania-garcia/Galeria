@@ -4,8 +4,6 @@ package galeria.modelo.usuarios;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONObject;
-
 import galeria.modelo.compras.GaleriaOferta;
 import galeria.modelo.compras.OfertaSubasta;
 import galeria.modelo.compras.OfertaVenta;
@@ -14,7 +12,6 @@ import galeria.modelo.inventario.ArteDigital;
 import galeria.modelo.inventario.ArteTridimensional;
 import galeria.modelo.inventario.ArteVisual;
 import galeria.modelo.inventario.ConsignacionPieza;
-import galeria.modelo.inventario.CrearPiezas;
 import galeria.modelo.inventario.Piezas;
 
 public class HistorialInversor{
@@ -29,9 +26,9 @@ public class HistorialInversor{
 	/**
 	 * Atributo que indica el monto maximo a gastar
 	 * */
-	private double montoMaximo;
+	private int montoMaximo;
 	
-	private double valorColeccion;
+	private int valorColeccion;
 	
 	/**
 	 * Atributo que nos da acceso a galeria
@@ -43,7 +40,7 @@ public class HistorialInversor{
 	/**
 	 * Constructor que relaciona propiedades de la super clase y inicializa la listas
 	 * */
-	public HistorialInversor(double monto, Usuarios inversor) {
+	public HistorialInversor(int monto, Usuarios inversor) {
 		
 		this.montoMaximo = monto;
 		this.inversor = inversor;
@@ -56,8 +53,14 @@ public class HistorialInversor{
 		this.galeria = galeria;
 	}
 	
-	public double getValorColeccion() {
+	public int getValorColeccion() {
 		
+		return valorColeccion;
+	}
+	
+	public int asignarValorColeccion(int compra) {
+		
+		valorColeccion = valorColeccion + compra;
 		return valorColeccion;
 	}
 	
@@ -65,7 +68,7 @@ public class HistorialInversor{
 	 * Método que dofica el monto maximo
 	 * @param montoMaximo
 	 * */
-	public void modificarMontoMaximo(double montoMaximo) {
+	public void modificarMontoMaximo(int montoMaximo) {
         
 		this.montoMaximo = montoMaximo;
 	}
@@ -74,7 +77,7 @@ public class HistorialInversor{
 	 * Método getter del monto maximo
 	 * @return montoMaximo
 	 * */
-	public double getMontoMaximo() {
+	public int getMontoMaximo() {
 		
 		return montoMaximo;
 	}
@@ -101,6 +104,11 @@ public class HistorialInversor{
 		pizasPropias.add(piezas);
 	}
 	
+	public void agregarPiezasCompradas(Piezas piezas){
+		
+		piezasCompradas.add(piezas);
+	}
+	
 	/**
 	 * Método getter del usuario dueño
 	 * */
@@ -109,13 +117,13 @@ public class HistorialInversor{
 		return inversor;
 	}
 	
-	public OfertaSubasta crearOfertaSubasta(Piezas pieza, HistorialInversor comprador, double monto) {
+	public OfertaSubasta crearOfertaSubasta(Piezas pieza, HistorialInversor comprador, int monto) {
 		
 		OfertaSubasta ofertaNueva = new OfertaSubasta(pieza, comprador, monto);
         return ofertaNueva;
 	}
 	
-	public OfertaVenta crearOfertaVenta(Piezas pieza, HistorialInversor comprador, double monto) {
+	public OfertaVenta crearOfertaVenta(Piezas pieza, HistorialInversor comprador, int monto) {
 		
 		OfertaVenta ofertaNueva = new OfertaVenta(pieza, comprador, monto);
         return ofertaNueva;
@@ -128,7 +136,7 @@ public class HistorialInversor{
 	 * @param monto
 	 * @return GaleriOferta
 	 * */
-	public GaleriaOferta crearOfertaGaleria(double monto, double montoMinimo, String proposito) {
+	public GaleriaOferta crearOfertaGaleria(int monto, int montoMinimo, String proposito) {
 
 		GaleriaOferta oferta = new GaleriaOferta(monto, montoMinimo);
 		return oferta;
@@ -139,7 +147,7 @@ public class HistorialInversor{
 	 * @param sus parametros son todos los requeridos para la creacion de la pieza
 	 * @return ArteDigital
 	 * */
-	public ConsignacionPieza CrearPiezaDigital(int dias, String titulo, double monto, double montoMinimo, String proposito, String lugar_creacion, boolean deposito, Usuarios propietario, String autores, String tipoArte, String tipoArchivo) {
+	public ConsignacionPieza CrearPiezaDigital(int dias, String titulo, int monto, int montoMinimo, String proposito, String lugar_creacion, boolean deposito, Usuarios propietario, String autores, String tipoArte, String tipoArchivo) {
 		GaleriaOferta oferta = crearOfertaGaleria(monto, montoMinimo, proposito);
 		Piezas pieza = new ArteDigital(titulo, proposito, lugar_creacion, deposito, oferta, inversor, autores, tipoArte, tipoArchivo);
 		ConsignacionPieza consignacion = new ConsignacionPieza(dias, pieza, inversor);
@@ -153,7 +161,7 @@ public class HistorialInversor{
 	 * @param sus parametros son todos los requeridos para la creacion de la pieza
 	 * @return ArteTridimensional
 	 * */
-	public ConsignacionPieza CrearPiezaTridimensional(int dias, String titulo,  double monto, double montoMinimo, String proposito, String lugar_creacion, boolean deposito, Usuarios propietario, String autores, String dimensiones, String tecnica, double peso, boolean electricidad) {
+	public ConsignacionPieza CrearPiezaTridimensional(int dias, String titulo,  int monto, int montoMinimo, String proposito, String lugar_creacion, boolean deposito, Usuarios propietario, String autores, String dimensiones, String tecnica, int peso, boolean electricidad) {
 		GaleriaOferta oferta = crearOfertaGaleria(monto, montoMinimo, proposito);
 		Piezas pieza = new ArteTridimensional(titulo, proposito, lugar_creacion, deposito, oferta, inversor, autores, dimensiones, tecnica, peso, electricidad);
 		ConsignacionPieza consignacion = new ConsignacionPieza(dias, pieza, inversor);
@@ -167,7 +175,7 @@ public class HistorialInversor{
 	 * @param sus parametros son todos los requeridos para la creacion de la pieza
 	 * @return ArteVisual
 	 * */
-	public ConsignacionPieza CrearPiezaPintura(int dias, String titulo, double monto, double montoMinimo, String proposito, String lugar_creacion, boolean deposito, Usuarios propietario, String autores, String anchoxlargo,String tecnica) {
+	public ConsignacionPieza CrearPiezaPintura(int dias, String titulo, int monto, int montoMinimo, String proposito, String lugar_creacion, boolean deposito, Usuarios propietario, String autores, String anchoxlargo,String tecnica) {
 		GaleriaOferta oferta = crearOfertaGaleria(monto, montoMinimo, proposito);
 		Piezas pieza = new ArteVisual(titulo, proposito, lugar_creacion, deposito, oferta, inversor, autores, anchoxlargo, tecnica);
 		ConsignacionPieza consignacion = new ConsignacionPieza(dias, pieza, inversor);

@@ -15,6 +15,7 @@ import galeria.modelo.controlador.Galeria;
 import galeria.modelo.inventario.ArteDigital;
 import galeria.modelo.inventario.ArteTridimensional;
 import galeria.modelo.inventario.ArteVisual;
+import galeria.modelo.inventario.Autores;
 import galeria.modelo.inventario.ConsignacionPieza;
 import galeria.modelo.usuarios.HistorialInversor;
 import galeria.modelo.usuarios.Usuarios;
@@ -57,8 +58,8 @@ public class PersistenciaInventario {
 			boolean vigencia = pieza.getBoolean("vigencia");
 			boolean venta = pieza.getBoolean("venta");
 			boolean aprobacion = pieza.getBoolean("aprobacion");
-			double monto = pieza.getDouble("monto");
-			double montoMin = pieza.getDouble("montoMin");
+			int monto = pieza.getInt("monto");
+			int montoMin = pieza.getInt("montoMin");
 			int tiempo = pieza.getInt("tiempo");
 			String propietario = pieza.getString("propietario");
 			String autores = pieza.getString("autores");
@@ -92,13 +93,27 @@ public class PersistenciaInventario {
 							historial = histo;
 						}
 					}
-					historial.agregarPiezasPropias(arte);
+					for(Autores auto : galeria.getCentroAutores().getListaAutores()) {
+						
+						String[] nombresCompletos = autores.split(",");
+	                	for (String nombreCompleto : nombresCompletos) {
+	                		String nombreC = nombreCompleto.replaceAll("(?<=.)([A-Z])", " $1");
+	                		if(auto.getNombre().equals(nombreC)) {
+	                			auto.agregarPiezas(arte);
+	                		}
+	                    }
+					}
+					if(arte.getVenta() == true) {
+						historial.agregarPiezasCompradas(arte);
+					}else {
+						historial.agregarPiezasPropias(arte);
+					}
 				}
 			}
 			else if(tipo.equals("Arte Tridimensional")){
 				String dimensiones = pieza.getString("dimensiones");
 				String tecnica = pieza.getString("tecnica");
-				double peso = pieza.getDouble("peso");
+				int peso = pieza.getInt("peso");
 				boolean electricidad = pieza.getBoolean("electricidad");
 				GaleriaOferta ofert = new GaleriaOferta(monto, montoMin);
 				ArteTridimensional arte = new ArteTridimensional(titulo, proposito, creacion, deposito, ofert, inver, autores, dimensiones, tecnica, peso, electricidad);
@@ -117,7 +132,21 @@ public class PersistenciaInventario {
 							historial = histo;
 						}
 					}
-					historial.agregarPiezasPropias(arte);
+					for(Autores auto : galeria.getCentroAutores().getListaAutores()) {
+						
+						String[] nombresCompletos = autores.split(",");
+	                	for (String nombreCompleto : nombresCompletos) {
+	                		String nombreC = nombreCompleto.replaceAll("(?<=.)([A-Z])", " $1");
+	                		if(auto.getNombre().equals(nombreC)) {
+	                			auto.agregarPiezas(arte);
+	                		}
+	                    }
+					}
+					if(arte.getVenta() == true) {
+						historial.agregarPiezasCompradas(arte);
+					}else {
+						historial.agregarPiezasPropias(arte);
+					}
 				}
 			}
 			else if(tipo.equals("Arte Digital")) {
@@ -140,7 +169,21 @@ public class PersistenciaInventario {
 							historial = histo;
 						}
 					}
-					historial.agregarPiezasPropias(arte);
+					for(Autores auto : galeria.getCentroAutores().getListaAutores()) {
+						
+						String[] nombresCompletos = autores.split(",");
+	                	for (String nombreCompleto : nombresCompletos) {
+	                		String nombreC = nombreCompleto.replaceAll("(?<=.)([A-Z])", " $1");
+	                		if(auto.getNombre().equals(nombreC)) {
+	                			auto.agregarPiezas(arte);
+	                		}
+	                    }
+					}
+					if(arte.getVenta() == true) {
+						historial.agregarPiezasCompradas(arte);
+					}else {
+						historial.agregarPiezasPropias(arte);
+					}
 				}
 			}
 		}

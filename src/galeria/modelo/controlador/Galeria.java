@@ -8,11 +8,13 @@ import java.util.Iterator;
 
 import galeria.modelo.compras.CentroOfertas;
 import galeria.modelo.compras.Ofertas;
+import galeria.modelo.inventario.Autores;
 import galeria.modelo.inventario.CentroAutores;
 import galeria.modelo.inventario.ConsignacionPieza;
 import galeria.modelo.inventario.Inventario;
 import galeria.modelo.inventario.Piezas;
 import galeria.modelo.persistencia.CentralPersistencia;
+import galeria.modelo.persistencia.PersistenciaAutores;
 import galeria.modelo.persistencia.PersistenciaInventario;
 import galeria.modelo.persistencia.PersistenciaUsuariosJson;
 import galeria.modelo.persistencia.PersistenciaVentas;
@@ -136,6 +138,18 @@ public class Galeria {
 		cargador.salvarTodasPiezas(this);
 	}
 	
+	public void cargarAutores() throws IOException {
+		
+		PersistenciaAutores cargador = CentralPersistencia.getPersistenciaAutores();
+		cargador.cargarTodo(this);
+	}
+	
+	public void salvarAutores() throws IOException {
+		
+		PersistenciaAutores cargador = CentralPersistencia.getPersistenciaAutores();
+		cargador.salvarTodo(this);
+	}
+	
 	public ProcesoCompra getCajero() {
 		
 		return cajero;
@@ -176,6 +190,11 @@ public class Galeria {
 		listaSolicitudMonto.add(solicitud);
 	}
 	
+	public void eliminarSolicitudMonto(HistorialInversor solicitud) {
+		
+		listaSolicitudMonto.remove(solicitud);
+	}
+	
 	public List<HistorialInversor> getSolicitudMonto() {
 		
 		return listaSolicitudMonto;
@@ -189,5 +208,10 @@ public class Galeria {
 	public List<Piezas> getPiezasVigentes(){
 		
 		return inventario.getVigentes();
+	}
+	
+	public List<Autores> getListaAutores(){
+		
+		return autores.getListaAutores();
 	}
 }

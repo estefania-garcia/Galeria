@@ -20,7 +20,7 @@ public class ArteTridimensional extends Piezas{
 	/**
 	 * Atributo que relacion el peso de la pieza
 	 * */
-	private double peso;
+	private int peso;
 	
 	/**
 	 * Atributo que indica si la pieza requiere electricidad o no
@@ -42,7 +42,7 @@ public class ArteTridimensional extends Piezas{
 	 * @param electricidad
 	 * @param tecnica
 	 * */
-	public ArteTridimensional(String titulo, String proposito, String lugar_creacion, boolean deposito, GaleriaOferta galeriaOferta, Usuarios propietario, String autores, String dimensiones, String tecnica, double peso, boolean electricidad) {
+	public ArteTridimensional(String titulo, String proposito, String lugar_creacion, boolean deposito, GaleriaOferta galeriaOferta, Usuarios propietario, String autores, String dimensiones, String tecnica, int peso, boolean electricidad) {
 		super(titulo, proposito, lugar_creacion, autores, deposito, galeriaOferta, propietario);
 		this.dimensiones = dimensiones;
 		this.peso = peso;
@@ -79,7 +79,7 @@ public class ArteTridimensional extends Piezas{
 	 * Método getter que indica el peso de la pieza
 	 * @return peso
 	 * */
-	public double getPeso() {
+	public int getPeso() {
 		return peso;
 	}
 	

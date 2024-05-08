@@ -15,7 +15,15 @@ public class CentroAutores {
 	
 	public void guardarNuevoAutor(Autores autor) {
 		
-		listaAutores.add(autor);
+		boolean aprobar = true;
+		for(Autores au : listaAutores) {
+			if(au.getNombre().equals(autor.getNombre())) {
+				aprobar = false;
+			}
+		}
+		if(aprobar == true) {
+			listaAutores.add(autor);
+		}
 	}
 	
 	public List<Autores> getListaAutores(){
@@ -37,10 +45,11 @@ public class CentroAutores {
 		return null;
 	}
 	
-	public void crearAutor(String nombre) {
+	public Autores crearAutor(String nombre) {
 		
 		Autores autor = new Autores(nombre);
 		guardarNuevoAutor(autor);
+		return autor;
 	}
 	
 	public void añadirPiezas(String nombre, Piezas pieza) {

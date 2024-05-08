@@ -26,6 +26,7 @@ public class PersistenciaUsuariosJson {
         cargarUsuarios(galeria, raiz.getJSONArray("Usuarios"));
         cargarRegistros(galeria, raiz.getJSONArray("Registros"));
         cargarHistoriales(galeria, raiz.getJSONArray("HistorialesInversor"));
+        cargarSolicitudMontos(galeria, raiz.getJSONArray("SolicitudesMonto"));
 	}
 	
 	public void salvarTdosoUsuarios(Galeria galeria) throws FileNotFoundException {
@@ -36,6 +37,7 @@ public class PersistenciaUsuariosJson {
 		salvarUsuarios(galeria, jobject);
 		salvarRegistros(galeria, jobject);
 		salvarHistoriales(galeria, jobject);
+		salvarSolicitudMontos(galeria, jobject);
 		
 		PrintWriter pw = new PrintWriter( rutaArchivo );
         jobject.write( pw, 2, 0 );
@@ -98,7 +100,7 @@ public class PersistenciaUsuariosJson {
 		for(int i = 0; i < numHistoriales; i++) {
 			JSONObject historial = jHistoriales.getJSONObject(i);
 			
-			double monto = historial.getDouble("monto");
+			int monto = historial.getInt("monto");
 			String inversor = historial.getString("inversor");
 			List<Usuarios> lista = galeria.getUsuarios();
 			Usuarios inver = null;
@@ -108,6 +110,7 @@ public class PersistenciaUsuariosJson {
 				}
 			}
 			HistorialInversor nuevoHistorial = new HistorialInversor(monto, inver);
+			nuevoHistorial.modificarMontoMaximo(monto);
 			galeria.getRegistro().crearHistoriales(nuevoHistorial.getInversor(), nuevoHistorial.getMontoMaximo());
 		}
 	}
@@ -125,5 +128,37 @@ public class PersistenciaUsuariosJson {
 			jHistoriales.put(jHistorial);
 		}
 		jobject.put( "HistorialesInversor", jHistoriales );
+	}
+	
+	private void cargarSolicitudMontos(Galeria galeria, JSONArray jSolicitudes) {
+		
+		int numHSolicitudes = jSolicitudes.length();
+		for(int i = 0; i < numHSolicitudes; i++) {
+			JSONObject solicitud = jSolicitudes.getJSONObject(i);
+			
+			String usuario = solicitud.getString("usuario");
+			List<HistorialInversor> lista = galeria.getListaHistorial();
+			HistorialInversor inver = null;
+			for(HistorialInversor usu : lista) {
+				if(usu.getInversor().getUsuario().equals(usuario)) {
+					inver = usu;
+				}
+			}
+			galeria.agregarSolicitudMonto(inver);
+		}
+	}
+
+	private void salvarSolicitudMontos(Galeria galeria, JSONObject jobject) {
+			
+		JSONArray jSolicitudes = new JSONArray();
+		for(HistorialInversor historial : galeria.getSolicitudMonto()) {
+				
+			JSONObject jSolicitud = new JSONObject();
+			jSolicitud.put("usuario", historial.getInversor().getUsuario());
+			jSolicitud.put("aprobado", historial.getInversor().getUsuario());
+			
+			jSolicitudes.put(jSolicitud);
+		}
+		jobject.put( "SolicitudesMonto", jSolicitudes );
 	}
 }

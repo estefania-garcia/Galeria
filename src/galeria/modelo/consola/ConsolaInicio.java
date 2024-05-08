@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import galeria.modelo.controlador.Galeria;
+import galeria.modelo.inventario.Inventario;
 import galeria.modelo.usuarios.RegistroInicio;
 
 public class ConsolaInicio {
@@ -15,7 +16,6 @@ public class ConsolaInicio {
         try {
 			galeria.cargarUsuarios();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -25,7 +25,6 @@ public class ConsolaInicio {
         try {
 			galeria.salvarUsuarios();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -35,7 +34,6 @@ public class ConsolaInicio {
         try {
 			galeria.cargarInventario();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -45,7 +43,6 @@ public class ConsolaInicio {
         try {
 			galeria.salvarInventario();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -56,6 +53,24 @@ public class ConsolaInicio {
 			galeria.cargarVentas();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void persistenciaSalvarAutores() {
+		
+        try {
+			galeria.salvarAutores();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void persistenciaCargarAutores() {
+		
+        try {
+			galeria.cargarAutores();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -74,6 +89,7 @@ public class ConsolaInicio {
 		
 		ConsolaInicio consola = new ConsolaInicio();
 		RegistroInicio sesion = galeria.getRegistro();
+		Inventario inventario = galeria.getInventario();
 		consola.persistenciaCargar();
 		
         Scanner scanner = new Scanner(System.in);

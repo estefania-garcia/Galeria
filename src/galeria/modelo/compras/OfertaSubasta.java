@@ -24,7 +24,7 @@ public class OfertaSubasta extends Ofertas{
 	 * @param comprador
 	 * @param monto
 	 * */
-	public OfertaSubasta(Piezas pieza, HistorialInversor comprador, double monto) {
+	public OfertaSubasta(Piezas pieza, HistorialInversor comprador, int monto) {
 		super(pieza, comprador, monto);
 	}
 

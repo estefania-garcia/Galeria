@@ -1,4 +1,8 @@
 {
+  "SolicitudesMonto": [{
+    "aprobado": "Isabel",
+    "usuario": "Isabel"
+  }],
   "Usuarios": [
     {
       "usuario": "Stefania",
@@ -15,7 +19,7 @@
   ],
   "HistorialesInversor": [{
     "inversor": "Isabel",
-    "monto": 5000000
+    "monto": 6000000
   }],
   "Registros": [{
     "usuario": "MelissaA",

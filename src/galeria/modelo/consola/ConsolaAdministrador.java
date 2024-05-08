@@ -26,8 +26,9 @@ public class ConsolaAdministrador {
 		ProcesoCompra cajero = galeria.getCajero();
 		CentroAutores autores = galeria.getCentroAutores();
 		
-		consola.persistenciaCargarInventario();
+		consola.persistenciaCargarAutores();
 		consola.persistenciaCargarVentas();
+		consola.persistenciaCargarInventario();
 		
         Scanner scanner = new Scanner(System.in);
         Scanner scanner2 = new Scanner(System.in);
@@ -81,7 +82,7 @@ public class ConsolaAdministrador {
                     		sesion.agregarNuevosAprobados(usu);
                     		if(usu.getRol().equals("Inversor")) {
                     			System.out.print("Ingresa el monto maximo de compras para este usuario: ");
-                            	double monto = scanner2.nextDouble();
+                            	int monto = scanner2.nextInt();
                             	sesion.crearHistoriales(usu, monto);
                     		}
                     	}
@@ -138,9 +139,7 @@ public class ConsolaAdministrador {
                 	}
                     break;
                 case 3:
-                	System.out.println("Acaba de iniciar exitosamente todas las subastas en espera de las piezas que aprobó");
-            		inventario.agregarPiezaSubasta();
-            		
+                	inventario.agregarPiezaSubasta();
                 	System.out.println("1. Finalizar Subasta");
                     System.out.println("3. Aprobar ofertas subasta");
                     System.out.print("Elije una opción: ");
@@ -277,18 +276,30 @@ public class ConsolaAdministrador {
                 	System.out.print(encontrado.getValorColeccion());
                 	System.out.print("\n");
                 	
-                	System.out.printf("%-10s %-10s%n", "Fecha Compra", "Pieza");
-                	for(Piezas pieza : encontrado.getPiezasCompradas()) {
-                		System.out.printf("%-10d %-10s%n", pieza.getFechaVendida(), pieza.getTitulo());
+                	if(encontrado.getPiezasCompradas().size() > 0 ) {
+                		System.out.printf("%-10s %-10s %-10s%n", "Fecha Compra", "Pieza", "Creacion");
+                    	for(Piezas pieza : encontrado.getPiezasCompradas()) {
+                    		System.out.printf("%-10s %-10s %-10s%n", pieza.getFechaVendida(), pieza.getTitulo(), pieza.getLugarCreacion());
+                    	}
+                    	System.out.print("\n");
+                	}else {
+                		System.out.println("No ha comprado piezas");
+                		System.out.print("\n");
                 	}
                 	
-                	System.out.printf("%-10s %-10s%n", "Tipo", "Pieza");
-                	for(Piezas pieza : encontrado.getPiezasCompradas()) {
-                		System.out.printf("%-10s %-10s%n", pieza.getTipo(), pieza.getTitulo());
+                	if(encontrado.getPiezas().size() > 0) {
+                		System.out.printf("%-10s %-10s %-10s%n", "Tipo", "Pieza", "Creacion");
+                    	for(Piezas pieza : encontrado.getPiezas()) {
+                    		System.out.printf("%-10s %-10s %-10s%n", pieza.getTipo(), pieza.getTitulo(), pieza.getLugarCreacion());
+                    	}
+                    	System.out.print("\n");
+                	}else {
+                		System.out.println("No tiene piezas propias");
+                		System.out.print("\n");
                 	}
                     break;
                 case 6:
-                	System.out.print("Estos son los compradores que tiene solicitud de aumento de monto maximo de compra: ");
+                	System.out.println("Estos son los compradores que tiene solicitud de aumento de monto maximo de compra: ");
                     
                     List<HistorialInversor> solicitudesMonto = galeria.getSolicitudMonto();
             		System.out.printf("%-10s %-10s %-10s%n", "Número", "Inversor", "Monto Actual");
@@ -296,7 +307,7 @@ public class ConsolaAdministrador {
             	
             		for(HistorialInversor historial: solicitudesMonto) {
             		contador++;
-            		System.out.printf("%-10d %-10s %-10d%n", contador, historial.getInversor().getUsuario(), historial.getMontoMaximo());
+            		System.out.printf("%-10d %-10s %-10f%n", contador, historial.getInversor().getUsuario(), historial.getMontoMaximo());
             		}
             		System.out.println("\n");
             		System.out.print("Ingresa la posicion de la solicitud: ");
@@ -309,7 +320,7 @@ public class ConsolaAdministrador {
                 	
                 	if(aprobacion == true) {
                 		System.out.print("Ingresa el nuevo valor: ");
-                    	double valor = scanner2.nextDouble();
+                    	int valor = scanner2.nextInt();
                 		inverMontoA.modificarMontoMaximo(valor);
                 		consola.persistenciaSalvar();
                 	}
@@ -318,7 +329,7 @@ public class ConsolaAdministrador {
                 	System.out.println("\n");
                 	break;
                 case 7:
-                	System.out.print("Estas son las piezas en prestamo: ");
+                	System.out.println("Estas son las piezas en prestamo: ");
                     
                 	boolean repetir = true;
                 	while(repetir) {
@@ -331,10 +342,15 @@ public class ConsolaAdministrador {
                 			System.out.printf("%-10d %-10s %-10s %-10s%n", contador, pieza.getPieza().getTitulo(), pieza.getPropietario().getUsuario(), pieza.getPieza().getTipo());
                 		}
                 		System.out.println("\n");
-                		System.out.print("Ingresa la posicion de la solicitud: ");
+                		System.out.print("Ingresa la posicion de la solicitud (0 si desea salir): ");
                 		int ubicacion = scanner2.nextInt();
-                	
-                		System.out.print("¿Deseas desea aprobarla o rechazarla? (true/false): ");
+                		
+                		if(ubicacion == 0) {
+                			repetir = false;
+                			break;
+                		}
+                		
+                		System.out.print("¿Deseas aprobarla o rechazarla? (true/false): ");
                 		boolean booleano = scanner2.nextBoolean();
                 	
                 		ConsignacionPieza consignacion = listaPiezasDevolver.get(ubicacion-1);
@@ -352,7 +368,7 @@ public class ConsolaAdministrador {
                 	System.out.print("Ingrese el titulo de la pieza que quiere consultar: ");
                 	String titulo = scanner2.next();
                 	
-                	System.out.print("Ingrese el autor de la pieza que tuiere consultar: ");
+                	System.out.print("Ingrese el autor de la pieza que quiere consultar, ingreselo sin espacios y si es más de un autor separelo por comas: ");
                 	String autor = scanner2.next();
                 	
                 	List<ConsignacionPieza> piezas = galeria.getPiezasSolicitud();
@@ -362,22 +378,26 @@ public class ConsolaAdministrador {
                 			pieza = arte;
                 		}
                 	}
-                	
-                	System.out.printf("%-10s %-10s %-10s %-10s %-10d%n", "Titulo", "Tipo", "Dueño", "Fecha Venta", "Precio Venta");
-                	if(pieza.getPieza().getProposito().equals("Vender")) {
-                		System.out.printf("%-10s %-10s %-10s %-10s %-10d%n", pieza.getPieza().getTitulo(), pieza.getPieza().getTipo(), pieza.getPropietario().getUsuario(), pieza.getPieza().getFechaVendida(), pieza.getPieza().getGaleriaOferta().getMontoCliente());
+                	if(pieza == null) {
+                		System.out.print("La pieza no fue encontrado");
+                	}else {
+                		System.out.printf("%-10s %-10s %-10s %-10s %-10s%n", "Titulo", "Tipo", "Dueño", "Fecha Venta", "Precio Venta");
+                    	if(pieza.getPieza().getProposito().equals("Vender")) {
+                    		System.out.printf("%-10s %-10s %-10s %-10s %-10f%n", pieza.getPieza().getTitulo(), pieza.getPieza().getTipo(), pieza.getPropietario().getUsuario(), pieza.getPieza().getFechaVendida(), pieza.getPieza().getGaleriaOferta().getMontoCliente());
+                    	}
+                    	else if(pieza.getPieza().getProposito().equals("Subastar")) {
+                    		System.out.printf("%-10s %-10s %-10s %-10s %-10f%n", pieza.getPieza().getTitulo(), pieza.getPieza().getTipo(), pieza.getPropietario().getUsuario(), pieza.getPieza().getFechaVendida(), pieza.getPieza().getGaleriaOferta().getMontoMinimo());
+                    	}
+                    	else if(pieza.getPieza().getProposito().equals("Exhibir")) {
+                    		System.out.print("Esta pieza no se vende");
+                    		System.out.printf("%-10s %-10s %-10s %-10s %-10f%n", pieza.getPieza().getTitulo(), pieza.getPieza().getTipo(), pieza.getPropietario().getUsuario(), pieza.getPieza().getFechaVendida(), 0);
+                    	}
                 	}
-                	else if(pieza.getPieza().getProposito().equals("Subastar")) {
-                		System.out.printf("%-10s %-10s %-10s %-10s %-10d%n", pieza.getPieza().getTitulo(), pieza.getPieza().getTipo(), pieza.getPropietario().getUsuario(), pieza.getPieza().getFechaVendida(), pieza.getPieza().getGaleriaOferta().getMontoMinimo());
-                	}
-                	else if(pieza.getPieza().getProposito().equals("Exhibir")) {
-                		System.out.print("Esta pieza no se vende");
-                		System.out.printf("%-10s %-10s %-10s %-10s %-10d%n", pieza.getPieza().getTitulo(), pieza.getPieza().getTipo(), pieza.getPropietario().getUsuario(), pieza.getPieza().getFechaVendida(), 0);
-                	}
+                	System.out.print("\n");
                     break;
                 case 9:
                 	System.out.print("Ingresa el nombre del autor que desea consultar: ");
-                	String nombre = scanner2.next();
+                	String nombre = scanner2.nextLine();
                 	
                 	List<Autores> autoresDisponibles = galeria.getCentroAutores().getListaAutores();
                 	Autores autorEncontrado = null;
@@ -386,19 +406,23 @@ public class ConsolaAdministrador {
                 			autorEncontrado = autor1;
                 		}
                 	}
-                	
-                	System.out.printf("%-10s %-10s %-10s %-10s%n", "Pieza", "Fecha", "Fecha Vendida", "Monto");
-                	for(Piezas piezas1 : autorEncontrado.getListaPiezas()) {
-                		if(piezas1.getProposito().equals("Subastar")) {
-                			System.out.printf("%-10s %-10s %-10s %-10d%n", piezas1.getTitulo(), piezas1.getLugarCreacion(), piezas1.getFechaVendida(), piezas1.getGaleriaOferta().getMontoMinimo());
-                		}
-                		else if(piezas1.getProposito().equals("Vender")) {
-                			System.out.printf("%-10s %-10s %-10s %-10d%n", piezas1.getTitulo(), piezas1.getLugarCreacion(), piezas1.getFechaVendida(), piezas1.getGaleriaOferta().getMontoCliente());
-                		}
-                		else if(piezas1.getProposito().equals("Exhibir")) {
-                			System.out.printf("%-10s %-10s %-10s %-10d%n", piezas1.getTitulo(), piezas1.getLugarCreacion(), piezas1.getFechaVendida(), 0);
-                		}
+                	if(autorEncontrado == null) {
+                		System.out.print("El autor no fue encontrado");
+                	}else {
+                		System.out.printf("%-10s %-10s %-10s %-10s%n", "Pieza", "Fecha", "Fecha Vendida", "Monto");
+                    	for(Piezas piezas1 : autorEncontrado.getListaPiezas()) {
+                    		if(piezas1.getProposito().equals("Subastar")) {
+                    			System.out.printf("%-10s %-10s %-10s %-10f%n", piezas1.getTitulo(), piezas1.getLugarCreacion(), piezas1.getFechaVendida(), piezas1.getGaleriaOferta().getMontoMinimo());
+                    		}
+                    		else if(piezas1.getProposito().equals("Vender")) {
+                    			System.out.printf("%-10s %-10s %-10s %-10f%n", piezas1.getTitulo(), piezas1.getLugarCreacion(), piezas1.getFechaVendida(), piezas1.getGaleriaOferta().getMontoCliente());
+                    		}
+                    		else if(piezas1.getProposito().equals("Exhibir")) {
+                    			System.out.printf("%-10s %-10s %-10s %-10f%n", piezas1.getTitulo(), piezas1.getLugarCreacion(), piezas1.getFechaVendida(), 0);
+                    		}
+                    	}
                 	}
+                	System.out.println("\n");
                     break;
                 case 0:
                 	salir = true;
