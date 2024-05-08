@@ -33,7 +33,7 @@ public class ConsolaInicio {
 	public void persistenciaCargarInventario() {
 		
         try {
-			galeria.cargarInventario();;
+			galeria.cargarInventario();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -43,7 +43,27 @@ public class ConsolaInicio {
 	public void persistenciaSalvarInventario() {
 		
         try {
-			galeria.salvarInventario();;
+			galeria.salvarInventario();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void persistenciaCargarVentas() {
+		
+        try {
+			galeria.cargarVentas();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void persistenciaSalvarVentas() {
+		
+        try {
+			galeria.cargarVentas();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

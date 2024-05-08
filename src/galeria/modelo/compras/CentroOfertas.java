@@ -52,6 +52,7 @@ public class CentroOfertas {
 		
 		if(oferta.tipoOferta().equals("Oferta Subasta")){
 			ofertasSubasta.add(oferta);
+			agregarOfertasSubasta();
 		}
 		else if(oferta.tipoOferta().equals("Oferta Venta") && oferta.getPiezas().getEstado() != "Bloqueada"){
 			Piezas pieza = oferta.getPiezas();

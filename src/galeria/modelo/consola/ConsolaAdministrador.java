@@ -27,6 +27,7 @@ public class ConsolaAdministrador {
 		CentroAutores autores = galeria.getCentroAutores();
 		
 		consola.persistenciaCargarInventario();
+		consola.persistenciaCargarVentas();
 		
         Scanner scanner = new Scanner(System.in);
         Scanner scanner2 = new Scanner(System.in);
@@ -61,14 +62,13 @@ public class ConsolaAdministrador {
                 	while(ciclo) {
                 		
                 		List<Usuarios> listaSolicitud = sesion.getSolicitud();
-                		System.out.printf("%-10s %-10s %-10s %-10s%n", "Número", "Nombre", "Rol", "Usuario");
+                		System.out.printf("%-10s %-10s %-10s %-15s%n", "Número", "Nombre", "Rol", "Usuario");
                 		contador = 0;
                 	
                 		for(Usuarios usuario: listaSolicitud) {
                 		contador++;
-                		System.out.printf("%-10d %-10s %-10s %-10s%n", contador, usuario.getNombre(), usuario.getRol(), usuario.getUsuario());
+                		System.out.printf("%-10d %-10s %-10s %-15s%n", contador, usuario.getNombre(), usuario.getRol(), usuario.getUsuario());
                 		}
-                		System.out.println("\n");
                 		
                 		System.out.print("Ingresa la posicion del usuario: ");
                     	int posicion = scanner2.nextInt();
@@ -103,11 +103,11 @@ public class ConsolaAdministrador {
                 		
                 		List<ConsignacionPieza> listaSolicitudPiezas = inventario.getPiezasSolicitud();
  
-                		System.out.printf("%-10s %-10s %-10s %-10s %-10s %-10s%n", "Número", "Titulo", "Dueño", "Proposito", "Consignación", "Vigencia");
+                		System.out.printf("%-10s %-10s %-10s %-10s %-10s %-20s%n", "Número", "Titulo", "Dueño", "Proposito", "Consignación", "Vigencia");
                     	contador = 0;
                 		for(ConsignacionPieza pieza: listaSolicitudPiezas) {
                        		contador++;
-                        	System.out.printf("%-10d %-10s %-10s %-10s %-10s %-10s%n", contador, pieza.getPieza().getTitulo(), pieza.getPieza().getPropietario().getUsuario(), pieza.getPieza().getProposito(), pieza.getPieza().getDeposito(), pieza.getPieza().getVigencia());
+                        	System.out.printf("%-10d %-10s %-10s %-10s %-10s %-20s%n", contador, pieza.getPieza().getTitulo(), pieza.getPieza().getPropietario().getUsuario(), pieza.getPieza().getProposito(), pieza.getPieza().getDeposito(), pieza.getPieza().getVigencia());
                         }
                 		System.out.println("\n");
                 		System.out.print("El número de piezas es: ");
@@ -117,13 +117,18 @@ public class ConsolaAdministrador {
                 		System.out.print("Ingresa la posicion de la pieza: ");
                        	int pos = scanner2.nextInt();
                        	
+                       	if(pos == 0) {
+                    		bucle = false;
+                    		break;
+                    	}
+                       	
                       	System.out.print("¿Desea aprobar la solicitud? (true/false): ");
                        	boolean aprobar = scanner2.nextBoolean();
                       	
                        	if(aprobar == true) {
                        		Piezas arte = listaSolicitudPiezas.get(pos-1).getPieza();
                        		arte.asignarVigenica(true);
-                           	arte.asignarAprobada(aprobar);
+                           	arte.asignarAprobada(true);
                            	consola.persistenciaSalvarInventario();
                        	}
                        	
@@ -133,17 +138,16 @@ public class ConsolaAdministrador {
                 	}
                     break;
                 case 3:
-                	System.out.println("1. Inicializar subastas");
-                	System.out.println("2. Finalizar Subasta");
+                	System.out.println("Acaba de iniciar exitosamente todas las subastas en espera de las piezas que aprobó");
+            		inventario.agregarPiezaSubasta();
+            		
+                	System.out.println("1. Finalizar Subasta");
                     System.out.println("3. Aprobar ofertas subasta");
+                    System.out.print("Elije una opción: ");
                     opcion2 = scanner3.nextInt();
-                    System.out.println("\n");
+                    System.out.print("\n");
                     switch (opcion2) {
                     	case 1:
-                    		System.out.println("Acaba de iniciar exitosamente todas las subastas en espera de las piezas que aprobó");
-                    		inventario.agregarPiezaSubasta();
-                    		break;
-                    	case 2:
                     		boolean loop = true;
                         	while(loop) {
                         		
@@ -156,20 +160,28 @@ public class ConsolaAdministrador {
                         		System.out.printf("%-10d %-10s %-10s %-10s %-10s%n", contador, pieza.getTitulo(), pieza.getPropietario().getUsuario(), pieza.getProposito(), pieza.getDeposito());
                         		}
                         		System.out.println("\n");
+                        		System.out.print("El número de los elementos es: ");
+                        		System.out.println(piezasSubasta.size());
                         		
-                        		System.out.print("Ingresa la posicion de la pieza: ");
+                        		System.out.print("Ingresa la posicion de la pieza (Pon 0 para salir): ");
                             	int pos = scanner2.nextInt();
+                            	
+                            	if(pos == 0) {
+                            		loop = false;
+                            		break;
+                            	}
                             	
                             	Piezas arte = piezasSubasta.get(pos-1);
                             	subasta.finalizarSubasta(arte);
                             	arte.asignarVigenica(false);
                             	consola.persistenciaSalvarInventario();
+                            	
                             	System.out.print("¿Deseas seguir verificando? (true/false): ");
                             	loop = scanner2.nextBoolean();
                             	System.out.println("\n");
                         	}
                     		break;
-                    	case 3:
+                    	case 2:
                     		boolean lop = true;
                         	while(lop) {
                         		
@@ -192,11 +204,17 @@ public class ConsolaAdministrador {
                             	Ofertas ofert = ofertasFinalesSubasta.get(pos-1);
                             	
                             	if(aprobacion == true) {
+                            		System.out.print("Ingresa la fecha actual sin espacios: ");
+                                	String fechaVenta = scanner2.next();
+                                	ofert.getPiezas().asignarFechaVendida(fechaVenta);
+                                	ofert.getPiezas().asignarVenta(true);
+                                	
                                 	cajero.agregarOfertas(ofert);
+                                	consola.persistenciaSalvarInventario();
+                                	consola.persistenciaSalvarVentas();
                             	}else {
                             		galeria.recharOfertasSubasta(ofert);
                             	}
-                            	//PONER PERSISTENCIA
                             	System.out.print("¿Deseas seguir verificando? (true/false): ");
                             	lop = scanner2.nextBoolean();
                             	System.out.println("\n");
@@ -227,11 +245,17 @@ public class ConsolaAdministrador {
                     	Ofertas ofert = ofertasVenta.get(pos-1);
                     	
                     	if(aprobacion == true) {
+                    		System.out.print("Ingresa la fecha actual sin espacios: ");
+                        	String fechaVenta = scanner2.next();
+                        	ofert.getPiezas().asignarFechaVendida(fechaVenta);
+                        	ofert.getPiezas().asignarVenta(true);
+                        	
                         	cajero.agregarOfertas(ofert);
+                        	consola.persistenciaSalvarInventario();
+                        	consola.persistenciaSalvarVentas();
                     	}else {
                     		galeria.getCentroOfertas().recharOfertaVenta(ofert);
                     	}
-                    	//PONER PERSISTENCIA
                     	System.out.print("¿Deseas seguir verificando? (true/false): ");
                     	lop = scanner2.nextBoolean();
                     	System.out.println("\n");
@@ -262,7 +286,6 @@ public class ConsolaAdministrador {
                 	for(Piezas pieza : encontrado.getPiezasCompradas()) {
                 		System.out.printf("%-10s %-10s%n", pieza.getTipo(), pieza.getTitulo());
                 	}
-                	//PONER PERSISTENCIA DE PIEZA QUE LE PERTENECEN
                     break;
                 case 6:
                 	System.out.print("Estos son los compradores que tiene solicitud de aumento de monto maximo de compra: ");
@@ -288,8 +311,8 @@ public class ConsolaAdministrador {
                 		System.out.print("Ingresa el nuevo valor: ");
                     	double valor = scanner2.nextDouble();
                 		inverMontoA.modificarMontoMaximo(valor);
+                		consola.persistenciaSalvar();
                 	}
-                	//PONER PERSISTENCIA
                 	System.out.print("¿Deseas seguir verificando? (true/false): ");
                 	lop = scanner2.nextBoolean();
                 	System.out.println("\n");
@@ -317,16 +340,16 @@ public class ConsolaAdministrador {
                 		ConsignacionPieza consignacion = listaPiezasDevolver.get(ubicacion-1);
                 	
                 		if(booleano == true) {
-                			inventario.devolverPieza(consignacion);
+                			consignacion.getPieza().asignarVigenica(false);
+                			consola.persistenciaSalvarInventario();
                 		}
-                		//PONER PERSISTENCIA
                 		System.out.print("¿Deseas seguir verificando? (true/false): ");
                 		repetir = scanner2.nextBoolean();
                 		System.out.println("\n");
                 	}
                 	break;
                 case 8:
-                	System.out.print("Ingrese el titulo de la pieza que tuiere consultar: ");
+                	System.out.print("Ingrese el titulo de la pieza que quiere consultar: ");
                 	String titulo = scanner2.next();
                 	
                 	System.out.print("Ingrese el autor de la pieza que tuiere consultar: ");
@@ -351,8 +374,6 @@ public class ConsolaAdministrador {
                 		System.out.print("Esta pieza no se vende");
                 		System.out.printf("%-10s %-10s %-10s %-10s %-10d%n", pieza.getPieza().getTitulo(), pieza.getPieza().getTipo(), pieza.getPropietario().getUsuario(), pieza.getPieza().getFechaVendida(), 0);
                 	}
-                	
-                	//PONER PERSISTENCIA DE PIEZA QUE LE PERTENECEN
                     break;
                 case 9:
                 	System.out.print("Ingresa el nombre del autor que desea consultar: ");
@@ -378,7 +399,6 @@ public class ConsolaAdministrador {
                 			System.out.printf("%-10s %-10s %-10s %-10d%n", piezas1.getTitulo(), piezas1.getLugarCreacion(), piezas1.getFechaVendida(), 0);
                 		}
                 	}
-                	//PONER PERSISTENCIA DE PIEZA QUE LE PERTENECEN
                     break;
                 case 0:
                 	salir = true;

@@ -66,7 +66,8 @@ public class HistorialInversor{
 	 * @param montoMaximo
 	 * */
 	public void modificarMontoMaximo(double montoMaximo) {
-        this.montoMaximo = montoMaximo;
+        
+		this.montoMaximo = montoMaximo;
 	}
 	
 	/**
@@ -74,6 +75,7 @@ public class HistorialInversor{
 	 * @return montoMaximo
 	 * */
 	public double getMontoMaximo() {
+		
 		return montoMaximo;
 	}
 	
@@ -82,10 +84,12 @@ public class HistorialInversor{
 	 * @return piezasPropias
 	 * */
 	public List<Piezas> getPiezas(){
+		
 		return pizasPropias;
 	}
 	
 	public List<Piezas> getPiezasCompradas(){
+		
 		return piezasCompradas;
 	}
 	
@@ -93,6 +97,7 @@ public class HistorialInversor{
 	 * Agregar las piezas propias
 	 * */
 	public void agregarPiezasPropias(Piezas piezas){
+		
 		pizasPropias.add(piezas);
 	}
 	

@@ -11,4 +11,9 @@ public class CentralPersistencia {
         
 		return new PersistenciaInventario();
     }
+	
+	public static PersistenciaVentas getPersistenciaOfertas() {
+		
+		return new PersistenciaVentas();
+	}
 }

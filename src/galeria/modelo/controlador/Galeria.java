@@ -15,6 +15,7 @@ import galeria.modelo.inventario.Piezas;
 import galeria.modelo.persistencia.CentralPersistencia;
 import galeria.modelo.persistencia.PersistenciaInventario;
 import galeria.modelo.persistencia.PersistenciaUsuariosJson;
+import galeria.modelo.persistencia.PersistenciaVentas;
 import galeria.modelo.usuarios.HistorialInversor;
 import galeria.modelo.usuarios.OperacionSubasta;
 import galeria.modelo.usuarios.ProcesoCompra;
@@ -106,6 +107,18 @@ public class Galeria {
 		cargador.salvarTdosoUsuarios(this);
 	}
 	
+	public void cargarVentas() throws IOException {
+		
+		PersistenciaVentas cargador = CentralPersistencia.getPersistenciaOfertas();
+		cargador.cargarTodo(this);
+	}
+	
+	public void salvarVentas() throws IOException {
+		
+		PersistenciaVentas cargador = CentralPersistencia.getPersistenciaOfertas();
+		cargador.salvarTodo(this);
+	}
+	
 	public List<HistorialInversor> getListaHistorial(){
 		
 		return registro.getListaHistorial();
@@ -171,5 +184,10 @@ public class Galeria {
 	public List<ConsignacionPieza> getDeposito(){
 		
 		return inventario.getDeposito();
+	}
+	
+	public List<Piezas> getPiezasVigentes(){
+		
+		return inventario.getVigentes();
 	}
 }

@@ -41,8 +41,6 @@ public class ProcesoCompra {
 		inventario.modificarEstado("Vendida", ofertas.getPiezas());
 		ofertas.getPiezas().asignarVenta(true);
 		ofertas.getPiezas().modificarPropietario(ofertas.getComprador().getInversor());
-		Date fechaVenta = new Date();
-		ofertas.getPiezas().asignarFechaVendida(fechaVenta);
 	}
 	
 	public List<Ofertas> getlistaOfertas(){

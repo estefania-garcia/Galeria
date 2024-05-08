@@ -1,5 +1,6 @@
 package galeria.modelo.consola;
 
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -28,6 +29,9 @@ public class ConsolaInversor {
         Scanner scanner = new Scanner(System.in);
         Scanner scanner2 = new Scanner(System.in);
         Scanner scanner3 = new Scanner(System.in);
+        Scanner scanner4 = new Scanner(System.in);
+        
+        Console console = System.console();
         
         RegistroInicio sesion = galeria.getRegistro();
 		OperacionSubasta subasta = galeria.getClaseSubasta();
@@ -69,53 +73,53 @@ public class ConsolaInversor {
             switch (opcion) {
                 case 1:
                 	System.out.print("Ingrese el tipo de pieza que desea crear (Arte Digital, Arte Tridimensional, Arte Cuadros: ");
-                	String tipo = scanner2.nextLine();
+                	String tipo = scanner4.nextLine();
+                	
+                	System.out.print("Ingrese el título: ");
+                    String titulo = scanner2.next();
+                    
+                    System.out.print("Ingrese los autores. Si es más de uno, separelo por comas: ");
+                    String autores = scanner2.next();
+
+                    System.out.print("Ingrese el propósito (Exhibir, Subastar, Vender): ");
+                    String proposito = scanner2.next();
+                    double monto = 0;
+                    double montoMin = 0;
+                    
+                    if(!posiblesPropositos.contains(proposito)) {
+                    	System.out.print("Ingrese un valor válido");
+                    	break;
+                    }
+                    else if(proposito.equals("Exhibir")){
+                    	monto = 0;
+                    	montoMin = 0;
+                    }
+                    else if(proposito.equals("Subastar")) {
+                    	System.out.print("Ingrese el monto inicial: ");
+                        monto = scanner2.nextDouble();
+                        
+                        System.out.print("Ingrese el monto minimo de venta: ");
+                        montoMin = scanner2.nextDouble();
+                    }
+                    else if(proposito.equals("Vender")) {
+                    	System.out.print("Ingrese el precio fijo de venta: ");
+                        monto = scanner2.nextDouble();
+                        montoMin = 0;
+                    }
+
+                    System.out.print("Ingrese el lugar de creación y el año, de esta forma (año-lugar): ");
+                    String lugar_creacion = scanner2.next();
+
+                    System.out.print("¿Desea darla en modo de consignación? (true/false): ");
+                    boolean deposito = scanner2.nextBoolean();
+                    int tiempo = 0;
+                    if(deposito == true) {
+                    	System.out.print("Ingrese el número de dias: ");
+                        tiempo = scanner2.nextInt();
+                    }else {
+                    	tiempo = 0;
+                    }
                 	if(tipo.equals("Arte Cuadros")) {
-
-                        System.out.print("Ingrese el título: ");
-                        String titulo = scanner2.next();
-                        
-                        System.out.print("Ingrese los autores. Si es más de uno, separelo por comas: ");
-                        String autores = scanner2.next();
-
-                        System.out.print("Ingrese el propósito (Exhibir, Subastar, Vender): ");
-                        String proposito = scanner2.next();
-                        double monto = 0;
-                        double montoMin = 0;
-                        
-                        if(!posiblesPropositos.contains(proposito)) {
-                        	System.out.print("Ingrese un valor válido");
-                        	break;
-                        }
-                        else if(proposito.equals("Exhibir")){
-                        	monto = 0;
-                        	montoMin = 0;
-                        }
-                        else if(proposito.equals("Subastar")) {
-                        	System.out.print("Ingrese el monto inicial: ");
-                            monto = scanner2.nextDouble();
-                            
-                            System.out.print("Ingrese el monto minimo de venta: ");
-                            montoMin = scanner2.nextDouble();
-                        }
-                        else if(proposito.equals("Vender")) {
-                        	System.out.print("Ingrese el precio fijo de venta: ");
-                            monto = scanner2.nextDouble();
-                            montoMin = 0;
-                        }
-
-                        System.out.print("Ingrese el lugar de creación y el año, de esta forma (año-lugar): ");
-                        String lugar_creacion = scanner2.next();
-
-                        System.out.print("¿Desea darla en modo de consignación? (true/false): ");
-                        boolean deposito = scanner2.nextBoolean();
-                        int tiempo = 0;
-                        if(deposito == true) {
-                        	System.out.print("Ingrese el número de dias: ");
-                            tiempo = scanner2.nextInt();
-                        }else {
-                        	tiempo = 0;
-                        }
                         
                         System.out.print("Ingrese el ancho y largo: ");
                         String anchoxlargo = scanner2.next();
@@ -127,61 +131,18 @@ public class ConsolaInversor {
                         inventario.añadirPiezasSolicitud(pieza);
                         
                     	System.out.println("Registro existoso. A espera de aprobación.");
+                    	//scanner2.close();
                 	}
                 	else if(tipo.equals("Arte Tridimensional")) {
-                		
-                		System.out.print("Ingrese el título: ");
-                        String titulo = scanner2.nextLine();
 
-                        System.out.print("Ingrese el propósito (Exhibir, Subastar, Vender): ");
-                        String proposito = scanner2.nextLine();
-                        double monto = 0;
-                        double montoMin = 0;
-                        if(!posiblesPropositos.contains(proposito)) {
-                        	System.out.print("Ingrese un valor válido");
-                        	break;
-                        }
-                        else if(proposito.equals("Exhibir")){
-                        	monto = 0;
-                        	montoMin = 0;
-                        }
-                        else if(proposito.equals("Subastar")) {
-                        	System.out.print("Ingrese el monto inicial: ");
-                            monto = scanner2.nextDouble();
-                            
-                            System.out.print("Ingrese el monto minimo de venta: ");
-                            montoMin = scanner2.nextDouble();
-                        }
-                        else if(proposito.equals("Vender")) {
-                        	System.out.print("Ingrese el precio fijo de venta: ");
-                            monto = scanner2.nextDouble();
-                            montoMin = 0;
-                        }
-
-                        System.out.print("Ingrese el lugar de creación y el año, de esta forma (año-lugar): ");
-                        String lugar_creacion = scanner2.next();
-                        
-                        System.out.print("Ingrese el peso: ");
-                        double peso = scanner2.nextDouble();
-                        
-                        System.out.print("Ingrese los autores. Si es más de uno, separelo por comas: ");
-                        String autores = scanner3.nextLine();
+                		System.out.print("Ingresa el peso: ");
+                        double peso = scanner3.nextDouble();
                         
                         System.out.print("¿La obra necesita electricidad?: ");
                         boolean electricidad = scanner3.nextBoolean();
                         
                         System.out.print("Ingrese la técnica de la obra: ");
                         String tecnica = scanner2.next();
-                        
-                        System.out.print("¿Desea darla en modo de consignación? (true/false): ");
-                        boolean deposito = scanner3.nextBoolean();
-                        int tiempo = 0;
-                        if(deposito == true) {
-                        	System.out.print("Ingrese el número de dias: ");
-                            tiempo = scanner2.nextInt();
-                        }else {
-                        	tiempo = 0;
-                        }
                         
                         System.out.print("Ingrese las dimensiones de la obra: ");
                         String dimensiones = scanner2.next();
@@ -190,52 +151,12 @@ public class ConsolaInversor {
                         inventario.añadirPiezasSolicitud(pieza);
                     	
                     	System.out.println("Registro existoso. A espera de aprobación.");
+                    	//scanner2.close();
+                    	//scanner3.close();
                 	}
                 	else if(tipo.equals("Arte Digital")) {
                 		
-                		System.out.print("Ingrese el título: ");
-                        String titulo = scanner2.nextLine();
-
-                        System.out.print("Ingrese el propósito (Exhibir, Subastar, Vender): ");
-                        String proposito = scanner2.nextLine();
-                        double monto = 0;
-                        double montoMin = 0;
-                        if(!posiblesPropositos.contains(proposito)) {
-                        	System.out.print("Ingrese un valor válido");
-                        	break;
-                        }
-                        else if(proposito.equals("Exhibir")){
-                        	monto = 0;
-                        	montoMin = 0;
-                        }
-                        else if(proposito.equals("Subastar")) {
-                        	System.out.print("Ingrese el monto inicial: ");
-                            monto = scanner2.nextDouble();
-                            
-                            System.out.print("Ingrese el monto minimo de venta: ");
-                            montoMin = scanner2.nextDouble();
-                        }
-                        else if(proposito.equals("Vender")) {
-                        	System.out.print("Ingrese el precio fijo de venta: ");
-                            monto = scanner2.nextDouble();
-                            montoMin = 0;
-                        }
-
-                        System.out.print("Ingrese el lugar de creación y el año, de esta forma (año-lugar): ");
-                        String lugar_creacion = scanner2.next();
-
-                        System.out.print("Ingrese los autores. Si es más de uno, separelo por comas: ");
-                        String autores = scanner2.next();
-
-                        System.out.print("¿Desea darla en modo de consignación? (true/false): ");
-                        boolean deposito = scanner2.nextBoolean();
-                        int tiempo = 0;
-                        if(deposito == true) {
-                        	System.out.print("Ingrese el número de dias: ");
-                            tiempo = scanner2.nextInt();
-                        }else {
-                        	tiempo = 0;
-                        }
+                		
                         
                         System.out.print("Ingrese el tipo de arte: ");
                         String tipoArte = scanner2.next();
@@ -247,6 +168,8 @@ public class ConsolaInversor {
                         inventario.añadirPiezasSolicitud(pieza);
                     	
                     	System.out.println("Registro existoso. A espera de aprobación.");
+                    	//scanner2.close();
+                    	//scanner3.close();
                 	}
                 	else {
                 		System.out.println("Ingrese un valor válido");
@@ -264,14 +187,14 @@ public class ConsolaInversor {
                 		System.out.printf("%-10d %-10s %-10s %-10d%n", contador, pieza.getTitulo(), pieza.getAutores(), oferta.get(oferta.size()-1).getMonto());
                 	}
                 	System.out.print("Ingrese el titulo de la pieza: ");
-                	String titulo = scanner2.next();
+                	String titulo1 = scanner2.next();
                 	
                 	System.out.print("Ingrese el autor de la pieza: ");
                 	String autor = scanner2.next();
                 	
                 	Piezas seleccionada = null;
                 	for(Piezas piezas : piezasSubasta) {
-                		if(piezas.getTitulo().equals(titulo) && piezas.getAutores().equals(autor)) {
+                		if(piezas.getTitulo().equals(titulo1) && piezas.getAutores().equals(autor)) {
                 			seleccionada = piezas;
                 		}
                 	}
@@ -291,14 +214,14 @@ public class ConsolaInversor {
                 		System.out.printf("%-10d %-10s %-10s %-10d%n", cuenta, pieza.getTitulo(), pieza.getAutores(), pieza.getGaleriaOferta().getMontoCliente());
                 	}
                 	System.out.print("Ingrese el titulo de la pieza: ");
-                	String titulo1 = scanner2.next();
+                	String titulo11 = scanner2.next();
                 	
                 	System.out.print("Ingrese el autor de la pieza: ");
                 	String autor1 = scanner2.next();
                 	
                 	Piezas seleccion = null;
                 	for(Piezas piezas : piezasVenta) {
-                		if(piezas.getTitulo().equals(titulo1) && piezas.getAutores().equals(autor1)) {
+                		if(piezas.getTitulo().equals(titulo11) && piezas.getAutores().equals(autor1)) {
                 			seleccion = piezas;
                 		}
                 	}
@@ -308,7 +231,7 @@ public class ConsolaInversor {
                     break;
                 case 4:
                 	System.out.print("Ingrese el titulo de la pieza que tuiere consultar: ");
-                	String titulo11 = scanner2.next();
+                	String titulo111 = scanner2.next();
                 	
                 	System.out.print("Ingrese el autor de la pieza que tuiere consultar: ");
                 	String autor11 = scanner2.next();
@@ -316,7 +239,7 @@ public class ConsolaInversor {
                 	List<ConsignacionPieza> piezas = galeria.getPiezasSolicitud();
                 	ConsignacionPieza pieza = null;
                 	for(ConsignacionPieza arte : piezas) {
-                		if(arte.getPieza().getTitulo().equals(titulo11) && arte.getPieza().getAutores().equals(autor11)) {
+                		if(arte.getPieza().getTitulo().equals(titulo111) && arte.getPieza().getAutores().equals(autor11)) {
                 			pieza = arte;
                 		}
                 	}

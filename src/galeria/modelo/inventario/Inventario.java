@@ -132,7 +132,14 @@ public class Inventario {
 	
 	public void añadirPiezasSolicitud(ConsignacionPieza pieza) {
 		
-		if(!piezasSolicitud.contains(pieza)) {
+		boolean confirmacion = true;
+		for(ConsignacionPieza piezas : piezasSolicitud) {
+			if(piezas.getPieza().getTitulo().equals(pieza.getPieza().getTitulo()) && piezas.getPieza().getAutores().equals(pieza.getPieza().getAutores())) {
+				confirmacion = false;
+				break;
+			}
+		}
+		if(confirmacion == true) {
 			piezasSolicitud.add(pieza);
 			añadirPiezasDeposito(pieza);
 		}
@@ -144,11 +151,11 @@ public class Inventario {
 	 * */
 	public void añadirPiezasDeposito(ConsignacionPieza piezas){
 
-		if(piezas.getPieza().getVigencia() == true && !piezasSolicitud.contains(piezas)) {
+		if(piezas.getPieza().getAprobada() == true) {
+			añadirPiezasTodas(piezas.getPieza());
 			if(piezas.getPieza().getDeposito() == true) {
 				piezasDeposito.add(piezas);
 			}
-			añadirPiezasTodas(piezas.getPieza());
 		}
 	}
 	
@@ -184,14 +191,14 @@ public class Inventario {
 		
 		return piezasDeposito;
 	}
-	
+	/**
 	public void devolverPieza(ConsignacionPieza pieza) {
 		
 		piezasDevueltas.add(pieza);
 		piezasDevueltas.remove(pieza);
 		pieza.getPieza().asignarVigenica(false);
 		añadirPiezasTodas(pieza.getPieza());
-	}
+	}*/
 	
 	/**
 	 * Método getter de la lista de piezas devueltas
@@ -207,6 +214,7 @@ public class Inventario {
 	 * @return piezasVigentes
 	 * */
 	public List<Piezas> getVigentes(){
+		
 		return piezasVigentes;
 	}
 	
@@ -223,6 +231,7 @@ public class Inventario {
 	 * @return piezasSubasta
 	 * */
 	public List<Piezas> getSubastar(){
+		
 		return piezasSubasta;
 	}
 	

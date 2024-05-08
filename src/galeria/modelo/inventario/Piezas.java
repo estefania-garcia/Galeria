@@ -22,16 +22,11 @@ public abstract class Piezas {
 	private boolean vendida = false;
 
 	
-	private Date fecha_vendida;
+	private String fecha_vendida = "";
 	/**
 	 * Atributo que relacion el lugar de creación de la pieza
 	 * */
 	private String año_lugar_creacion;
-	
-	/**
-	 * Atributo que relacion el lugar en el que se encuentra la pieza dentro de la galería
-	 * */
-	private String lugar;
 	
 	/**
 	 * Atributo que relacion los autrores de la pieza
@@ -180,32 +175,14 @@ public abstract class Piezas {
 		return galeriaOferta;
 	}
 	
-	public Date getFechaVendida() {
+	public String getFechaVendida() {
 		
 		return fecha_vendida;
 	}
 	
-	public void asignarFechaVendida(Date fecha) {
+	public void asignarFechaVendida(String fecha) {
 		
 		this.fecha_vendida = fecha;
-	}
-	
-	/**
-	 * Método le asigna el lugar a la pieza, esta puede estar en la bodega o exhibida
-	 * @param ubicacion
-	 * @return lugar
-	 * */
-	public String asignarLugar( String ubicacion) {
-		this.lugar = ubicacion;
-		return lugar;
-	}
-	
-	/**
-	 * Método getter que indica el lugar de la pieza
-	 * @return lugar
-	 * */
-	public String getLugar() {
-		return lugar;
 	}
 	
 	/**

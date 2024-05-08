@@ -1,4 +1,4 @@
-package galeria.modelo.persistencia;
+ package galeria.modelo.persistencia;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,6 +16,7 @@ import galeria.modelo.compras.Ofertas;
 import galeria.modelo.controlador.Galeria;
 import galeria.modelo.inventario.ConsignacionPieza;
 import galeria.modelo.inventario.Piezas;
+import galeria.modelo.usuarios.HistorialInversor;
 import galeria.modelo.usuarios.Usuarios;
 
 public class PersistenciaVentas {
@@ -27,6 +28,7 @@ public class PersistenciaVentas {
         JSONObject raiz = new JSONObject( jsonCompleto );
         
         cargarOfertas(galeria, raiz.getJSONArray("CentroOfertas"));
+        cargarProcesoCompra(galeria, raiz.getJSONArray("ProcesoCompra"));
 	}
 	
 	public void salvarTodo(Galeria galeria) throws FileNotFoundException {
@@ -35,6 +37,7 @@ public class PersistenciaVentas {
 		JSONObject jobject = new JSONObject();
 		
 		salvarOfertas(galeria, jobject);
+		salcarProcesoCompra(galeria, jobject);
 		
 		PrintWriter pw = new PrintWriter( rutaArchivo );
         jobject.write( pw, 2, 0 );
@@ -53,19 +56,17 @@ public class PersistenciaVentas {
 			double monto = oferta.getDouble("monto");
 			String tipo = oferta.getString("tipo");
 			
-			Usuarios inver = null;
-			List<Usuarios> usuarios = galeria.getUsuarios();
-			for(Usuarios usu : usuarios) {
-				if(usu.getUsuario().equals(ofertador) && usu.getRol().equals("Inversor")) {
-					inver = usu;
-				}
-			}
-			
+			HistorialInversor inver = null;
 			Piezas pieza = null;
-			List<ConsignacionPieza> arte = galeria.getPiezasTotales();
-			for(ConsignacionPieza art : arte) {
-				if(art.getPieza().getTitulo().equals(titulo) && art.getPieza().getAutores().equals(autores)) {
-					pieza = art.getPieza();
+			List<HistorialInversor> arte = galeria.getListaHistorial();
+			for(HistorialInversor art : arte) {
+				if(art.getInversor().getUsuario().equals(ofertador)) {
+					inver = art;
+					for(Piezas artis : art.getPiezas()) {
+						if(artis.getTitulo().equals(titulo) && artis.getAutores().equals(autores)) {
+							pieza = artis;
+						}
+					}
 				}
 			}
 			
@@ -86,7 +87,7 @@ public class PersistenciaVentas {
 			
 			JSONObject jOferta = new JSONObject();
 			
-			jOferta.put("ofertador", oferta.getComprador().getUsuario());
+			jOferta.put("ofertador", oferta.getComprador().getInversor().getUsuario());
 			jOferta.put("titulo", oferta.getPiezas().getTitulo());
 			jOferta.put("autores", oferta.getPiezas().getAutores());
 			jOferta.put("monto", oferta.getMonto());
@@ -95,5 +96,62 @@ public class PersistenciaVentas {
 			jOfertas.put(jOferta);
 		}
 		jobject.put("CentroOfertas", jOfertas);
+	}
+	
+	private void cargarProcesoCompra(Galeria galeria, JSONArray jOfertas) {
+		
+		int numOfertas = jOfertas.length();
+		for(int i = 0; i < numOfertas; i++) {
+			JSONObject oferta = jOfertas.getJSONObject(i);
+			
+			String ofertador = oferta.getString("ofertador");
+			String titulo = oferta.getString("titulo");
+			String autores = oferta.getString("autores");
+			double monto = oferta.getDouble("monto");
+			String tipo = oferta.getString("tipo");
+			
+			HistorialInversor inver = null;
+			Piezas pieza = null;
+			List<HistorialInversor> arte = galeria.getListaHistorial();
+			for(HistorialInversor art : arte) {
+				if(art.getInversor().getUsuario().equals(ofertador)) {
+					inver = art;
+					for(Piezas artis : art.getPiezas()) {
+						if(artis.getTitulo().equals(titulo) && artis.getAutores().equals(autores)) {
+							pieza = artis;
+						}
+					}
+				}
+			}
+			
+			if(tipo.equals("Oferta Subasta")) {
+				if(pieza.getVenta() == true) {
+					OfertaSubasta nueva = new OfertaSubasta(pieza, inver, monto);
+					galeria.getCajero().agregarOfertas(nueva);
+				}
+			}else {
+				if(pieza.getVenta() == true) {
+					OfertaVenta nueva = new OfertaVenta(pieza, inver, monto);
+					galeria.getCajero().agregarOfertas(nueva);
+				}
+			}
+		}
+	}
+	private void salcarProcesoCompra(Galeria galeria, JSONObject jobject) {
+		
+		JSONArray jOfertas = new JSONArray();
+		for(Ofertas oferta : galeria.getOfertasSubasta()) {
+			
+			JSONObject jOferta = new JSONObject();
+			
+			jOferta.put("ofertador", oferta.getComprador().getInversor().getUsuario());
+			jOferta.put("titulo", oferta.getPiezas().getTitulo());
+			jOferta.put("autores", oferta.getPiezas().getAutores());
+			jOferta.put("monto", oferta.getMonto());
+			jOferta.put("tipo", oferta.tipoOferta());
+			
+			jOfertas.put(jOferta);
+		}
+		jobject.put("ProcesoCompra", jOfertas);
 	}
 }
