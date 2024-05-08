@@ -39,11 +39,12 @@ public class OperacionSubasta {
 	 * @param rol
 	 * @param nombre
 	 * */
-	public OperacionSubasta() {
+	public OperacionSubasta(Galeria galeria) {
 		
 		listaOfertas = new ArrayList<Ofertas>();
 		listaOfertasFinales = new ArrayList<Ofertas>();
 		mapaSubastas = new HashMap<>();
+		this.galeria = galeria;
 	}
 	
 	/**
@@ -69,9 +70,13 @@ public class OperacionSubasta {
     		Piezas clave = mapa.getKey();
     		List<Ofertas> llave = mapa.getValue();
     		if(clave == ofertas.getPiezas()) {
-    			int pos = llave.size() - 1;
-    			Ofertas ul_oferta = llave.get(pos);
-    			if(ul_oferta.getMonto() < ofertas.getMonto()) {
+    			if(llave.size() > 0) {
+    				int pos = llave.size() - 1;
+        			Ofertas ul_oferta = llave.get(pos);
+        			if(ul_oferta.getMonto() < ofertas.getMonto()) {
+        				llave.add(ofertas);
+        			}
+    			}else {
     				llave.add(ofertas);
     			}
     		}
@@ -89,6 +94,7 @@ public class OperacionSubasta {
 		mapaSubastas.remove(pieza);
 		if(oferta_subastas.venderPieza() == true) {
 			listaOfertasFinales.add(oferta_final);
+			galeria.getOfertasFinales(oferta_final);
 		}
 	}
 	

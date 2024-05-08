@@ -1,5 +1,10 @@
 {
-	"ProcesoCompra":[],
-	"Subasta":[],
-	"CentroOfertas": []
+  "CentroOfertas": [{
+    "tipo": "Oferta Subasta",
+    "monto": 4000000,
+    "ofertador": "Isabel",
+    "titulo": "Plato",
+    "autores": "RubenMartinez"
+  }],
+  "ProcesoCompra": []
 }

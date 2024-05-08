@@ -41,7 +41,9 @@ public class ConsolaInversor {
 		CentroOfertas centroOferta = galeria.getCentroOfertas();
 		CentroAutores cenAutores = galeria.getCentroAutores();
 		
+		
 		consola.persistenciaCargarInventario();
+		consola.persistenciaCargarVentas();
 		consola.persistenciaCargarAutores();
         
         HistorialInversor inversor = null;
@@ -207,17 +209,17 @@ public class ConsolaInversor {
                 		contador++;
                 		List<Ofertas> oferta = galeria.getMapaSubastas().get(pieza);
                 		if(oferta.size() > 0) {
-                			System.out.printf("%-10d %-10s %-10s %-10f%n", contador, pieza.getTitulo(), pieza.getAutores(), oferta.get(oferta.size()-1).getMonto());
+                			System.out.printf("%-10d %-10s %-10s %-10d%n", contador, pieza.getTitulo(), pieza.getAutores(), oferta.get(oferta.size()-1).getMonto());
                 		}
                 		else {
-                			System.out.printf("%-10d %-10s %-10s %-10f%n", contador, pieza.getTitulo(), pieza.getAutores(), pieza.getGaleriaOferta().getMontoCliente());
+                			System.out.printf("%-10d %-10s %-10s %-10d%n", contador, pieza.getTitulo(), pieza.getAutores(), pieza.getGaleriaOferta().getMontoCliente());
                 		}
                 	}
                 	System.out.print("\n");
                 	System.out.print("Ingrese el titulo de la pieza: ");
                 	String titulo1 = scanner2.next();
                 	
-                	System.out.print("Ingrese el autor de la pieza: ");
+                	System.out.print("Ingrese el autor de la pieza tal cual aparece su información: ");
                 	String autor = scanner2.next();
                 	
                 	Piezas seleccionada = null;
@@ -226,21 +228,29 @@ public class ConsolaInversor {
                 			seleccionada = piezas;
                 		}
                 	}
-                	System.out.println("Ingrese el monto: ");
-                	int montoParticipa = scanner2.nextInt();
-                	System.out.println("Si ingresa un valor menor su oferta no será tomada en cuenta");
-                	OfertaSubasta ofertaNuevas = inversor.crearOfertaSubasta(seleccionada, inversor, montoParticipa);
-                    centroOferta.agregarOfertas(ofertaNuevas);
+                	if(seleccionada == null) {
+                		System.out.println("No se encontro la pieza");
+                		System.out.print("\n");
+                	}else {
+                		System.out.print("Ingrese el monto: ");
+                    	int montoParticipa = scanner2.nextInt();
+                    	System.out.println("Si ingresa un valor menor su oferta no será tomada en cuenta");
+                    	OfertaSubasta ofertaNuevas = inversor.crearOfertaSubasta(seleccionada, inversor, montoParticipa);
+                    	galeria.getCentroOfertas().agregarOfertas(ofertaNuevas);
+                        consola.persistenciaSalvarVentas();
+                	}
                 	break;
                 case 3:
                 	System.out.println("Estas son las piezas disponibles: ");
                 	List<Piezas> piezasVenta = inventario.getVenta();
                 	System.out.printf("%-10s %-10s %-10s %-10s", "Número", "Pieza", "Autor/es", "Valor Fijo");
+                	System.out.print("\n");
                 	int cuenta = 0;
                 	for(Piezas pieza : piezasVenta) {
                 		cuenta++; 
                 		System.out.printf("%-10d %-10s %-10s %-10d%n", cuenta, pieza.getTitulo(), pieza.getAutores(), pieza.getGaleriaOferta().getMontoCliente());
                 	}
+                	System.out.print("\n");
                 	System.out.print("Ingrese el titulo de la pieza: ");
                 	String titulo11 = scanner2.next();
                 	
@@ -253,64 +263,75 @@ public class ConsolaInversor {
                 			seleccion = piezas;
                 		}
                 	}
-                	System.out.println("Si ingresa un valor menor su oferta no será tomada en cuenta");
-                	OfertaVenta ofertaNueva = inversor.crearOfertaVenta(seleccion, inversor, seleccion.getGaleriaOferta().getMontoCliente());
-                    centroOferta.agregarOfertas(ofertaNueva);
+                	if(seleccion == null) {
+                		System.out.println("No se encontro la pieza");
+                		System.out.print("\n");
+                	}else {
+                		System.out.println("Si ingresa un valor menor su oferta no será tomada en cuenta");
+                    	OfertaVenta ofertaNueva = inversor.crearOfertaVenta(seleccion, inversor, seleccion.getGaleriaOferta().getMontoCliente());
+                        centroOferta.agregarOfertas(ofertaNueva);
+                        consola.persistenciaSalvarVentas();
+                	}
                     break;
                 case 4:
-                	System.out.print("Ingrese el titulo de la pieza que tuiere consultar: ");
-                	String titulo111 = scanner2.next();
+                	System.out.print("Ingrese el titulo de la pieza que quiere consultar: ");
+                	String nomT = scanner2.next();
                 	
-                	System.out.print("Ingrese el autor de la pieza que tuiere consultar: ");
-                	String autor11 = scanner2.next();
+                	System.out.print("Ingrese el autor de la pieza que quiere consultar, ingreselo sin espacios y si es más de un autor separelo por comas: ");
+                	String autorT = scanner2.next();
                 	
                 	List<ConsignacionPieza> piezas = galeria.getPiezasSolicitud();
                 	ConsignacionPieza pieza = null;
                 	for(ConsignacionPieza arte : piezas) {
-                		if(arte.getPieza().getTitulo().equals(titulo111) && arte.getPieza().getAutores().equals(autor11)) {
+                		if(arte.getPieza().getTitulo().equals(nomT) && arte.getPieza().getAutores().equals(autorT)) {
                 			pieza = arte;
                 		}
                 	}
-                	
-                	System.out.printf("%-10s %-10s %-10s %-10s %-10d%n", "Titulo", "Tipo", "Dueño", "Fecha Venta", "Precio Venta");
-                	if(pieza.getPieza().getProposito().equals("Vender")) {
-                		System.out.printf("%-10s %-10s %-10s %-10s %-10d%n", pieza.getPieza().getTitulo(), pieza.getPieza().getTipo(), pieza.getPropietario().getUsuario(), pieza.getPieza().getFechaVendida(), pieza.getPieza().getGaleriaOferta().getMontoCliente());
+                	if(pieza == null) {
+                		System.out.print("La pieza no fue encontrado");
+                	}else {
+                		System.out.printf("%-10s %-10s %-10s %-10s %-10s%n", "Titulo", "Tipo", "Dueño", "Fecha Venta", "Precio Venta");
+                    	if(pieza.getPieza().getProposito().equals("Vender")) {
+                    		System.out.printf("%-10s %-10s %-10s %-10s %-10d%n", pieza.getPieza().getTitulo(), pieza.getPieza().getTipo(), pieza.getPropietario().getUsuario(), pieza.getPieza().getFechaVendida(), pieza.getPieza().getGaleriaOferta().getMontoCliente());
+                    	}
+                    	else if(pieza.getPieza().getProposito().equals("Subastar")) {
+                    		System.out.printf("%-10s %-10s %-10s %-10s %-10d%n", pieza.getPieza().getTitulo(), pieza.getPieza().getTipo(), pieza.getPropietario().getUsuario(), pieza.getPieza().getFechaVendida(), pieza.getPieza().getGaleriaOferta().getMontoMinimo());
+                    	}
+                    	else if(pieza.getPieza().getProposito().equals("Exhibir")) {
+                    		System.out.print("Esta pieza no se vende");
+                    		System.out.printf("%-10s %-10s %-10s %-10s %-10d%n", pieza.getPieza().getTitulo(), pieza.getPieza().getTipo(), pieza.getPropietario().getUsuario(), pieza.getPieza().getFechaVendida(), 0);
+                    	}
                 	}
-                	else if(pieza.getPieza().getProposito().equals("Subastar")) {
-                		System.out.printf("%-10s %-10s %-10s %-10s %-10d%n", pieza.getPieza().getTitulo(), pieza.getPieza().getTipo(), pieza.getPropietario().getUsuario(), pieza.getPieza().getFechaVendida(), pieza.getPieza().getGaleriaOferta().getMontoMinimo());
-                	}
-                	else if(pieza.getPieza().getProposito().equals("Exhibir")) {
-                		System.out.print("Esta pieza no se vende");
-                		System.out.printf("%-10s %-10s %-10s %-10s %-10d%n", pieza.getPieza().getTitulo(), pieza.getPieza().getTipo(), pieza.getPropietario().getUsuario(), pieza.getPieza().getFechaVendida(), 0);
-                	}
-                	
-                	//PONER PERSISTENCIA DE PIEZA QUE LE PERTENECEN
+                	System.out.print("\n");
                     break;
                 case 5:
                 	System.out.print("Ingresa el nombre del autor que desea consultar: ");
-                	String nombre = scanner2.next();
+                	String nombre = scanner2.nextLine();
                 	
                 	List<Autores> autoresDisponibles = galeria.getCentroAutores().getListaAutores();
                 	Autores autorEncontrado = null;
-                	for(Autores autor111 : autoresDisponibles) {
-                		if(autor111.getNombre().equals(nombre)) {
-                			autorEncontrado = autor111;
+                	for(Autores autorE : autoresDisponibles) {
+                		if(autorE.getNombre().equals(nombre)) {
+                			autorEncontrado = autorE;
                 		}
                 	}
-                	
-                	System.out.printf("%-10s %-10s %-10s %-10s%n", "Pieza", "Fecha", "Fecha Vendida", "Monto");
-                	for(Piezas piezas1 : autorEncontrado.getListaPiezas()) {
-                		if(piezas1.getProposito().equals("Subastar")) {
-                			System.out.printf("%-10s %-10s %-10s %-10d%n", piezas1.getTitulo(), piezas1.getLugarCreacion(), piezas1.getFechaVendida(), piezas1.getGaleriaOferta().getMontoMinimo());
-                		}
-                		else if(piezas1.getProposito().equals("Vender")) {
-                			System.out.printf("%-10s %-10s %-10s %-10d%n", piezas1.getTitulo(), piezas1.getLugarCreacion(), piezas1.getFechaVendida(), piezas1.getGaleriaOferta().getMontoCliente());
-                		}
-                		else if(piezas1.getProposito().equals("Exhibir")) {
-                			System.out.printf("%-10s %-10s %-10s %-10d%n", piezas1.getTitulo(), piezas1.getLugarCreacion(), piezas1.getFechaVendida(), 0);
-                		}
+                	if(autorEncontrado == null) {
+                		System.out.print("El autor no fue encontrado");
+                	}else {
+                		System.out.printf("%-10s %-10s %-10s %-10s%n", "Pieza", "Fecha", "Fecha Vendida", "Monto");
+                    	for(Piezas piezas1 : autorEncontrado.getListaPiezas()) {
+                    		if(piezas1.getProposito().equals("Subastar")) {
+                    			System.out.printf("%-10s %-10s %-10s %-10d%n", piezas1.getTitulo(), piezas1.getLugarCreacion(), piezas1.getFechaVendida(), piezas1.getGaleriaOferta().getMontoMinimo());
+                    		}
+                    		else if(piezas1.getProposito().equals("Vender")) {
+                    			System.out.printf("%-10s %-10s %-10s %-10d%n", piezas1.getTitulo(), piezas1.getLugarCreacion(), piezas1.getFechaVendida(), piezas1.getGaleriaOferta().getMontoCliente());
+                    		}
+                    		else if(piezas1.getProposito().equals("Exhibir")) {
+                    			System.out.printf("%-10s %-10s %-10s %-10d%n", piezas1.getTitulo(), piezas1.getLugarCreacion(), piezas1.getFechaVendida(), 0);
+                    		}
+                    	}
                 	}
-                	//PONER PERSISTENCIA DE PIEZA QUE LE PERTENECEN
+                	System.out.println("\n");
                     break;
                 case 6:
                 	inversor.crearSolicitudMonto();

@@ -83,7 +83,7 @@ public class PersistenciaVentas {
 	private void salvarOfertas(Galeria galeria, JSONObject jobject) {
 		
 		JSONArray jOfertas = new JSONArray();
-		for(Ofertas oferta : galeria.getOfertasSubasta()) {
+		for(Ofertas oferta : galeria.getTotalOfertas()) {
 			
 			JSONObject jOferta = new JSONObject();
 			
@@ -125,13 +125,16 @@ public class PersistenciaVentas {
 			}
 			
 			if(tipo.equals("Oferta Subasta")) {
+				OfertaSubasta nueva = new OfertaSubasta(pieza, inver, monto);
+				galeria.getOfertasFinales(nueva);
 				if(pieza.getVenta() == true) {
-					OfertaSubasta nueva = new OfertaSubasta(pieza, inver, monto);
 					galeria.getCajero().agregarOfertas(nueva);
+					
 				}
 			}else {
+				OfertaVenta nueva = new OfertaVenta(pieza, inver, monto);
+				galeria.getOfertasFinales(nueva);
 				if(pieza.getVenta() == true) {
-					OfertaVenta nueva = new OfertaVenta(pieza, inver, monto);
 					galeria.getCajero().agregarOfertas(nueva);
 				}
 			}
@@ -140,7 +143,7 @@ public class PersistenciaVentas {
 	private void salcarProcesoCompra(Galeria galeria, JSONObject jobject) {
 		
 		JSONArray jOfertas = new JSONArray();
-		for(Ofertas oferta : galeria.getOfertasSubasta()) {
+		for(Ofertas oferta : galeria.getListaOfertasFinales()) {
 			
 			JSONObject jOferta = new JSONObject();
 			

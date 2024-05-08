@@ -53,18 +53,21 @@ public class Galeria {
 	
 	private List<HistorialInversor> listaSolicitudMonto;
 	
+	private List<Ofertas> listaOfertasFinales;
+	
 	/**
 	 * Constructor que inicializa la lista de usuarios registrados
 	 * */
 	public Galeria(){
 		
-		this.operador = new OperacionSubasta();
+		this.operador = new OperacionSubasta(this);
 		this.inventario = new Inventario (operador);
 		this.registro = new RegistroInicio();
 		this.cajero = new ProcesoCompra();
-		this.centroOfertas = new CentroOfertas();
+		this.centroOfertas = new CentroOfertas(operador, this);
 		this.listaSolicitudMonto = new ArrayList<>();
 		this.autores = new CentroAutores();
+		listaOfertasFinales = new ArrayList<>();
 	}
 	
 	public RegistroInicio getRegistro() {
@@ -155,9 +158,9 @@ public class Galeria {
 		return cajero;
 	}
 	
-	public List<Ofertas> getOfertasSubasta(){
+	public List<Ofertas> getTotalOfertas(){
 		
-		return operador.getofertaFinalesSubasta();
+		return centroOfertas.getTotalOfertas();
 	}
 	
 	public List<Ofertas> getOfertasVentas(){
@@ -213,5 +216,16 @@ public class Galeria {
 	public List<Autores> getListaAutores(){
 		
 		return autores.getListaAutores();
+	}
+	
+	public List<Ofertas> getOfertasFinales(Ofertas oferta){
+		
+		listaOfertasFinales.add(oferta);
+		return listaOfertasFinales;
+	}
+	
+	public List<Ofertas> getListaOfertasFinales(){
+		
+		return listaOfertasFinales;
 	}
 }

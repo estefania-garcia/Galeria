@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import galeria.modelo.controlador.Galeria;
 import galeria.modelo.inventario.Inventario;
 import galeria.modelo.inventario.Piezas;
 import galeria.modelo.usuarios.OperacionSubasta;
@@ -29,18 +30,25 @@ public class CentroOfertas {
 	 * */
 	private List<Ofertas> ofertasSubasta;
 	
+	private List<Ofertas> totalOfertas;
+	
 	/**
 	 * Lista que recibe objetos de tipo Ofertas y que guarda todas las ofertas de tipo venta
 	 * */
 	private List<Ofertas> ofertasVenta;
 	
+	private Galeria galeria;
+	
 	/**
 	 * Inicializa la lista de ofertas subastas
 	 * */
-	public CentroOfertas() {
+	public CentroOfertas(OperacionSubasta operador, Galeria galeria) {
 		
+		this.operador = operador;
 		ofertasSubasta = new ArrayList<Ofertas>();
+		totalOfertas = new ArrayList<Ofertas>();
 		ofertasVenta = new ArrayList<Ofertas>();
+		this.galeria = galeria;
 	}
 	
 	/**
@@ -50,6 +58,7 @@ public class CentroOfertas {
 	 * */
 	public void agregarOfertas(Ofertas oferta) {
 		
+		totalOfertas.add(oferta);
 		if(oferta.tipoOferta().equals("Oferta Subasta")){
 			ofertasSubasta.add(oferta);
 			agregarOfertasSubasta();
@@ -58,6 +67,7 @@ public class CentroOfertas {
 			Piezas pieza = oferta.getPiezas();
 			inventario.modificarEstado("Bloqueada", pieza);
 			ofertasVenta.add(oferta);
+			galeria.getOfertasFinales(oferta);
 		}
 	}
 	
@@ -72,7 +82,12 @@ public class CentroOfertas {
 	 * @return ofertaSubasta
 	 * */
 	public List<Ofertas> getOfertasSubasta(){
+		
 		return ofertasSubasta;
+	}
+	
+	public List<Ofertas> getTotalOfertas(){
+		return totalOfertas;
 	}
 	
 	/**

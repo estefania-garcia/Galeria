@@ -78,7 +78,7 @@ public class ConsolaInicio {
 	public void persistenciaSalvarVentas() {
 		
         try {
-			galeria.cargarVentas();
+			galeria.salvarVentas();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

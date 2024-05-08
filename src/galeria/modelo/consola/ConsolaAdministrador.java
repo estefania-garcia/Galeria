@@ -42,13 +42,12 @@ public class ConsolaAdministrador {
             System.out.println("Bienvenido al menú del administrador de la galeria:");
             System.out.println("1. Aprobar nuevos usuarios");
             System.out.println("2. Aprobar nuevas piezas");
-            System.out.println("3. Consultar proceso subastas");
-            System.out.println("4. Aprobar ofertas venta");
-            System.out.println("5. Consultar historial de comprador");
-            System.out.println("6. Verificar solicitudes inversores");
-            System.out.println("7. Devolver piezas en consignación");
-            System.out.println("8. Consultar historial de piezas");
-            System.out.println("9. Consultar historial de un artista");
+            System.out.println("3. Consultar proceso subastas y ventas");
+            System.out.println("4. Consultar historial de comprador");
+            System.out.println("5. Verificar solicitudes inversores");
+            System.out.println("6. Devolver piezas en consignación");
+            System.out.println("7. Consultar historial de piezas");
+            System.out.println("8. Consultar historial de un artista");
             System.out.println("0. Salir");
             System.out.print("Elije una opción: ");
             opcion = scanner.nextInt();
@@ -173,7 +172,9 @@ public class ConsolaAdministrador {
                             	Piezas arte = piezasSubasta.get(pos-1);
                             	subasta.finalizarSubasta(arte);
                             	arte.asignarVigenica(false);
+                            	
                             	consola.persistenciaSalvarInventario();
+                            	consola.persistenciaSalvarVentas();
                             	
                             	System.out.print("¿Deseas seguir verificando? (true/false): ");
                             	loop = scanner2.nextBoolean();
@@ -185,82 +186,48 @@ public class ConsolaAdministrador {
                         	while(lop) {
                         		
                         		System.out.println("Todas las ofertas a continuación pasaron los filtros de precio. Son válidas para el sistema");
-                        		List<Ofertas> ofertasFinalesSubasta = galeria.getOfertasSubasta();
-                        		System.out.printf("%-10s %-10s %-10s %-10s%n", "Número", "Ofertador", "Pieza", "Monto");
+                        		List<Ofertas> ofertasFinales = galeria.getListaOfertasFinales();
+                        		System.out.printf("%-10s %-10s %-10s %-10s %-10s%n", "Número", "Ofertador", "Pieza", "Monto", "Tipo");
                         		contador = 0;
                         	
-                        		for(Ofertas oferta: ofertasFinalesSubasta) {
+                        		for(Ofertas oferta: ofertasFinales) {
                         		contador++;
-                        		System.out.printf("%-10d %-10s %-10d %-10s%n", contador, oferta.getComprador().getInversor().getUsuario(), oferta.getPiezas().getTitulo(), oferta.getMonto());
+                        		System.out.printf("%-10d %-10s %-10s %-10d %-10s%n", contador, oferta.getComprador().getInversor().getUsuario(), oferta.getPiezas().getTitulo(), oferta.getMonto(), oferta.tipoOferta());
                         		}
                         		System.out.println("\n");
                         		
                         		System.out.print("Ingresa la posicion de la oferta: ");
                             	int pos = scanner2.nextInt();
                             	
-                            	System.out.print("¿Deseas desea aprobarla o rechazarla? (true/false): ");
-                            	boolean aprobacion = scanner2.nextBoolean();
-                            	Ofertas ofert = ofertasFinalesSubasta.get(pos-1);
-                            	
-                            	if(aprobacion == true) {
-                            		System.out.print("Ingresa la fecha actual sin espacios: ");
-                                	String fechaVenta = scanner2.next();
-                                	ofert.getPiezas().asignarFechaVendida(fechaVenta);
-                                	ofert.getPiezas().asignarVenta(true);
-                                	
-                                	cajero.agregarOfertas(ofert);
-                                	consola.persistenciaSalvarInventario();
-                                	consola.persistenciaSalvarVentas();
+                            	if(ofertasFinales.size() > 0) {
+                            		System.out.print("¿Deseas desea aprobarla o rechazarla? (true/false): ");
+                                	boolean aprobacion = scanner2.nextBoolean();
+                                	Ofertas ofert = ofertasFinales.get(pos-1);
+                                	if(aprobacion == true) {
+                                		System.out.print("Ingresa la fecha actual sin espacios: ");
+                                    	String fechaVenta = scanner2.next();
+                                    	ofert.getPiezas().asignarFechaVendida(fechaVenta);
+                                    	ofert.getPiezas().asignarVenta(true);
+                                    	
+                                    	cajero.agregarOfertas(ofert);
+                                    	consola.persistenciaSalvarInventario();
+                                    	consola.persistenciaSalvarVentas();
+                                    	consola.persistenciaSalvarVentas();
+                                	}else {
+                                		galeria.recharOfertasSubasta(ofert);
+                                	}
+                                	System.out.print("¿Deseas seguir verificando? (true/false): ");
+                                	lop = scanner2.nextBoolean();
+                                	System.out.println("\n");
                             	}else {
-                            		galeria.recharOfertasSubasta(ofert);
+                            		System.out.println("No hay ofertas disponibles");
+                            		System.out.print("\n");
                             	}
-                            	System.out.print("¿Deseas seguir verificando? (true/false): ");
-                            	lop = scanner2.nextBoolean();
-                            	System.out.println("\n");
                         	}
                     		break;
                     }
                     break;
                 case 4:
-                	boolean lop = true;
-                	while(lop) {
-                		
-                		System.out.println("Todas las ofertas a continuación pasaron los filtros de precio. Son válidas para el sistema");
-                		List<Ofertas> ofertasVenta = galeria.getOfertasVentas();
-                		System.out.printf("%-10s %-10s %-10s %-10s%n", "Número", "Ofertador", "Pieza", "Monto");
-                		contador = 0;
-                	
-                		for(Ofertas oferta: ofertasVenta) {
-                		contador++;
-                		System.out.printf("%-10d %-10s %-10d %-10s%n", contador, oferta.getComprador().getInversor().getUsuario(), oferta.getPiezas().getTitulo(), oferta.getMonto());
-                		}
-                		System.out.println("\n");
-                		
-                		System.out.print("Ingresa la posicion de la oferta: ");
-                    	int pos = scanner2.nextInt();
-                    	
-                    	System.out.print("¿Deseas desea aprobarla o rechazarla? (true/false): ");
-                    	boolean aprobacion = scanner2.nextBoolean();
-                    	Ofertas ofert = ofertasVenta.get(pos-1);
-                    	
-                    	if(aprobacion == true) {
-                    		System.out.print("Ingresa la fecha actual sin espacios: ");
-                        	String fechaVenta = scanner2.next();
-                        	ofert.getPiezas().asignarFechaVendida(fechaVenta);
-                        	ofert.getPiezas().asignarVenta(true);
-                        	
-                        	cajero.agregarOfertas(ofert);
-                        	consola.persistenciaSalvarInventario();
-                        	consola.persistenciaSalvarVentas();
-                    	}else {
-                    		galeria.getCentroOfertas().recharOfertaVenta(ofert);
-                    	}
-                    	System.out.print("¿Deseas seguir verificando? (true/false): ");
-                    	lop = scanner2.nextBoolean();
-                    	System.out.println("\n");
-                	}
-            		break;
-                case 5:
                 	System.out.print("Ingresa el usuario del inversor que desea consultar: ");
                 	String consulta = scanner2.next();
                 	
@@ -298,7 +265,7 @@ public class ConsolaAdministrador {
                 		System.out.print("\n");
                 	}
                     break;
-                case 6:
+                case 5:
                 	System.out.println("Estos son los compradores que tiene solicitud de aumento de monto maximo de compra: ");
                     
                     List<HistorialInversor> solicitudesMonto = galeria.getSolicitudMonto();
@@ -307,7 +274,7 @@ public class ConsolaAdministrador {
             	
             		for(HistorialInversor historial: solicitudesMonto) {
             		contador++;
-            		System.out.printf("%-10d %-10s %-10f%n", contador, historial.getInversor().getUsuario(), historial.getMontoMaximo());
+            		System.out.printf("%-10d %-10s %-10d%n", contador, historial.getInversor().getUsuario(), historial.getMontoMaximo());
             		}
             		System.out.println("\n");
             		System.out.print("Ingresa la posicion de la solicitud: ");
@@ -324,11 +291,9 @@ public class ConsolaAdministrador {
                 		inverMontoA.modificarMontoMaximo(valor);
                 		consola.persistenciaSalvar();
                 	}
-                	System.out.print("¿Deseas seguir verificando? (true/false): ");
-                	lop = scanner2.nextBoolean();
                 	System.out.println("\n");
                 	break;
-                case 7:
+                case 6:
                 	System.out.println("Estas son las piezas en prestamo: ");
                     
                 	boolean repetir = true;
@@ -364,7 +329,7 @@ public class ConsolaAdministrador {
                 		System.out.println("\n");
                 	}
                 	break;
-                case 8:
+                case 7:
                 	System.out.print("Ingrese el titulo de la pieza que quiere consultar: ");
                 	String titulo = scanner2.next();
                 	
@@ -383,19 +348,19 @@ public class ConsolaAdministrador {
                 	}else {
                 		System.out.printf("%-10s %-10s %-10s %-10s %-10s%n", "Titulo", "Tipo", "Dueño", "Fecha Venta", "Precio Venta");
                     	if(pieza.getPieza().getProposito().equals("Vender")) {
-                    		System.out.printf("%-10s %-10s %-10s %-10s %-10f%n", pieza.getPieza().getTitulo(), pieza.getPieza().getTipo(), pieza.getPropietario().getUsuario(), pieza.getPieza().getFechaVendida(), pieza.getPieza().getGaleriaOferta().getMontoCliente());
+                    		System.out.printf("%-10s %-10s %-10s %-10s %-10d%n", pieza.getPieza().getTitulo(), pieza.getPieza().getTipo(), pieza.getPropietario().getUsuario(), pieza.getPieza().getFechaVendida(), pieza.getPieza().getGaleriaOferta().getMontoCliente());
                     	}
                     	else if(pieza.getPieza().getProposito().equals("Subastar")) {
-                    		System.out.printf("%-10s %-10s %-10s %-10s %-10f%n", pieza.getPieza().getTitulo(), pieza.getPieza().getTipo(), pieza.getPropietario().getUsuario(), pieza.getPieza().getFechaVendida(), pieza.getPieza().getGaleriaOferta().getMontoMinimo());
+                    		System.out.printf("%-10s %-10s %-10s %-10s %-10d%n", pieza.getPieza().getTitulo(), pieza.getPieza().getTipo(), pieza.getPropietario().getUsuario(), pieza.getPieza().getFechaVendida(), pieza.getPieza().getGaleriaOferta().getMontoMinimo());
                     	}
                     	else if(pieza.getPieza().getProposito().equals("Exhibir")) {
                     		System.out.print("Esta pieza no se vende");
-                    		System.out.printf("%-10s %-10s %-10s %-10s %-10f%n", pieza.getPieza().getTitulo(), pieza.getPieza().getTipo(), pieza.getPropietario().getUsuario(), pieza.getPieza().getFechaVendida(), 0);
+                    		System.out.printf("%-10s %-10s %-10s %-10s %-10d%n", pieza.getPieza().getTitulo(), pieza.getPieza().getTipo(), pieza.getPropietario().getUsuario(), pieza.getPieza().getFechaVendida(), 0);
                     	}
                 	}
                 	System.out.print("\n");
                     break;
-                case 9:
+                case 8:
                 	System.out.print("Ingresa el nombre del autor que desea consultar: ");
                 	String nombre = scanner2.nextLine();
                 	
@@ -412,13 +377,13 @@ public class ConsolaAdministrador {
                 		System.out.printf("%-10s %-10s %-10s %-10s%n", "Pieza", "Fecha", "Fecha Vendida", "Monto");
                     	for(Piezas piezas1 : autorEncontrado.getListaPiezas()) {
                     		if(piezas1.getProposito().equals("Subastar")) {
-                    			System.out.printf("%-10s %-10s %-10s %-10f%n", piezas1.getTitulo(), piezas1.getLugarCreacion(), piezas1.getFechaVendida(), piezas1.getGaleriaOferta().getMontoMinimo());
+                    			System.out.printf("%-10s %-10s %-10s %-10d%n", piezas1.getTitulo(), piezas1.getLugarCreacion(), piezas1.getFechaVendida(), piezas1.getGaleriaOferta().getMontoMinimo());
                     		}
                     		else if(piezas1.getProposito().equals("Vender")) {
-                    			System.out.printf("%-10s %-10s %-10s %-10f%n", piezas1.getTitulo(), piezas1.getLugarCreacion(), piezas1.getFechaVendida(), piezas1.getGaleriaOferta().getMontoCliente());
+                    			System.out.printf("%-10s %-10s %-10s %-10d%n", piezas1.getTitulo(), piezas1.getLugarCreacion(), piezas1.getFechaVendida(), piezas1.getGaleriaOferta().getMontoCliente());
                     		}
                     		else if(piezas1.getProposito().equals("Exhibir")) {
-                    			System.out.printf("%-10s %-10s %-10s %-10f%n", piezas1.getTitulo(), piezas1.getLugarCreacion(), piezas1.getFechaVendida(), 0);
+                    			System.out.printf("%-10s %-10s %-10s %-10d%n", piezas1.getTitulo(), piezas1.getLugarCreacion(), piezas1.getFechaVendida(), 0);
                     		}
                     	}
                 	}
