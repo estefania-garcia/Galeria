@@ -15,14 +15,26 @@ public abstract class Piezas {
 	 * */
 	private String titulo;
 	
+	/**
+	 * Atributo booleano que indica si esta vigente o no. Se inicializa en false esperando a aprobacion
+	 * */
 	private boolean vigencia = false;
 	
+	/**
+	 * Atributo booleano que indica si esta fue aprobada o no. Se inicializa en false esperando a aprobacion
+	 * */
 	private boolean aprobacion = false;
 	
+	/**
+	 * Atributo booleano que indica si fue vendida o no. Se inicializa en false esperando a aprobacion de alguna oferta
+	 * */
 	private boolean vendida = false;
 
-	
+	/**
+	 * Atributo que relacion la fecha de venta. Inicia en vacio
+	 * */
 	private String fecha_vendida = "";
+	
 	/**
 	 * Atributo que relacion el lugar de creación de la pieza
 	 * */
@@ -60,13 +72,6 @@ public abstract class Piezas {
 	
 	/**
 	 * Constructor que inicializa los atributos de la clase
-	 * @param titulo
-	 * @param año
-	 * @param autores
-	 * @param deposito
-	 * @param galeriaOferta
-	 * @param propietario
-	 * @param proposito
 	 * */
 	public Piezas(String titulo, String proposito, String año_lugar_creacion, String autores, boolean deposito, GaleriaOferta galeriaOferta, Usuarios propietario) {
 		
@@ -79,36 +84,57 @@ public abstract class Piezas {
 		this.proposito = proposito;
 	}
 	
+	/**
+	 * Método para cambiar la vigencia
+	 * */
 	public void asignarVigenica(boolean vigente) {
 		
 		this.vigencia = vigente;
 	}
 	
+	/**
+	 * Método getter para la vigencia
+	 * */
 	public boolean getVigencia() {
 		
 		return vigencia;
 	}
 	
+	/**
+	 * Método que cambia el estado de venta
+	 * */
 	public void asignarVenta(boolean venta) {
 		
 		this.vendida = venta;
 	}
 	
+	/**
+	 * Método getter del booleano de la venta
+	 * */
 	public boolean getVenta() {
 		
 		return vendida;
 	}
 	
+	/**
+	 * Método que cambia su estado de aprobacion
+	 * */
 	public void asignarAprobada(boolean aprobacion) {
 		
 		this.aprobacion = aprobacion;
 	}
 	
+	/**
+	 * Método getter de la aprobación
+	 * */
 	public boolean getAprobada() {
 		
 		return aprobacion;
 	}
 	
+	/**
+	 * Método que permite cambiar el propietario de una pieza si esta fue comprada por otro
+	 * */
 	public void modificarPropietario(Usuarios nuevo) {
 		
 		this.propietario = nuevo;
@@ -121,7 +147,6 @@ public abstract class Piezas {
 	
 	/**
 	 * Método getter que indica los autores
-	 * @return autores
 	 * */
 	public String getAutores() {
 		return autores;	
@@ -129,7 +154,6 @@ public abstract class Piezas {
 	
 	/**
 	 * Método getter que indica el proposito
-	 * @return autores
 	 * */
 	public String getProposito() {
 		return proposito;	
@@ -137,7 +161,6 @@ public abstract class Piezas {
 	
 	/**
 	 * Método getter que indica el lugar de creacion
-	 * @return autores
 	 * */
 	public String getLugarCreacion() {
 		return año_lugar_creacion;	
@@ -145,7 +168,6 @@ public abstract class Piezas {
 	
 	/**
 	 * Método getter que indica el propietario
-	 * @return propietario
 	 * */
 	public Usuarios getPropietario() {
 		return propietario;
@@ -153,7 +175,6 @@ public abstract class Piezas {
 	
 	/**
 	 * Método getter que indica si es deposito o no
-	 * @return deposito
 	 * */
 	public boolean getDeposito() {
 		return deposito;
@@ -161,7 +182,6 @@ public abstract class Piezas {
 	
 	/**
 	 * Método getter que indica el titulo
-	 * @return titulo
 	 * */
 	public String getTitulo() {
 		return titulo;
@@ -169,17 +189,22 @@ public abstract class Piezas {
 	
 	/**
 	 * Método getter que indica el tipo de oferta según su proposito
-	 * @return galeriaOferta
 	 * */
 	public GaleriaOferta getGaleriaOferta() {
 		return galeriaOferta;
 	}
 	
+	/**
+	 * Método getter de la fecha de venta
+	 * */
 	public String getFechaVendida() {
 		
 		return fecha_vendida;
 	}
 	
+	/**
+	 * Método que permite cambiar la fecha de venta
+	 * */
 	public void asignarFechaVendida(String fecha) {
 		
 		this.fecha_vendida = fecha;
@@ -187,8 +212,6 @@ public abstract class Piezas {
 	
 	/**
 	 * Método que le asigna un estado a la pieza
-	 * @param estados
-	 * @return estado
 	 * */
 	public String asignarEstado(String estados) {
 		this.estado = estados;
@@ -197,7 +220,6 @@ public abstract class Piezas {
 	
 	/**
 	 * Método getter que indica el estado de la pieza
-	 * @return estado
 	 * */
 	public String getEstado() {
 		return estado;

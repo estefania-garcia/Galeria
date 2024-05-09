@@ -20,9 +20,6 @@ public class OfertaSubasta extends Ofertas{
 	
 	/**
 	 * El constructor de la clase solo toma los atributos especificados por la super clase
-	 * @param pieza
-	 * @param comprador
-	 * @param monto
 	 * */
 	public OfertaSubasta(Piezas pieza, HistorialInversor comprador, int monto) {
 		super(pieza, comprador, monto);
@@ -30,7 +27,6 @@ public class OfertaSubasta extends Ofertas{
 
 	/**
 	 * Verifica que el monto que el comprador pretende pagar por la pieza sea mayor o igual al precio inicial que le fue asignado a la pieza
-	 * @return retorna un booleano que nos indica si esta condición se cumple o no
 	 * */
 	@Override
 	public boolean validarPrecio() {
@@ -43,7 +39,6 @@ public class OfertaSubasta extends Ofertas{
 	
 	/**
 	 * Verifica que el monto que el comprador pretende pagar por la pieza sea mayor o igual al precio minimo asignado a la pieza para poder ser vendida
-	 * @return retorna un booleano que nos indica si esta condición se cumple o no
 	 * */
 	public boolean venderPieza() {
 		if(super.getPiezas().getGaleriaOferta().getMontoMinimo() <= super.getMonto()) {
@@ -55,7 +50,6 @@ public class OfertaSubasta extends Ofertas{
 
 	/**
 	 * Indica el tipo de oferta que representa la clase
-	 * @return OFERTAVENTA 
 	 * */
 	@Override
 	public String tipoOferta() {

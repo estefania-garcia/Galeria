@@ -64,13 +64,15 @@ public class PersistenciaVentas {
 				}
 			}
 			Piezas pieza = null;
-			if(inver != null && pieza == null) {
-				for(Piezas artis : inver.getPiezas()) {
+			if(pieza == null) {
+				for(ConsignacionPieza arti : galeria.getPiezasSolicitud()) {
+					Piezas artis = arti.getPieza();
 					if(artis.getTitulo().equals(titulo) && artis.getAutores().equals(autores)) {
 						pieza = artis;
 					}
 				}
-				for(Piezas artis : inver.getPiezasCompradas()) {
+				for(ConsignacionPieza arti : galeria.getPiezasSolicitud()) {
+					Piezas artis = arti.getPieza();
 					if(artis.getTitulo().equals(titulo) && artis.getAutores().equals(autores)) {
 						pieza = artis;
 					}
@@ -125,13 +127,15 @@ public class PersistenciaVentas {
 				}
 			}
 			Piezas pieza = null;
-			if(inver != null && pieza == null) {
-				for(Piezas artis : inver.getPiezas()) {
+			if(pieza == null) {
+				for(ConsignacionPieza arti : galeria.getPiezasSolicitud()) {
+					Piezas artis = arti.getPieza();
 					if(artis.getTitulo().equals(titulo) && artis.getAutores().equals(autores)) {
 						pieza = artis;
 					}
 				}
-				for(Piezas artis : inver.getPiezasCompradas()) {
+				for(ConsignacionPieza arti : galeria.getPiezasSolicitud()) {
+					Piezas artis = arti.getPieza();
 					if(artis.getTitulo().equals(titulo) && artis.getAutores().equals(autores)) {
 						pieza = artis;
 					}

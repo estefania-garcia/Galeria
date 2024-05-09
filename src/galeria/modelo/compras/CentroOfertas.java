@@ -30,6 +30,9 @@ public class CentroOfertas {
 	 * */
 	private List<Ofertas> ofertasSubasta;
 	
+	/**
+	 * Lista que recibe objetos de tipo Ofertas y guarda todas las ofertas que entran al sistema
+	 * */
 	private List<Ofertas> totalOfertas;
 	
 	/**
@@ -37,10 +40,13 @@ public class CentroOfertas {
 	 * */
 	private List<Ofertas> ofertasVenta;
 	
+	/**
+	 * Este atributo nos da acceso a la galeria 
+	 * */
 	private Galeria galeria;
 	
 	/**
-	 * Inicializa la lista de ofertas subastas
+	 * Inicializa la lista de ofertas subastas y recibe el acceso a los otras clases con las que opera
 	 * */
 	public CentroOfertas(OperacionSubasta operador, Galeria galeria, Inventario inventario) {
 		
@@ -53,9 +59,9 @@ public class CentroOfertas {
 	}
 	
 	/**
-	 * Método que discriman las ofertas que recibe según su tipo
-	 * Las de tipo subasta las guarda en la lista al igual que las de tipo venta. Para las ultimas se verifica que no este bloqueda.
-	 * @return
+	 * Método que discriman las ofertas que recibe según su tipo, verificando que no este repetida la oferta
+	 * Las de tipo subasta las guarda en la lista al igual que las de tipo venta. 
+	 * Para las ultimas se verifica que no este bloqueda.
 	 * */
 	public void agregarOfertas(Ofertas oferta) {
 		
@@ -80,6 +86,10 @@ public class CentroOfertas {
 		}
 	}
 	
+	/**
+	 * Con este método las ofertas de tipo venta que no fueron aceptadas se remueven 
+	 * y el estado se cambia para que se pueda volver a ofertar por ella
+	 * */
 	public void recharOfertaVenta(Ofertas oferta) {
 		
 		inventario.modificarEstado("Disponible", oferta.getPiezas());
@@ -88,20 +98,21 @@ public class CentroOfertas {
 	
 	/**
 	 * Método getter de la lista subasta
-	 * @return ofertaSubasta
 	 * */
 	public List<Ofertas> getOfertasSubasta(){
 		
 		return ofertasSubasta;
 	}
 	
+	/**
+	 * Método getter de la lista total de ofertas
+	 * */
 	public List<Ofertas> getTotalOfertas(){
 		return totalOfertas;
 	}
 	
 	/**
 	 * Método getter de la lista venta
-	 * @return ofertaVenta 
 	 * */
 	public List<Ofertas> getOfertaVenta() {
 		return ofertasVenta;
@@ -109,7 +120,6 @@ public class CentroOfertas {
 	
 	/**
 	 * Método que recorre la lista de ofertas subasta y se las pasa a operador por medio del metodo agregarOfertas para que este las registre
-	 * @return
 	 * */
 	public void agregarOfertasSubasta() {
 		
@@ -120,6 +130,5 @@ public class CentroOfertas {
     			operador.agregarOfertas(oferta);
     		}
     	}
-	}
-	
+	}	
 }

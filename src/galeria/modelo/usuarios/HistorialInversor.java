@@ -21,6 +21,9 @@ public class HistorialInversor{
 	 * */
 	private List<Piezas> pizasPropias;
 	
+	/**
+	 * Lista de las piezas compradas
+	 * */
 	private List<Piezas> piezasCompradas;
 	
 	/**
@@ -28,6 +31,9 @@ public class HistorialInversor{
 	 * */
 	private int montoMaximo;
 	
+	/**
+	 * Atributo del valor de las piezas compradas
+	 * */
 	private int valorColeccion;
 	
 	/**
@@ -35,6 +41,9 @@ public class HistorialInversor{
 	 * */
 	private Galeria galeria;
 	
+	/**
+	 * Atributo que relaciona al usuario
+	 * */
 	private Usuarios inversor;
 	
 	/**
@@ -48,16 +57,25 @@ public class HistorialInversor{
 		piezasCompradas = new ArrayList<Piezas>();
 	}
 	
+	/**
+	 * Método para referencia a la clase galeria sin crear una adicional
+	 * */
 	public void asignarGaleria(Galeria galeria) {
 		
 		this.galeria = galeria;
 	}
 	
+	/**
+	 * Método getter del valor de la coleccion
+	 * */
 	public int getValorColeccion() {
 		
 		return valorColeccion;
 	}
 	
+	/**
+	 * Método que aumenta el vlaor de la coleccion
+	 * */
 	public int asignarValorColeccion(int compra) {
 		
 		valorColeccion = valorColeccion + compra;
@@ -66,7 +84,6 @@ public class HistorialInversor{
 	
 	/**
 	 * Método que dofica el monto maximo
-	 * @param montoMaximo
 	 * */
 	public void modificarMontoMaximo(int montoMaximo) {
         
@@ -75,7 +92,6 @@ public class HistorialInversor{
 	
 	/**
 	 * Método getter del monto maximo
-	 * @return montoMaximo
 	 * */
 	public int getMontoMaximo() {
 		
@@ -84,13 +100,15 @@ public class HistorialInversor{
 	
 	/**
 	 * Método getter de lista piezas
-	 * @return piezasPropias
 	 * */
 	public List<Piezas> getPiezas(){
 		
 		return pizasPropias;
 	}
 	
+	/**
+	 * Método getter de las peizas compradas
+	 * */
 	public List<Piezas> getPiezasCompradas(){
 		
 		return piezasCompradas;
@@ -104,6 +122,9 @@ public class HistorialInversor{
 		pizasPropias.add(piezas);
 	}
 	
+	/**
+	 * Método para agregar peizas compradas
+	 * */
 	public void agregarPiezasCompradas(Piezas piezas){
 		
 		piezasCompradas.add(piezas);
@@ -117,12 +138,18 @@ public class HistorialInversor{
 		return inversor;
 	}
 	
+	/**
+	 * Método para crear una oferta de subasta
+	 * */
 	public OfertaSubasta crearOfertaSubasta(Piezas pieza, HistorialInversor comprador, int monto) {
 		
 		OfertaSubasta ofertaNueva = new OfertaSubasta(pieza, comprador, monto);
         return ofertaNueva;
 	}
 	
+	/**
+	 * Método para crear un oferta de venta
+	 * */
 	public OfertaVenta crearOfertaVenta(Piezas pieza, HistorialInversor comprador, int monto) {
 		
 		OfertaVenta ofertaNueva = new OfertaVenta(pieza, comprador, monto);
@@ -131,10 +158,6 @@ public class HistorialInversor{
 	
 	/**
 	 * Crea la oferta para la pieza nueva
-	 * @param montoMaximo
-	 * @param proposito
-	 * @param monto
-	 * @return GaleriOferta
 	 * */
 	public GaleriaOferta crearOfertaGaleria(int monto, int montoMinimo) {
 
@@ -144,8 +167,6 @@ public class HistorialInversor{
 	
 	/**
 	 * Crea una pieza de tipo digitla, la envia a solicitud y la agrega a una lista de solicitudes
-	 * @param sus parametros son todos los requeridos para la creacion de la pieza
-	 * @return ArteDigital
 	 * */
 	public ConsignacionPieza CrearPiezaDigital(int dias, String titulo, int monto, int montoMinimo, String proposito, String lugar_creacion, boolean deposito, Usuarios propietario, String autores, String tipoArte, String tipoArchivo) {
 		GaleriaOferta oferta = crearOfertaGaleria(monto, montoMinimo);
@@ -158,8 +179,6 @@ public class HistorialInversor{
 	
 	/**
 	 * Crea una pieza de tipo tridimensional, la envia a solicitud y la agrega a una lista de solicitudes
-	 * @param sus parametros son todos los requeridos para la creacion de la pieza
-	 * @return ArteTridimensional
 	 * */
 	public ConsignacionPieza CrearPiezaTridimensional(int dias, String titulo,  int monto, int montoMinimo, String proposito, String lugar_creacion, boolean deposito, Usuarios propietario, String autores, String dimensiones, String tecnica, int peso, boolean electricidad) {
 		GaleriaOferta oferta = crearOfertaGaleria(monto, montoMinimo);
@@ -172,8 +191,6 @@ public class HistorialInversor{
 	
 	/**
 	 * Crea una pieza de tipo visual, la envia a solicitud y la agrega a una lista de solicitudes
-	 * @param sus parametros son todos los requeridos para la creacion de la pieza
-	 * @return ArteVisual
 	 * */
 	public ConsignacionPieza CrearPiezaPintura(int dias, String titulo, int monto, int montoMinimo, String proposito, String lugar_creacion, boolean deposito, Usuarios propietario, String autores, String anchoxlargo,String tecnica) {
 		GaleriaOferta oferta = crearOfertaGaleria(monto, montoMinimo);

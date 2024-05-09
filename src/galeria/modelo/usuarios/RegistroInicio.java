@@ -179,6 +179,9 @@ public class RegistroInicio {
 		return false;
 	}
 	
+	/**
+	 * Método que crea el historial de cada inversor aprobado
+	 * */
 	public HistorialInversor crearHistoriales(Usuarios usuario, int monto) {
 
 		HistorialInversor nombre = new HistorialInversor(monto, usuario);
@@ -186,6 +189,9 @@ public class RegistroInicio {
 		return nombre;
 	}
 	
+	/**
+	 * Método getter de la lista de los historiales de los inversores
+	 * */
 	public List<HistorialInversor> getListaHistorial(){
 		
 		return listaHistorialesInversores;

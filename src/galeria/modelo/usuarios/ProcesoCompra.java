@@ -52,6 +52,9 @@ public class ProcesoCompra {
 		}
 	}
 	
+	/**
+	 * Método getter de las ofertas finales aprobadas
+	 * */
 	public List<Ofertas> getlistaOfertas(){
 		
 		return lista_ofertas;

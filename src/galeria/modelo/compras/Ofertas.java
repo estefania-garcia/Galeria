@@ -23,15 +23,12 @@ public abstract class Ofertas {
 	 * */
 	private int monto;
 	/**
-	 * Atributo que nos da acceso al monto maximo asignado al comprador
+	 * Atributo que referencia al ofertador
 	 * */
 	private HistorialInversor comprador;
 	
 	/**
-	 * Inicializa los atributos según los parámetros
-	 * @param pieza
-	 * @param comprador
-	 * @param monto
+	 * Inicializa los atributos según los parámetros indicados
 	 * */
 	public Ofertas(Piezas pieza, HistorialInversor comprador, int monto) {
 		
@@ -72,13 +69,11 @@ public abstract class Ofertas {
 	
 	/**
 	 * Método abstracto para obtener el tipo de oferta
-	 * @return String
 	 * */
 	public abstract String tipoOferta();
 	 
 	/**
 	 * Método para verificar que la oferta que esta haciendo el comprador no supere el monto maximo de compra asignado por el administrador
-	 * @return boolean
 	 * */
 	public boolean verificarMonto() {
 		 

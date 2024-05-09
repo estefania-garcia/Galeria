@@ -34,10 +34,6 @@ public class OperacionSubasta {
 	
 	/**
 	 * Constructor que inicializa los atributos de la clase
-	 * @param usuario
-	 * @param contraseña
-	 * @param rol
-	 * @param nombre
 	 * */
 	public OperacionSubasta(Galeria galeria) {
 		
@@ -49,7 +45,6 @@ public class OperacionSubasta {
 	
 	/**
 	 * Método que agrega piezas que van a estar disponibles en la subasta
-	 * @param piezas
 	 * */
 	public void agregarPiezasSubasta(Piezas piezas) {
 		
@@ -60,7 +55,6 @@ public class OperacionSubasta {
 	
 	/**
 	 * Método que agrega ofertas a las piezas que están disponibles para la subasta
-	 * @param ofertas
 	 * */
 	public void agregarOfertas(Ofertas ofertas){
 		
@@ -84,8 +78,7 @@ public class OperacionSubasta {
 	}
 	
 	/**
-	 * Método que verifica cual fue la oferta mayor de una pieza en subasta y se la pasa a Galeria.
-	 * @param ofertas
+	 * Método que finaliza una subasta y pasa la ultima ofer (la mayor) a la clase galeria
 	 * */
 	public void finalizarSubasta(Piezas pieza) {
 		
@@ -100,16 +93,25 @@ public class OperacionSubasta {
 		}
 	}
 	
+	/**
+	 * Método para rechazar una oferta
+	 * */
 	public void recharOfertaFinal(Ofertas oferta) {
 		
 		listaOfertasFinales.remove(oferta);
 	}
 	
+	/**
+	 * Método getter del mapa de las subastas
+	 * */
 	public Map<Piezas, List<Ofertas>> getMapa(){
 		
 		return mapaSubastas;
 	}
 	
+	/**
+	 * Método getter de las ofertas finales de las subastas
+	 * */
 	public List<Ofertas> getofertaFinalesSubasta(){
 		
 		return listaOfertasFinales;

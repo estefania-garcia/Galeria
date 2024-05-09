@@ -81,6 +81,9 @@ public class Usuarios {
 		return nombre;
 	}
 	
+	/**
+	 * Método que proporciona una base para cargar los elementos del usuario al archivo JSON
+	 * */
 	public static Usuarios cargarDesdeJSON(JSONObject usuario) {
 		
 		String rol = usuario.getString("rol");
@@ -90,6 +93,9 @@ public class Usuarios {
 		return new Usuarios(usuario1, contraseña, rol, nombre);
 	}
 	
+	/**
+	 * Método que proporciona una base para salvar los elementos del usuario al archivo JSON
+	 * */
 	public JSONObject salvarEnJson() {
 		
 		JSONObject jobject = new JSONObject();

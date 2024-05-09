@@ -12,6 +12,9 @@ import galeria.modelo.usuarios.OperacionSubasta;
 
 public class Inventario {
 	
+	/**
+	 * Lista de piezas en solicitud
+	 * */
 	private List<ConsignacionPieza> piezasSolicitud;
 	
 	/**
@@ -82,6 +85,9 @@ public class Inventario {
 		piezasBloqueadas = new ArrayList<Piezas>();
 	}
 	
+	/**
+	 * Método en general que agrega y filtra segun sus caracteristicas en las diferentes listas
+	 * */
 	public void añadirPiezasTodas(Piezas pieza) {
 
 		if(pieza.getVigencia() == true) {
@@ -130,6 +136,9 @@ public class Inventario {
 		}
 	}
 	
+	/**
+	 * Método que agrega las piezas en solicitud y a su vez llama a otro método para filtrarlas
+	 * */
 	public void añadirPiezasSolicitud(ConsignacionPieza pieza) {
 		
 		boolean confirmacion = true;
@@ -146,8 +155,7 @@ public class Inventario {
 	}
 	
 	/**
-	 * Método que agrega una pieza a las piezas en deposito
-	 * @param piezas
+	 * Método que agrega una pieza a las piezas en deposito y las filtra segun sus caracteristicas
 	 * */
 	public void añadirPiezasDeposito(ConsignacionPieza piezas){
 
@@ -163,6 +171,9 @@ public class Inventario {
 		}
 	}
 	
+	/**
+	 * Método getter de las piezas en solicitud
+	 * */
 	public List<ConsignacionPieza> getPiezasSolicitud(){
 		
 		return piezasSolicitud;
@@ -170,8 +181,6 @@ public class Inventario {
 	
 	/**
 	 * Método que modifica el estado de una pieza
-	 * @param piezas
-	 * @param estado
 	 * */
 	public void modificarEstado(String estado, Piezas pieza) {
 	
@@ -180,7 +189,6 @@ public class Inventario {
 	
 	/**
 	 * Método getter de la lista de piezas totales
-	 * @return piezasTotale
 	 * */
 	public List<ConsignacionPieza> getTotales(){
 		
@@ -189,7 +197,6 @@ public class Inventario {
 	
 	/**
 	 * Método getter de la lista de piezas en deposito
-	 * @return piezasDeposito
 	 * */
 	public List<ConsignacionPieza> getDeposito(){
 		
@@ -198,7 +205,6 @@ public class Inventario {
 	
 	/**
 	 * Método getter de la lista de piezas devueltas
-	 * @return piezasDevueltas
 	 * */
 	public List<ConsignacionPieza> getDevueltas(){
 		
@@ -207,7 +213,6 @@ public class Inventario {
 	
 	/**
 	 * Método getter de la lista de piezas vigentes
-	 * @return piezasVigentes
 	 * */
 	public List<Piezas> getVigentes(){
 		
@@ -216,7 +221,6 @@ public class Inventario {
 	
 	/**
 	 * Método getter de la lista de piezas en exhibición 
-	 * @return piezasExhibir
 	 * */
 	public List<Piezas> getExhibir(){
 		return piezasExhibir;
@@ -224,7 +228,6 @@ public class Inventario {
 	
 	/**
 	 * Método getter de la lista de piezas para subastar
-	 * @return piezasSubasta
 	 * */
 	public List<Piezas> getSubastar(){
 		
@@ -233,7 +236,6 @@ public class Inventario {
 	
 	/**
 	 * Método getter de la lista de piezas en venta
-	 * @return piezasVenta
 	 * */
 	public List<Piezas> getVenta(){
 		return piezasVenta;
@@ -241,7 +243,6 @@ public class Inventario {
 	
 	/**
 	 * Método getter de la lista de piezas vendidas
-	 * @return piezasVendidas
 	 * */
 	public List<Piezas> getVendidas(){
 		return piezasVendidas;
@@ -249,7 +250,6 @@ public class Inventario {
 	
 	/**
 	 * Método getter de la lista de piezas bloqueadas
-	 * @return piezasBloqueadas
 	 * */
 	public List<Piezas> getBloqueadas(){
 		return piezasBloqueadas;

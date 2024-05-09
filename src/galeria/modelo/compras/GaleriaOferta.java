@@ -7,19 +7,19 @@ package galeria.modelo.compras;
 public class GaleriaOferta {
 	
 	/**
-	 * Método getter del atributo monto cliente. Para las subasta representa el monto inicial y para las ventas representa el monto fijo
+	 * Atributo que referencia al monto fijo, en el caso de la venta o al monto inicial en caso de la subasta
+	 * En caso de la exhibición este queda en 0
 	 * */
 	private int montoCliente;
 	
 	/**
-	 * Método getter del atributo monto minimo. Aplica para las ofertas de tipo subasta
+	 * M Atributo que referencia al monto minimo de compra en el caso de la subasta
+	 * En caso de la exhibición y venta este queda en 0
 	 * */
 	private int montoMinimo;
 	
 	/**
 	 * Constructor para las ofertas de tipo subasta. Relaciona el monto inicial y el monto minimo
-	 * @param monto
-	 * @param montoMinimo
 	 * */
 	public GaleriaOferta(int monto, int montoMinimo) {
 		

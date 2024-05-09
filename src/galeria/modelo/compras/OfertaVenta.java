@@ -18,9 +18,6 @@ public class OfertaVenta extends Ofertas{
 	
 	/**
 	 * El constructor de la clase solo toma los atributos especificados por la super clase
-	 * @param pieza
-	 * @param comprador
-	 * @param monto
 	 * */
 	public OfertaVenta(Piezas pieza, HistorialInversor comprador, int monto) {
 		super(pieza, comprador, monto);
@@ -28,7 +25,6 @@ public class OfertaVenta extends Ofertas{
 	
 	/**
 	 * Verifica que el monto que el comprador pretende pagar por la pieza sea igual a precio fijo asginado a la pieza
-	 * @return retorna un booleano que nos indica si esta condición se cumple o no
 	 * */
 	
 	@Override
@@ -42,7 +38,6 @@ public class OfertaVenta extends Ofertas{
 	
 	/**
 	 * Indica el tipo de oferta que representa la clase
-	 * @return OFERTAVENTA 
 	 * */
 	
 	@Override
