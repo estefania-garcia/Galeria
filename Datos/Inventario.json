@@ -1,6 +1,6 @@
 {"Piezas": [
   {
-    "vigencia": false,
+    "vigencia": true,
     "tipo": "Arte Digital",
     "venta": false,
     "estado": "Nueva",

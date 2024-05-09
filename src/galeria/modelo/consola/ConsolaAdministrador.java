@@ -207,6 +207,11 @@ public class ConsolaAdministrador {
                         		System.out.print("Ingresa la posicion de la oferta: ");
                             	int pos = scanner2.nextInt();
                             	
+                            	if(pos == 0) {
+                            		lop = false;
+                            		break;
+                            	}
+                            	
                             	if(ofertasFinales.size() > 0) {
                             		System.out.print("¿Deseas desea aprobarla o rechazarla? (true/false): ");
                                 	boolean aprobacion = scanner2.nextBoolean();

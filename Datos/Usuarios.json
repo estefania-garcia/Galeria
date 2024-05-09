@@ -27,16 +27,28 @@
       "nombre": "Julian",
       "rol": "Cajero",
       "contraseña": "Sharks"
+    },
+    {
+      "usuario": "Robert",
+      "nombre": "Roberto",
+      "rol": "Inversor",
+      "contraseña": "AmericanIdol"
     }
   ],
-  "HistorialesInversor": [{
-    "inversor": "Isabel",
-    "monto": 6000000
-  }],
+  "HistorialesInversor": [
+    {
+      "inversor": "Isabel",
+      "monto": 6000000
+    },
+    {
+      "inversor": "Robert",
+      "monto": 200000
+    }
+  ],
   "Registros": [{
-    "usuario": "Robert",
-    "nombre": "Roberto",
-    "rol": "Operador",
-    "contraseña": "AmericanIdol"
+    "usuario": "Mugue",
+    "nombre": "Miguel",
+    "rol": "Cajero",
+    "contraseña": "Mil"
   }]
 }

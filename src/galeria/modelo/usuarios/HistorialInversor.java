@@ -136,7 +136,7 @@ public class HistorialInversor{
 	 * @param monto
 	 * @return GaleriOferta
 	 * */
-	public GaleriaOferta crearOfertaGaleria(int monto, int montoMinimo, String proposito) {
+	public GaleriaOferta crearOfertaGaleria(int monto, int montoMinimo) {
 
 		GaleriaOferta oferta = new GaleriaOferta(monto, montoMinimo);
 		return oferta;
@@ -148,7 +148,7 @@ public class HistorialInversor{
 	 * @return ArteDigital
 	 * */
 	public ConsignacionPieza CrearPiezaDigital(int dias, String titulo, int monto, int montoMinimo, String proposito, String lugar_creacion, boolean deposito, Usuarios propietario, String autores, String tipoArte, String tipoArchivo) {
-		GaleriaOferta oferta = crearOfertaGaleria(monto, montoMinimo, proposito);
+		GaleriaOferta oferta = crearOfertaGaleria(monto, montoMinimo);
 		Piezas pieza = new ArteDigital(titulo, proposito, lugar_creacion, deposito, oferta, inversor, autores, tipoArte, tipoArchivo);
 		ConsignacionPieza consignacion = new ConsignacionPieza(dias, pieza, inversor);
 		galeria.getInventario().añadirPiezasSolicitud(consignacion);
@@ -162,7 +162,7 @@ public class HistorialInversor{
 	 * @return ArteTridimensional
 	 * */
 	public ConsignacionPieza CrearPiezaTridimensional(int dias, String titulo,  int monto, int montoMinimo, String proposito, String lugar_creacion, boolean deposito, Usuarios propietario, String autores, String dimensiones, String tecnica, int peso, boolean electricidad) {
-		GaleriaOferta oferta = crearOfertaGaleria(monto, montoMinimo, proposito);
+		GaleriaOferta oferta = crearOfertaGaleria(monto, montoMinimo);
 		Piezas pieza = new ArteTridimensional(titulo, proposito, lugar_creacion, deposito, oferta, inversor, autores, dimensiones, tecnica, peso, electricidad);
 		ConsignacionPieza consignacion = new ConsignacionPieza(dias, pieza, inversor);
 		galeria.getInventario().añadirPiezasSolicitud(consignacion);
@@ -176,7 +176,7 @@ public class HistorialInversor{
 	 * @return ArteVisual
 	 * */
 	public ConsignacionPieza CrearPiezaPintura(int dias, String titulo, int monto, int montoMinimo, String proposito, String lugar_creacion, boolean deposito, Usuarios propietario, String autores, String anchoxlargo,String tecnica) {
-		GaleriaOferta oferta = crearOfertaGaleria(monto, montoMinimo, proposito);
+		GaleriaOferta oferta = crearOfertaGaleria(monto, montoMinimo);
 		Piezas pieza = new ArteVisual(titulo, proposito, lugar_creacion, deposito, oferta, inversor, autores, anchoxlargo, tecnica);
 		ConsignacionPieza consignacion = new ConsignacionPieza(dias, pieza, inversor);
 		galeria.getInventario().añadirPiezasSolicitud(consignacion);
