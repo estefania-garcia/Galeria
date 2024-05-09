@@ -1,10 +1,25 @@
 {
-  "CentroOfertas": [{
-    "tipo": "Oferta Subasta",
-    "monto": 4000000,
+  "CentroOfertas": [
+    {
+      "tipo": "Oferta Subasta",
+      "monto": 1100000,
+      "ofertador": "Isabel",
+      "titulo": "EspacioNocturno",
+      "autores": "MelissaArias"
+    },
+    {
+      "tipo": "Oferta Venta",
+      "monto": 2000000,
+      "ofertador": "Isabel",
+      "titulo": "Mujer",
+      "autores": "RubenMartin,JulietaMiles"
+    }
+  ],
+  "ProcesoCompra": [{
+    "tipo": "Oferta Venta",
+    "monto": 2000000,
     "ofertador": "Isabel",
-    "titulo": "Plato",
-    "autores": "RubenMartinez"
-  }],
-  "ProcesoCompra": []
+    "titulo": "Mujer",
+    "autores": "RubenMartin,JulietaMiles"
+  }]
 }

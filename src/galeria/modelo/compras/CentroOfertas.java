@@ -42,13 +42,14 @@ public class CentroOfertas {
 	/**
 	 * Inicializa la lista de ofertas subastas
 	 * */
-	public CentroOfertas(OperacionSubasta operador, Galeria galeria) {
+	public CentroOfertas(OperacionSubasta operador, Galeria galeria, Inventario inventario) {
 		
 		this.operador = operador;
 		ofertasSubasta = new ArrayList<Ofertas>();
 		totalOfertas = new ArrayList<Ofertas>();
 		ofertasVenta = new ArrayList<Ofertas>();
 		this.galeria = galeria;
+		this.inventario = inventario;
 	}
 	
 	/**
@@ -58,16 +59,24 @@ public class CentroOfertas {
 	 * */
 	public void agregarOfertas(Ofertas oferta) {
 		
-		totalOfertas.add(oferta);
-		if(oferta.tipoOferta().equals("Oferta Subasta")){
-			ofertasSubasta.add(oferta);
-			agregarOfertasSubasta();
+		boolean aprobar = true;
+		for(Ofertas off : totalOfertas) {
+			if(off.getComprador().getInversor().getUsuario().equals(oferta.getComprador().getInversor().getUsuario()) && off.getMonto() == oferta.getMonto() && off.getPiezas().getTitulo().equals(oferta.getPiezas().getTitulo())) {
+				aprobar = false;
+			}
 		}
-		else if(oferta.tipoOferta().equals("Oferta Venta") && oferta.getPiezas().getEstado() != "Bloqueada"){
-			Piezas pieza = oferta.getPiezas();
-			inventario.modificarEstado("Bloqueada", pieza);
-			ofertasVenta.add(oferta);
-			galeria.getOfertasFinales(oferta);
+		if(aprobar == true) {
+			totalOfertas.add(oferta);
+			if(oferta.tipoOferta().equals("Oferta Subasta")){
+				ofertasSubasta.add(oferta);
+				agregarOfertasSubasta();
+			}
+			else if(oferta.tipoOferta().equals("Oferta Venta") && oferta.getPiezas().getEstado() != "Bloqueada"){
+				Piezas pieza = oferta.getPiezas();
+				inventario.modificarEstado("Bloqueada", pieza);
+				ofertasVenta.add(oferta);
+				galeria.getOfertasFinales(oferta);
+			}
 		}
 	}
 	

@@ -26,9 +26,10 @@ public class ProcesoCompra {
 	 * @param rol
 	 * @param nombre
 	 * */
-	public ProcesoCompra() {
+	public ProcesoCompra(Inventario inventario) {
 		
 		lista_ofertas = new ArrayList<>();
+		this.inventario = inventario;
 	}
 	
 	/**
@@ -37,10 +38,18 @@ public class ProcesoCompra {
 	 * */
 	public void agregarOfertas(Ofertas ofertas) {
 		
-		lista_ofertas.add(ofertas);
-		inventario.modificarEstado("Vendida", ofertas.getPiezas());
-		ofertas.getPiezas().asignarVenta(true);
-		ofertas.getPiezas().modificarPropietario(ofertas.getComprador().getInversor());
+		boolean aprobar = true;
+		for(Ofertas ofer : lista_ofertas) {
+			if(ofer.getMonto() == ofertas.getMonto() && ofer.getComprador().getInversor().getUsuario().equals(ofertas.getComprador().getInversor().getUsuario()) && ofer.getPiezas().getTitulo().equals(ofertas.getPiezas().getTitulo())) {
+				aprobar = false;
+			}
+		}
+		if(aprobar == true) {
+			lista_ofertas.add(ofertas);
+			inventario.modificarEstado("Vendida", ofertas.getPiezas());
+			ofertas.getPiezas().asignarVenta(true);
+			ofertas.getPiezas().modificarPropietario(ofertas.getComprador().getInversor());
+		}
 	}
 	
 	public List<Ofertas> getlistaOfertas(){

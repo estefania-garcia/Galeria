@@ -27,8 +27,8 @@ public class ConsolaAdministrador {
 		CentroAutores autores = galeria.getCentroAutores();
 		
 		consola.persistenciaCargarAutores();
-		consola.persistenciaCargarVentas();
 		consola.persistenciaCargarInventario();
+		consola.persistenciaCargarVentas();
 		
         Scanner scanner = new Scanner(System.in);
         Scanner scanner2 = new Scanner(System.in);
@@ -73,17 +73,25 @@ public class ConsolaAdministrador {
                 		System.out.print("Ingresa la posicion del usuario: ");
                     	int posicion = scanner2.nextInt();
                     	
+                    	if(posicion == 0) {
+                    		ciclo = false;
+                    		System.out.print("\n");
+                    		break;
+                    	}
+                    	
                     	System.out.print("¿Desea aprobar la solicitud? (true/false): ");
                     	boolean aprobar = scanner2.nextBoolean();
                     	
                     	Usuarios usu = sesion.getSolicitud().get(posicion-1);
                     	if(aprobar == true) {
                     		sesion.agregarNuevosAprobados(usu);
+                    		sesion.rechazarSolicitud();
                     		if(usu.getRol().equals("Inversor")) {
                     			System.out.print("Ingresa el monto maximo de compras para este usuario: ");
                             	int monto = scanner2.nextInt();
                             	sesion.crearHistoriales(usu, monto);
                     		}
+                    	}else {
                     	}
                     	consola.persistenciaSalvar();
                     	
@@ -140,7 +148,7 @@ public class ConsolaAdministrador {
                 case 3:
                 	inventario.agregarPiezaSubasta();
                 	System.out.println("1. Finalizar Subasta");
-                    System.out.println("3. Aprobar ofertas subasta");
+                    System.out.println("2. Aprobar ofertas subasta");
                     System.out.print("Elije una opción: ");
                     opcion2 = scanner3.nextInt();
                     System.out.print("\n");
@@ -208,6 +216,7 @@ public class ConsolaAdministrador {
                                     	String fechaVenta = scanner2.next();
                                     	ofert.getPiezas().asignarFechaVendida(fechaVenta);
                                     	ofert.getPiezas().asignarVenta(true);
+                                    	ofert.getPiezas().asignarVigenica(false);
                                     	
                                     	cajero.agregarOfertas(ofert);
                                     	consola.persistenciaSalvarInventario();
@@ -222,6 +231,7 @@ public class ConsolaAdministrador {
                             	}else {
                             		System.out.println("No hay ofertas disponibles");
                             		System.out.print("\n");
+                            		lop = false;
                             	}
                         	}
                     		break;

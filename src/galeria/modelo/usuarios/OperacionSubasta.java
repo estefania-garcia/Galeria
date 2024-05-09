@@ -90,11 +90,13 @@ public class OperacionSubasta {
 	public void finalizarSubasta(Piezas pieza) {
 		
 		List<Ofertas> lista = mapaSubastas.get(pieza);
-		Ofertas oferta_final = lista.get(lista.size()-1);
-		mapaSubastas.remove(pieza);
-		if(oferta_subastas.venderPieza() == true) {
-			listaOfertasFinales.add(oferta_final);
-			galeria.getOfertasFinales(oferta_final);
+		if(lista.size() > 0) {
+			Ofertas oferta_final = lista.get(lista.size()-1);
+			mapaSubastas.remove(pieza);
+			if(oferta_subastas.venderPieza() == true) {
+				listaOfertasFinales.add(oferta_final);
+				galeria.getOfertasFinales(oferta_final);
+			}
 		}
 	}
 	

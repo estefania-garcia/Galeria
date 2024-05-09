@@ -57,15 +57,22 @@ public class PersistenciaVentas {
 			String tipo = oferta.getString("tipo");
 			
 			HistorialInversor inver = null;
-			Piezas pieza = null;
 			List<HistorialInversor> arte = galeria.getListaHistorial();
 			for(HistorialInversor art : arte) {
 				if(art.getInversor().getUsuario().equals(ofertador)) {
 					inver = art;
-					for(Piezas artis : art.getPiezas()) {
-						if(artis.getTitulo().equals(titulo) && artis.getAutores().equals(autores)) {
-							pieza = artis;
-						}
+				}
+			}
+			Piezas pieza = null;
+			if(inver != null && pieza == null) {
+				for(Piezas artis : inver.getPiezas()) {
+					if(artis.getTitulo().equals(titulo) && artis.getAutores().equals(autores)) {
+						pieza = artis;
+					}
+				}
+				for(Piezas artis : inver.getPiezasCompradas()) {
+					if(artis.getTitulo().equals(titulo) && artis.getAutores().equals(autores)) {
+						pieza = artis;
 					}
 				}
 			}
@@ -111,15 +118,22 @@ public class PersistenciaVentas {
 			String tipo = oferta.getString("tipo");
 			
 			HistorialInversor inver = null;
-			Piezas pieza = null;
 			List<HistorialInversor> arte = galeria.getListaHistorial();
 			for(HistorialInversor art : arte) {
 				if(art.getInversor().getUsuario().equals(ofertador)) {
 					inver = art;
-					for(Piezas artis : art.getPiezas()) {
-						if(artis.getTitulo().equals(titulo) && artis.getAutores().equals(autores)) {
-							pieza = artis;
-						}
+				}
+			}
+			Piezas pieza = null;
+			if(inver != null && pieza == null) {
+				for(Piezas artis : inver.getPiezas()) {
+					if(artis.getTitulo().equals(titulo) && artis.getAutores().equals(autores)) {
+						pieza = artis;
+					}
+				}
+				for(Piezas artis : inver.getPiezasCompradas()) {
+					if(artis.getTitulo().equals(titulo) && artis.getAutores().equals(autores)) {
+						pieza = artis;
 					}
 				}
 			}

@@ -86,14 +86,18 @@ public class RegistroInicio {
 	 * Método que elimina de la lista de usuarios registrados el usuario entrado por parametro
 	 * */		
 	public void rechazarSolicitud() {
-			
-		Iterator<Usuarios> iterador = listaUsuariosRegistrados.iterator();
-	    while(iterador.hasNext()) {
-	   		Usuarios ingreso = iterador.next();
-	   		if(listaNuevosUsuarios.contains(ingreso)) {
-	   			listaNuevosUsuarios.remove(ingreso);
-	   		}
-	    }
+		
+		Usuarios usua = null;
+		for(Usuarios usu : listaUsuariosRegistrados) {
+			for(Usuarios usuario : listaNuevosUsuarios) {
+				if(usu.getUsuario().equals(usuario.getUsuario()) && usu.getRol().equals(usuario.getRol())) {
+					usua = usu;
+				}
+			}
+		}
+		if(usua != null) {
+			listaNuevosUsuarios.remove(usua);
+		}
 	}
 	
 	/**

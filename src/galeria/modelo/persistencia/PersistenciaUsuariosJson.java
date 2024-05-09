@@ -77,6 +77,7 @@ public class PersistenciaUsuariosJson {
 			Usuarios nuevoUsuario = null;
 			nuevoUsuario = Usuarios.cargarDesdeJSON(usuario);
 			galeria.getRegistro().crearNuevoUsuario(nuevoUsuario.getRol(), nuevoUsuario.getNombre(), nuevoUsuario.getContrasena(), nuevoUsuario.getUsuario());
+			
 			galeria.getRegistro().rechazarSolicitud();
 		}
 	}

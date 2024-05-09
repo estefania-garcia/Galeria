@@ -63,8 +63,8 @@ public class Galeria {
 		this.operador = new OperacionSubasta(this);
 		this.inventario = new Inventario (operador);
 		this.registro = new RegistroInicio();
-		this.cajero = new ProcesoCompra();
-		this.centroOfertas = new CentroOfertas(operador, this);
+		this.cajero = new ProcesoCompra(inventario);
+		this.centroOfertas = new CentroOfertas(operador, this, inventario);
 		this.listaSolicitudMonto = new ArrayList<>();
 		this.autores = new CentroAutores();
 		listaOfertasFinales = new ArrayList<>();
@@ -220,7 +220,15 @@ public class Galeria {
 	
 	public List<Ofertas> getOfertasFinales(Ofertas oferta){
 		
-		listaOfertasFinales.add(oferta);
+		boolean aprobar = true;
+		for(Ofertas off : listaOfertasFinales) {
+			if(off.getMonto() == oferta.getMonto() && off.getComprador().getInversor().getUsuario().equals(oferta.getComprador().getInversor().getUsuario()) && off.getPiezas().getTitulo().equals(oferta.getPiezas().getTitulo())) {
+				aprobar = false;
+			}
+		}
+		if(aprobar == true) {
+			listaOfertasFinales.add(oferta);
+		}
 		return listaOfertasFinales;
 	}
 	

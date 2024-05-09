@@ -51,7 +51,6 @@ public class ConsolaInversor {
         	String usuP = usu.getInversor().getUsuario();
         	if(usuP.equals(usuario)) {
         		inversor = usu;
-        		usu.asignarGaleria(galeria);
         	}
         }
         
@@ -80,10 +79,10 @@ public class ConsolaInversor {
                 	System.out.print("Ingrese el tipo de pieza que desea crear (Arte Digital, Arte Tridimensional, Arte Cuadros: ");
                 	String tipo = scanner4.nextLine();
                 	
-                	System.out.print("Ingrese el título: ");
+                	System.out.print("Ingrese el título sin espacios: ");
                     String titulo = scanner2.next();
                     
-                    System.out.print("Ingrese los autores. Si es más de uno, separelo por comas: ");
+                    System.out.print("Ingrese los autores. Si es más de uno, separelo por comas. Sin espacios: ");
                     String autores = scanner2.next();
 
                     System.out.print("Ingrese el propósito (Exhibir, Subastar, Vender): ");
@@ -127,7 +126,7 @@ public class ConsolaInversor {
                     
                 	if(tipo.equals("Arte Cuadros")) {
                         
-                        System.out.print("Ingrese el ancho y largo: ");
+                        System.out.print("Ingrese el ancho y largo en centimetros (anchoXlargo): ");
                         String anchoxlargo = scanner2.next();
 
                         System.out.print("Ingrese la técnica de la obra: ");
@@ -148,7 +147,7 @@ public class ConsolaInversor {
                 	}
                 	else if(tipo.equals("Arte Tridimensional")) {
 
-                		System.out.print("Ingresa el peso: ");
+                		System.out.print("Ingresa el peso (kg): ");
                         int peso = scanner3.nextInt();
                         
                         System.out.print("¿La obra necesita electricidad?: ");
@@ -157,7 +156,7 @@ public class ConsolaInversor {
                         System.out.print("Ingrese la técnica de la obra: ");
                         String tecnica = scanner2.next();
                         
-                        System.out.print("Ingrese las dimensiones de la obra: ");
+                        System.out.print("Ingrese las dimensiones de la obra en centimetros (anchoXlargoXprodunfidad): ");
                         String dimensiones = scanner2.next();
                         
                         ConsignacionPieza pieza = inversor.CrearPiezaTridimensional(tiempo, titulo, monto, montoMin, proposito, lugar_creacion, deposito, inversor.getInversor(), autores, dimensiones, tecnica, peso, electricidad);
@@ -215,6 +214,7 @@ public class ConsolaInversor {
                 			System.out.printf("%-10d %-10s %-10s %-10d%n", contador, pieza.getTitulo(), pieza.getAutores(), pieza.getGaleriaOferta().getMontoCliente());
                 		}
                 	}
+                	
                 	System.out.print("\n");
                 	System.out.print("Ingrese el titulo de la pieza: ");
                 	String titulo1 = scanner2.next();
@@ -234,7 +234,6 @@ public class ConsolaInversor {
                 	}else {
                 		System.out.print("Ingrese el monto: ");
                     	int montoParticipa = scanner2.nextInt();
-                    	System.out.println("Si ingresa un valor menor su oferta no será tomada en cuenta");
                     	OfertaSubasta ofertaNuevas = inversor.crearOfertaSubasta(seleccionada, inversor, montoParticipa);
                     	galeria.getCentroOfertas().agregarOfertas(ofertaNuevas);
                         consola.persistenciaSalvarVentas();

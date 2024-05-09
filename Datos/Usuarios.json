@@ -15,6 +15,18 @@
       "nombre": "Laura",
       "rol": "Inversor",
       "contraseña": "20005!"
+    },
+    {
+      "usuario": "MelissaA",
+      "nombre": "Melissa",
+      "rol": "Operador",
+      "contraseña": "TUta1n4!"
+    },
+    {
+      "usuario": "Juancho",
+      "nombre": "Julian",
+      "rol": "Cajero",
+      "contraseña": "Sharks"
     }
   ],
   "HistorialesInversor": [{
@@ -22,9 +34,9 @@
     "monto": 6000000
   }],
   "Registros": [{
-    "usuario": "MelissaA",
-    "nombre": "Melissa",
+    "usuario": "Robert",
+    "nombre": "Roberto",
     "rol": "Operador",
-    "contraseña": "TUta1n4!"
+    "contraseña": "AmericanIdol"
   }]
 }
