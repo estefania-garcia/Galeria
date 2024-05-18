@@ -52,7 +52,6 @@ public class ConsolaInicio {
         try {
 			galeria.cargarVentas();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -80,7 +79,6 @@ public class ConsolaInicio {
         try {
 			galeria.salvarVentas();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
