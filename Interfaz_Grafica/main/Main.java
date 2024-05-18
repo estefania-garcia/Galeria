@@ -29,10 +29,27 @@ public class Main extends javax.swing.JFrame {
     private final double coverSize = 40;
     private final double loginSize = 60;
     
-    private Galeria nuevaGaleria;
+    private static final Galeria nuevaGaleria = new Galeria();;
 	
+    public void persistenciaCargar() {
+		
+        try {
+        	nuevaGaleria.cargarUsuarios();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void persistenciaSalvar() {
+		
+        try {
+        	nuevaGaleria.salvarUsuarios();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+    
     public Main() {
-    	this.nuevaGaleria = new Galeria();
         initComponents();
         init();   
     }
@@ -161,7 +178,9 @@ public class Main extends javax.swing.JFrame {
         
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Main().setVisible(true);
+            	Main main = new Main();
+            	main.setVisible(true);
+            	main.persistenciaCargar();
             }
         });
     }

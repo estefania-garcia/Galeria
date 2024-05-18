@@ -6,6 +6,8 @@ import swing.MyTextField;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
+import java.io.IOException;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -16,6 +18,7 @@ import galeria.modelo.controlador.Galeria;
 public class PanelLoginAndRegister extends javax.swing.JLayeredPane {
 
 	private Galeria nuevaGaleria;
+	
     public PanelLoginAndRegister(Galeria nuevaGaleria) {
         initComponents();
         initRegister();
@@ -23,9 +26,12 @@ public class PanelLoginAndRegister extends javax.swing.JLayeredPane {
         login.setVisible(false);
         register.setVisible(true);
         this.nuevaGaleria = nuevaGaleria;
+        
     }
 
     private void initRegister() {
+    	
+    	
         register.setLayout(new MigLayout("wrap", "push[center]push", "push[]25[]10[]10[]25[]push"));
         JLabel label = new JLabel("Crear cuenta");
         label.setFont(new Font("sansserif", 1, 30));
@@ -68,6 +74,7 @@ public class PanelLoginAndRegister extends javax.swing.JLayeredPane {
         register.add(cmd, "w 40%, h 40");
         
         //Espacio para llamar la logica
+        boolean comprobar = nuevaGaleria.getRegistro().crearNuevoUsuario(rolTexto, nombreTexto, passTexto, usuarioTexto);
         
     }
 
