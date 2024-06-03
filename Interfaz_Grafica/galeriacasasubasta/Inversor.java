@@ -32,10 +32,21 @@ import galeria.modelo.usuarios.ProcesoCompra;
 import galeria.modelo.usuarios.RegistroInicio;
 import net.miginfocom.swing.MigLayout;
 
+/**
+ * Este JFrame representa la interfaz del inversor
+ * */
 public class Inversor extends javax.swing.JFrame {
 
+	/**
+	 * Atributo que referencia al mismo JFrame
+	 * */
     private JFrame frame = (JFrame) this;
     
+    /**
+     * Constructor del JFrame que recibe la referencia a las diferentes clases de la lógica del proyecto
+     * Tambien recibe el usuario y el tipo de usuario de la persona que ingreso al sistema
+     * Este inicializa los clases y los demas elementos y métodos del JFrame
+     * */
     public Inversor(String tipo, String usu, LoginMain inicio, Galeria galeria, String inversorUsu) {
         initComponents();
         
@@ -62,6 +73,7 @@ public class Inversor extends javax.swing.JFrame {
         	}
         }
         
+        //Inicializar menú y atributos del frame
         itemsMenu(tipo, inversor, inventario, cenAutores, inicio, galeria);
         setLocationRelativeTo(null);
         setBackground(Color.WHITE);
@@ -80,11 +92,16 @@ public class Inversor extends javax.swing.JFrame {
         arteTridi.setVisible(false);
         arteVisual.setVisible(false);
         tablas.setVisible(false);
+        //Mensaje panatalla inicio
         blogo.setVisible(true);
         bienvenida.setVisible(true);
         bienvenida.setText("<html>Bienvenido, " + tipo + " a nuestra" + " Galería y Casa de Subastas<br></html>");
     }
     
+    /**
+     * Inicializar el menu con los boton de opción
+     * Recibe diferentes parametros de clases para ser conectados con la lógica
+     * */
     private void itemsMenu(String tipo, HistorialInversor inversor, Inventario inventario, CentroAutores cenAutores, LoginMain inicio, Galeria galeria){
         
         if(tipo.equals("Inversor")){
@@ -176,6 +193,9 @@ public class Inversor extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Método que limpia la pantalla principal para ir presentado diferentes opciones según lo seleccionado en el menú
+     * */
     private void incializar(){
         
         blogo.setVisible(false);
@@ -186,6 +206,7 @@ public class Inversor extends javax.swing.JFrame {
         arteTridi.setVisible(false);
         arteDigital.setVisible(false);
         arteVisual.setVisible(false);
+        //Custom barra de scroll de la tabla
         scrollTabla.setVisible(false);
         scrollTabla.setVerticalScrollBar(new ScrollBar());
         scrollTabla.getVerticalScrollBar().setBackground(Color.WHITE);
@@ -193,13 +214,20 @@ public class Inversor extends javax.swing.JFrame {
         JPanel p = new JPanel();
         p.setBackground(Color.WHITE);
         scrollTabla.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
+        //Limpiar el cuadro de texto
         ingresoTipo.setText("");
         ingresoTipo1.setText("");
     }
     
+    /**
+     * Método para hacer una solicitud de monto
+     * Recibe los parametros del inversor que inicio en el sistema y del frame principal
+     * */
     private void solicitudMonto(HistorialInversor inversor, LoginMain inicio){
         
+    	//Limpiar
         incializar();
+        //Inicializar componentes
         inicioCrear.setVisible(true);
         opcion1.setText("¿Deseas ampliar tu monto?");
         botonAccion1.setText("Enviar Solicitud");
@@ -216,6 +244,10 @@ public class Inversor extends javax.swing.JFrame {
         });
     }
     
+    /**
+     * Permite la creación de una pieza. Hace visible direferentes paneles según el tipo de pieza
+     * Toma los valores de los cuadros de texto y llama a las dferentes clases para guardarla 
+     * */
     private void crearPieza(HistorialInversor inversor, Inventario inventario, CentroAutores cenAutores, LoginMain inicio, Galeria galeria){
         
         incializar();
@@ -224,6 +256,7 @@ public class Inversor extends javax.swing.JFrame {
         ingresoTipo.setVisible(true);
         botonAccion1.setText("Generar");
         botonAccion1.setIcon(new ImageIcon(getClass().getResource("/icon/genera.png")));
+        //Botones de ingreso de tipo de pieza
         botonAccion1.addActionListener(new ActionListener(){
             String texto;
             @Override
@@ -244,6 +277,7 @@ public class Inversor extends javax.swing.JFrame {
             }
         });
         
+        //Botones según tl tipo de pieza
         botonDigital.addActionListener(new ActionListener() {
 			
 			@Override
@@ -391,6 +425,9 @@ public class Inversor extends javax.swing.JFrame {
 		});
     }
     
+    /**
+     * Componentes para hacer una oferta por una pieza en subasta
+     * */
     private void ofertarSubasta(LoginMain inicio, Galeria galeria, HistorialInversor inversor){
         
         incializar();
@@ -440,6 +477,9 @@ public class Inversor extends javax.swing.JFrame {
         });
     }
     
+    /**
+     * Componentes para hacer una oferta por un pieza en venta
+     * */
     private void ofertarVenta(LoginMain inicio, Galeria galeria, HistorialInversor inversor, Inventario inventario){
         
         incializar();
@@ -481,6 +521,9 @@ public class Inversor extends javax.swing.JFrame {
         });
     }
     
+    /**
+     * Consultar historial de piezas
+     * */
     private void historialPieza(Galeria galeria){
         
         incializar();
@@ -529,6 +572,9 @@ public class Inversor extends javax.swing.JFrame {
         });
     }
     
+    /**
+     * Consultar historial artista
+     * */
     private void historialArtista(Galeria galeria){
         
         incializar();
