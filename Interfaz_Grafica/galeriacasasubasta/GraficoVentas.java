@@ -7,7 +7,7 @@ import galeria.modelo.controlador.Galeria;
 
 public class GraficoVentas extends javax.swing.JFrame {
 
-    public GraficoVentas(LoginMain inicio, Galeria galeria) {
+    public GraficoVentas(Galeria galeria) {
         initComponents();
         setLocationRelativeTo(null);
         getContentPane().setBackground(new Color(255, 255, 255));

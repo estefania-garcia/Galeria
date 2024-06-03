@@ -16,6 +16,9 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Esta clase permite la creación del gáfico que mostrara las ventas por fechas a lo largo del año
+ * */
 public class Grafico extends javax.swing.JComponent {
 
     private final List<ModeloGrafico> list = new ArrayList<>();

@@ -214,7 +214,7 @@ public class Principal extends javax.swing.JFrame {
 			cmd11.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					GraficoVentas grafico = new GraficoVentas(inicio, galeria);
+					GraficoVentas grafico = new GraficoVentas(galeria);
 					grafico.setVisible(true);
 				}
 			});
