@@ -1,54 +1,11 @@
 {
-  "SolicitudesMonto": [{
-    "aprobado": "Isabel",
-    "usuario": "Isabel"
+  "SolicitudesMonto": [],
+  "Usuarios": [{
+    "usuario": "Stefania",
+    "nombre": "Estefania",
+    "rol": "Administrador",
+    "contraseña": "BTfr1997!"
   }],
-  "Usuarios": [
-    {
-      "usuario": "Stefania",
-      "nombre": "Estefania",
-      "rol": "Administrador",
-      "contraseña": "BTfr1997!"
-    },
-    {
-      "usuario": "Isabel",
-      "nombre": "Laura",
-      "rol": "Inversor",
-      "contraseña": "20005!"
-    },
-    {
-      "usuario": "MelissaA",
-      "nombre": "Melissa",
-      "rol": "Operador",
-      "contraseña": "TUta1n4!"
-    },
-    {
-      "usuario": "Juancho",
-      "nombre": "Julian",
-      "rol": "Cajero",
-      "contraseña": "Sharks"
-    },
-    {
-      "usuario": "Winter",
-      "nombre": "Crystal",
-      "rol": "Inversor",
-      "contraseña": "everafter"
-    }
-  ],
-  "HistorialesInversor": [
-    {
-      "inversor": "Isabel",
-      "monto": 6000000
-    },
-    {
-      "inversor": "Winter",
-      "monto": 100000
-    }
-  ],
-  "Registros": [{
-    "usuario": "Mugue",
-    "nombre": "Miguel",
-    "rol": "Cajero",
-    "contraseña": "Mil"
-  }]
+  "HistorialesInversor": [],
+  "Registros": []
 }
