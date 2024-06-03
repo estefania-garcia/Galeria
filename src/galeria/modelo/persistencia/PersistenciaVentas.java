@@ -158,6 +158,7 @@ public class PersistenciaVentas {
 			}
 		}
 	}
+	
 	private void salcarProcesoCompra(Galeria galeria, JSONObject jobject) {
 		
 		JSONArray jOfertas = new JSONArray();

@@ -197,7 +197,6 @@ public class Inversor extends javax.swing.JFrame {
         ingresoTipo1.setText("");
     }
     
-    
     private void solicitudMonto(HistorialInversor inversor, LoginMain inicio){
         
         incializar();
@@ -390,36 +389,6 @@ public class Inversor extends javax.swing.JFrame {
                 panel.showNotification();
 			}
 		});
-    }
-    
-    
-    private void ofertarVenta(){
-        
-        incializar();
-        tablas.setVisible(true);
-        scrollTabla.setVisible(true);
-        inicioCrear1.setVisible(true);
-        opcion2.setText("Ofertar por una pieza");
-        descripcion.setText("Ingresa de la pieza");
-        botonAccion2.setText("Ofertar");
-        botonAccion2.setIcon(new ImageIcon(getClass().getResource("/icon/aprobar3.png")));
-        //Filas Tabla Usuario
-        tabla.removeRowAll();
-        tabla.removeColumnAll();
-        tabla.addColumn("Pieza");
-        tabla.addColumn("Autor");
-        tabla.addColumn("Valor Fijo");
-        tabla.addColumn("Índice Aprobación");
-        for(int i = 0; i < 50; i++){
-            tabla.addRow(new Object []{"Estefania"+i, "Stef"+i, "Inversor"+i, i});
-        }
-        botonAccion2.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e){
-                Notification alertUsu = new Notification(frame, Notification.Type.INFO, Notification.Location.TOP_RIGHT, "Se ha ejecutado la acción");
-                alertUsu.showNotification();
-            }
-        });
     }
     
     private void ofertarSubasta(LoginMain inicio, Galeria galeria, HistorialInversor inversor){
