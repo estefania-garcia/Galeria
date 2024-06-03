@@ -13,13 +13,6 @@
       "ofertador": "Isabel",
       "titulo": "Mujer",
       "autores": "RubenMartin,JulietaMiles"
-    },
-    {
-      "tipo": "Oferta Subasta",
-      "monto": 200000,
-      "ofertador": "Robert",
-      "titulo": "Macarrones",
-      "autores": "RubenMartin,JulesMiles"
     }
   ],
   "ProcesoCompra": [{

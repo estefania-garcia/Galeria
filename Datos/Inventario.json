@@ -40,7 +40,7 @@
     "fechaVenta": "8/05/2024"
   },
   {
-    "vigencia": false,
+    "vigencia": true,
     "tipo": "Arte Visual",
     "venta": false,
     "estado": "Nueva",
@@ -75,6 +75,25 @@
     "monto": 400000,
     "montoMin": 1200000,
     "tiempo": 20,
+    "fechaVenta": ""
+  },
+  {
+    "vigencia": false,
+    "tipo": "Arte Visual",
+    "venta": false,
+    "estado": "Nueva",
+    "proposito": "Subastar",
+    "propietario": "Winter",
+    "titulo": "Diario Vampiros",
+    "creacion": "Bogotá-2024",
+    "deposito": true,
+    "autores": "Karoline Forbes",
+    "aprobacion": false,
+    "anchoXlargo": "25x26",
+    "monto": 10000,
+    "montoMin": 20000,
+    "tiempo": 24,
+    "tecnica": "Serie",
     "fechaVenta": ""
   }
 ]}

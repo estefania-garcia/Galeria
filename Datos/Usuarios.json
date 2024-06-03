@@ -29,10 +29,10 @@
       "contraseña": "Sharks"
     },
     {
-      "usuario": "Robert",
-      "nombre": "Roberto",
+      "usuario": "Winter",
+      "nombre": "Crystal",
       "rol": "Inversor",
-      "contraseña": "AmericanIdol"
+      "contraseña": "everafter"
     }
   ],
   "HistorialesInversor": [
@@ -41,8 +41,8 @@
       "monto": 6000000
     },
     {
-      "inversor": "Robert",
-      "monto": 200000
+      "inversor": "Winter",
+      "monto": 100000
     }
   ],
   "Registros": [{
