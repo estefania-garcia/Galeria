@@ -79,19 +79,6 @@ public class Grafico extends javax.swing.JComponent {
         grphcs.drawImage(img, 0, 0, null);
     }
 
-    private void drawValues(Graphics2D g2, String values, double angle, double rs) {
-        int centerx = getWidth() / 2;
-        int centerY = (getHeight() - PADDING_BOTTON) / 2;
-        Point p = getLocation(angle, rs);
-        g2.setColor(getForeground());
-        g2.setFont(getFont());
-        FontMetrics ft = g2.getFontMetrics();
-        Rectangle2D r2 = ft.getStringBounds(values, g2);
-        double x = (centerx + p.x) - (r2.getWidth() / 2);
-        double y = (centerY - p.y) + (ft.getAscent() / 2);
-        g2.drawString(values, (int) x, (int) y);
-    }
-
     private Shape createShape(double start, double end, double values) {
         int width = getWidth();
         int height = getHeight() - PADDING_BOTTON;
@@ -109,12 +96,6 @@ public class Grafico extends javax.swing.JComponent {
     private double valuesToAngle(double values) {
         double n = values * 100 / totalValues;
         return n * 360 / 100;
-    }
-
-    private Point getLocation(double angle, double rs) {
-        double x = Math.cos(Math.toRadians(angle)) * rs;
-        double y = Math.sin(Math.toRadians(angle)) * rs;
-        return new Point((int) x, (int) y);
     }
 
     private void calculateValues(ModeloGrafico data) {
