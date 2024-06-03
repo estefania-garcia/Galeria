@@ -1,8 +1,10 @@
 package galeria.modelo.inventario;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import galeria.modelo.usuarios.OperacionSubasta;
 
@@ -16,6 +18,11 @@ public class Inventario {
 	 * Lista de piezas en solicitud
 	 * */
 	private List<ConsignacionPieza> piezasSolicitud;
+	
+	/**
+	 * Mapa con las fechas de compra
+	 * */
+	private Map<String, Integer> ventasPorFecha;
 	
 	/**
 	 * Listas de las piezas totales
@@ -83,6 +90,30 @@ public class Inventario {
 		piezasVendidas = new ArrayList<Piezas>();
 		piezasSolicitud = new ArrayList<ConsignacionPieza>();
 		piezasBloqueadas = new ArrayList<Piezas>();
+		ventasPorFecha = new HashMap<>();
+	}
+	
+	public void agregarFechas(String fecha) {
+		
+		boolean aprobar = true;
+		if(!fecha.equals("") | fecha != null) {
+			for(String fechas : ventasPorFecha.keySet()) {
+				if(fechas.equals(fecha)) {
+					aprobar = false;
+				}
+			}
+			if(aprobar == true) {
+				ventasPorFecha.put(fecha, 1);
+			}else {
+				int valorActual = ventasPorFecha.get(fecha);
+				ventasPorFecha.put(fecha, valorActual+1);
+			}
+		}
+	}
+	
+	public Map<String, Integer> getFechasMapa(){
+		
+		return ventasPorFecha;
 	}
 	
 	/**

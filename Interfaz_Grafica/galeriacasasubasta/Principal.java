@@ -203,6 +203,21 @@ public class Principal extends javax.swing.JFrame {
 					historialesArtistas(galeria);
 				}
 			});
+			
+			Button cmd11 = new Button();
+			cmd11.setBackground(new Color(72, 125, 171));
+			cmd11.setForeground(new Color(250, 250, 250));
+			cmd11.setFont(new Font("SansSerif", Font.BOLD, 15));
+			cmd11.setText("Ventas Por Año");
+			items.add(cmd11, "w 202, h 40");
+
+			cmd11.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					GraficoVentas grafico = new GraficoVentas(inicio, galeria);
+					grafico.setVisible(true);
+				}
+			});
 		}
 	}
 

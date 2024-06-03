@@ -53,6 +53,7 @@ public class PersistenciaInventario {
 			String titulo = pieza.getString("titulo");
 			String proposito = pieza.getString("proposito");
 			String fechaVenta = pieza.getString("fechaVenta");
+			galeria.getInventario().agregarFechas(fechaVenta);;
 			String creacion = pieza.getString("creacion");
 			boolean deposito = pieza.getBoolean("deposito");
 			boolean vigencia = pieza.getBoolean("vigencia");
@@ -207,7 +208,6 @@ public class PersistenciaInventario {
 			jPiezas.put("propietario", piezas.getPropietario().getUsuario());
 			jPiezas.put("autores", piezas.getPieza().getAutores());
 			jPiezas.put("vigencia", piezas.getPieza().getVigencia());
-			
 			jPiezas.put("venta", piezas.getPieza().getVenta());
 			jPiezas.put("fechaVenta", piezas.getPieza().getFechaVendida());
 			jPiezas.put("estado", piezas.getPieza().getEstado());
