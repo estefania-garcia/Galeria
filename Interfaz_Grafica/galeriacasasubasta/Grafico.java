@@ -42,7 +42,7 @@ public class Grafico extends javax.swing.JComponent {
     private void createChart(Graphics grphcs) {
         int width = getWidth();
         int height = getHeight() - PADDING_BOTTON;
-        int space = 5;
+        int space = 25;
         int size = Math.min(width, height) - space;
         int x = (width - size) / 2;
         int y = (height - size) / 2;
