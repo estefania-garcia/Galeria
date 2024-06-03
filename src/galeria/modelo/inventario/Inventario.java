@@ -96,7 +96,7 @@ public class Inventario {
 	public void agregarFechas(String fecha) {
 		
 		boolean aprobar = true;
-		if(!fecha.equals("") | fecha != null) {
+		if(!fecha.equals("")) {
 			for(String fechas : ventasPorFecha.keySet()) {
 				if(fechas.equals(fecha)) {
 					aprobar = false;

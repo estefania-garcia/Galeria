@@ -15,7 +15,9 @@ public class GraficoVentas extends javax.swing.JFrame {
         Random random = new Random();
         for(String llave : galeria.getInventario().getFechasMapa().keySet()) {
         	int valor = galeria.getInventario().getFechasMapa().get(llave);
-        	grafico1.addItem(new ModeloGrafico(new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256)), llave, valor));
+        	if(!llave.equals("")) {
+            	grafico1.addItem(new ModeloGrafico(new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256)), llave, valor));
+        	}
         }
     }
 
@@ -23,7 +25,6 @@ public class GraficoVentas extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        modeloGrafico1 = new galeriacasasubasta.ModeloGrafico();
         grafico1 = new galeriacasasubasta.Grafico();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -46,6 +47,5 @@ public class GraficoVentas extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private galeriacasasubasta.Grafico grafico1;
-    private galeriacasasubasta.ModeloGrafico modeloGrafico1;
     // End of variables declaration//GEN-END:variables
 }
